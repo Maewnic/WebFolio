@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Home</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="home" data-title="Home">
+  <div id="site-header"></div>
+  <main>
+    <section class="container hero">
+      <p class="eyebrow reveal" data-site="tagline"></p>
+      <h1 class="reveal">Hi, I'm <span data-site="name"></span>.</h1>
+      <p class="lead reveal" data-site="intro"></p>
+    </section>
+
+    <section class="container">
+      <div class="paths" data-cards="paths"></div>
+    </section>
+
+    <section class="container section">
+      <div class="about">
+        <div class="photo reveal" data-photo></div>
+        <div class="reveal">
+          <h2>About</h2>
+          <p data-site="about"></p>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div id="site-footer"></div>
+  <script src="js/content.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
