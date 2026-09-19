@@ -72,8 +72,8 @@ h1 em, h2 em, .footer-title em { font-style: italic; }
 #site-header { position: sticky; top: 0; z-index: 20; }   /* the wrapper must be the sticky one, so the menu stays put while scrolling */
 .site-header {
   position: relative; z-index: 20;
-  background: color-mix(in srgb, var(--bg) 86%, transparent);
-  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  background: color-mix(in srgb, var(--bg) 72%, transparent);
+  -webkit-backdrop-filter: blur(22px) saturate(1.4); backdrop-filter: blur(22px) saturate(1.4);
   border-bottom: 1px solid transparent;
 }
 .header-row { display: flex; align-items: center; justify-content: space-between; height: 72px; }
