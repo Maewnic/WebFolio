@@ -28,23 +28,27 @@
      hidden        true = keep it in the file but don't show it on the site yet
      cover         the main image (card + top of the project page)
      hero          optional: show a video/embed at the top instead of the cover image
+     context       e.g. "RMIT University · Virtual Environment" (shows as "Made for")
      role          what you did
      collaborators [{ name, role }]
      tools         ["Unity", ...]  (these also build the Tools list on the About page)
      year          e.g. "2026"
+     links         [{ label, url }] buttons under the intro, e.g. Sketchfab, Instagram
+     highlights    a player that plays clips one after another (see the TSA project)
+     tabs          groups of videos/reels shown as tabs (see the TSA project)
      sections      [{ title, text, media }]  story sections; text can have several paragraphs
                    separated by a blank line. Empty sections are skipped.
      mediaRows     groups of videos/reels shown together, [{ title, text, media: [ ... ] }]
      gallery       [{ src, alt }] for a picture gallery; galleryLayout: "grid" or "masonry"
-     links         [{ label, url }] e.g. Sketchfab, YouTube
 
-   MEDIA TYPES (used inside media / hero / mediaRows)
+   MEDIA TYPES (used inside media / hero / mediaRows / tabs / highlights)
      { type: "youtube",    url: "https://..." }      normal videos and Shorts
      { type: "instagram",  url: "https://..." }      public Instagram reels/posts
      { type: "soundcloud", url: "https://..." }
-     { type: "sketchfab",  url: "https://..." }      interactive 3D model
+     { type: "sketchfab",  url: "https://..." }      interactive 3D model (use the full sketchfab.com link)
      { type: "audio",      url: "assets/audio/x.mp3" }
      { type: "image",      url: "assets/projects/x/01.jpg", alt: "..." }
+     { type: "video",      url: "assets/video/x.mp4" }   your own video file (highlights only; keep files small)
    ========================================================================== */
 
 const PORTFOLIO = {
@@ -55,8 +59,9 @@ const PORTFOLIO = {
     fullName: "Witthawin Batsomboon",
     intro: "A Digital Media creative exploring immersive experiences, visual storytelling and digital environments.",
     location: "Melbourne · RMIT Digital Media",
-    education: "Bachelor of Digital Design, RMIT University",
+    education: "Bachelor of Design (Digital Media), RMIT University (2024–2027), specialising in virtual environment design",
     from: "From Thailand, studying in Melbourne",
+    languages: "English (fluent), Thai (native)",
 
     heroImage: "",            // big image on the home page, e.g. "assets/projects/lakes-echo/cover.jpg"
     heroAlt: "",
@@ -72,7 +77,7 @@ const PORTFOLIO = {
     ],
 
     // Contact. Leave a value as "" and it won't show.
-    email: "",                // add the email you want people to use
+    email: "Witthawin.munich@gmail.com",
     linkedin: "https://www.linkedin.com/in/witthawin-batsomboon/",
     instagram: "",
     youtube: ""
@@ -94,32 +99,50 @@ const PORTFOLIO = {
   /* ----------------------------- PROJECTS ----------------------------- */
   projects: [
 
+    /* ============================ IMMERSIVE & INTERACTIVE ============================ */
+
     {
       slug: "lakes-echo",
       title: "Lake's Echo",
       category: "immersive",
       type: "Serene VR experience",
-      tagline: "A research-informed VR experience about calm, atmosphere and sound.",
-      summary: "A research-informed VR experience exploring how environmental design, spatial immersion, visual atmosphere and sound can contribute to a feeling of calm and serenity.",
+      tagline: "A misty lakeside in VR, designed around one goal: the most serene place possible.",
+      summary: "A VR experience built around a single goal: creating the most serene environment possible. Psychology research on spatial and sensory design shaped a misty lakeside in Unity, centred on a lone pavilion.",
       status: "",
       size: "l",
       hidden: false,
       cover: "",
-      year: "",
+      hero: { type: "youtube", url: "https://youtu.be/8VPb5HJ2Dcs" },
+      context: "RMIT University · Heighten: Multi-Sensory Experience",
+      year: "Aug – Oct 2025",
       role: "",
       collaborators: [{ name: "Yu Sen Ng", role: "Sound Design" }],
       tools: ["Unity", "ProBuilder"],
-      // Fill these in as you have the material. Empty ones are skipped.
+      links: [],
       sections: [
-        { title: "Concept",       text: "", media: [] },
-        { title: "Experience",    text: "", media: [] },
-        { title: "Process",       text: "", media: [] },
-        { title: "Development",   text: "", media: [] },
-        { title: "Collaboration", text: "", media: [] }
+        {
+          title: "Concept",
+          text: "Serene started with research. I looked into psychology research on spatial and sensory design to understand what makes a place feel calm, then used it to shape the environment: a misty lakeside with a lone pavilion as a visual anchor.",
+          media: []
+        },
+        {
+          title: "Experience",
+          text: "Visitors drift through the scene at their own pace. There's no goal to reach and nothing to solve, only the space, the mist and the sound.",
+          media: []
+        },
+        {
+          title: "Development",
+          text: "The fog does two jobs. It reduces the render distance, which keeps the scene light enough for VR, and it softens the mountains into layered, painterly silhouettes.",
+          media: []
+        },
+        {
+          title: "Collaboration",
+          text: "The sound was developed together with a sound design student, so the audio and the environment were shaped around each other.",
+          media: []
+        }
       ],
       gallery: [],
-      galleryLayout: "grid",
-      links: []
+      galleryLayout: "grid"
     },
 
     {
@@ -127,36 +150,37 @@ const PORTFOLIO = {
       title: "Hikari",
       category: "immersive",
       type: "Social VR venue · VRChat",
-      tagline: "A Japanese-themed restaurant and bar in VRChat, and the community that runs it.",
-      summary: "Hikari is a Japanese-themed restaurant and bar in VRChat with a live performance stage and games like chess, Othello and pool. I built the world, designed the brand and lead the community that hosts weekly events there.",
+      tagline: "A Japanese-themed restaurant, bar and onsen in VRChat, and the community around it.",
+      summary: "A Japanese-themed restaurant, bar and onsen in VRChat, with live singers, games and a community of 800+ members. I'm part of the founding team: I built much of the world, designed the brand, and looked after VIP memberships and staff operations. I no longer run it day to day.",
       status: "",
       size: "l",
       hidden: false,
       cover: "",
-      year: "",
-      role: "World builder, brand designer and community lead",
+      context: "",
+      year: "Dec 2024 – Jun 2026",
+      role: "Founding team: world building, brand design, VIP and staff operations",
       collaborators: [],
       tools: ["Unity", "ProBuilder", "VRChat"],
+      links: [],
       sections: [
         {
           title: "The world",
-          text: "Hikari runs as a weekly event on Wednesdays at 8pm (GMT+7), mainly for Thai players.\n\nEarlier builds used more free and marketplace assets. More recently I've moved toward original geometry made in Unity with ProBuilder, especially for the indoor spaces.",
+          text: "Guests arrive through a torii gate entrance into an interconnected VIP lounge, with a full sauna and onsen area linked by bridges and walkways. They can order from an in-world chef, listen to live singers, and play chess, Othello and pool, while staff dressed as maiko and geisha host the evening.\n\nHikari ran as a weekly event on Wednesdays at 8pm (GMT+7), mainly for Thai players.\n\nEarly builds used free and marketplace assets. Over time I moved toward original geometry made with ProBuilder in Unity, especially for the indoor spaces.",
           media: []
         },
         {
           title: "Brand",
-          text: "I designed Hikari's identity, including the 光 (hikari, \"light\") logo with koi pond and torii motifs, promotional posters, social thumbnails, and physical keychains tied to the VIP membership tiers.",
+          text: "I designed Hikari's identity: the 光 (hikari, \"light\") logo with koi pond and torii motifs, promotional posters, social thumbnails, and physical keychains tied to the VIP membership tiers.",
           media: []
         },
         {
-          title: "Community",
-          text: "The community has 800+ members and has had 10,000+ visitors. Staff dress as maiko and geisha to host guests during events.\n\nI also manage the VIP membership system and the accounting, tracking VIP purchases and sharing the revenue with our volunteer staff every month.",
+          title: "Community & operations",
+          text: "The community grew to 800+ members across platforms, with 10,000+ visitors to the world. I moderated engagement, resolved community issues, and coordinated a small team of volunteer creators, tracking milestones and delegating tasks.\n\nI managed the VIP membership system and staff operations, with a flexible internal accounting structure that tracked monthly and one-off daily VIP purchases against volunteer staff attendance, so revenue could be shared with the staff every month.",
           media: []
         }
       ],
       gallery: [],
-      galleryLayout: "grid",
-      links: []
+      galleryLayout: "grid"
     },
 
     {
@@ -164,20 +188,78 @@ const PORTFOLIO = {
       title: "Keep It In!",
       category: "immersive",
       type: "Interactive · Unity",
-      tagline: "A surreal toilet chase, built around story and level design.",
-      summary: "A surreal interactive Unity project set in a toilet-themed chase environment. It's the piece where I focused most on storytelling and level design.",
+      tagline: "A surreal chase toward a toilet, built around story, sound and level design.",
+      summary: "A short Unity experience that explores emotional state through environment and sound alone, with no dialogue and no UI. It's the piece where I focused most on storytelling and level design.",
       status: "",
       size: "m",
       hidden: false,
       cover: "",
+      hero: { type: "youtube", url: "https://youtu.be/7GCy969uqHU" },
+      context: "RMIT University · Virtual Environment",
+      year: "Aug – Oct 2025",
+      role: "",
+      collaborators: [],
+      tools: ["Unity", "Reaper"],
+      links: [],
+      sections: [
+        {
+          title: "The experience",
+          text: "It starts at a food truck, where you're handed a questionable hot dog. A plaza leads into a maze, and from somewhere far away you hear toilet flushes, both a hint and a taunt. As you get closer the vignette tightens. Then comes an anticlimactic flush, and the screen fades to white.",
+          media: []
+        },
+        {
+          title: "Sound",
+          text: "The sound design is custom recorded and edited in Reaper, layered over ambient effects. With no dialogue or on-screen UI, the environment and the audio carry the player's emotional state.",
+          media: []
+        }
+      ],
+      gallery: [],
+      galleryLayout: "grid"
+    },
+
+    {
+      slug: "liminal-lavatory",
+      title: "Liminal Lavatory",
+      category: "immersive",
+      type: "VR multisensory experience",
+      tagline: "The Keep It In! bathroom maze, reworked as a VR multisensory experience.",
+      summary: "A sub-project that reuses the bathroom maze from Keep It In! and turns it into a VR multisensory experience.",
+      status: "",
+      size: "s",
+      hidden: false,
+      cover: "",
+      hero: { type: "youtube", url: "https://youtu.be/C0TI0wnjY78" },
+      context: "RMIT University · Heighten: Multi-Sensory Experience",
       year: "",
       role: "",
       collaborators: [],
       tools: ["Unity"],
+      links: [],
       sections: [],
       gallery: [],
-      galleryLayout: "grid",
-      links: []
+      galleryLayout: "grid"
+    },
+
+    {
+      slug: "haul",
+      title: "HAUL",
+      category: "immersive",
+      type: "Game · Procedural rhetoric",
+      tagline: "A shopping game where the only way to win is to walk away.",
+      summary: "A game about shopping where the player wins by walking away. It's a procedural rhetoric piece: the point about consumption is made through the rules, not through text.",
+      status: "",
+      size: "s",
+      hidden: false,
+      cover: "",
+      context: "RMIT University · Minimalism, Limits & Constraints",
+      year: "",
+      role: "",
+      collaborators: [],
+      tools: [],
+      links: [],
+      sections: [],
+      gallery: [],
+      galleryLayout: "grid"
     },
 
     {
@@ -191,133 +273,218 @@ const PORTFOLIO = {
       size: "m",
       hidden: false,
       cover: "",
+      context: "RMIT University · AI Studio",
       year: "2026",
       role: "",
       collaborators: [],
-      tools: ["Unity", "Shaders", "Suno"],
+      tools: ["Unity", "Claude Code", "Suno"],
+      links: [],
       sections: [
         {
           title: "How it's made",
-          text: "The shaders are driven by one shared audio script that feeds the music's amplitude and frequency into the shader settings. I used AI to help write and tune the shaders, and the music was generated with Suno. I'm also working on getting everything to run well in VR.",
+          text: "The shaders are driven by one shared audio script that feeds the music's amplitude and frequency into the shader settings. I used Claude Code to help write and tune the shaders, and the music was generated with Suno. I'm also working on getting everything to run well in VR.",
           media: []
         }
       ],
       gallery: [],
-      galleryLayout: "grid",
-      links: []
+      galleryLayout: "grid"
     },
 
     {
-      slug: "meadow-whispers",
-      title: "Meadow Whispers",
+      slug: "scroll-to-space",
+      title: "Scroll to Space",
       category: "immersive",
-      type: "Virtual environment · Unity",
-      tagline: "A Unity virtual environment.",
-      summary: "A virtual environment built in Unity.",
+      type: "Interactive website",
+      tagline: "An educational website where scrolling up is climbing into space.",
+      summary: "A scroll-driven infographic that turns scrolling into a climb from the ground to space. It's built with vanilla JavaScript and CSS, using real atmospheric data.",
       status: "",
       size: "s",
       hidden: false,
       cover: "",
-      year: "",
+      context: "RMIT University",
+      year: "Oct 2025",
       role: "",
       collaborators: [],
-      tools: ["Unity"],
-      sections: [],
+      tools: ["JavaScript", "CSS", "HTML"],
+      links: [{ label: "Open the website", url: "https://maewnic.github.io/Assignment3_ScrollToSpace/" }],
+      sections: [
+        {
+          title: "How it works",
+          text: "The page loads scrolled to the bottom, so scrolling up mirrors climbing. An altitude counter blends a linear scale for the first 80 km with an exponential one after that, reaching 10,000 km. The background darkens from sky blue to black along the way, and hovering reveals captions about each layer.",
+          media: []
+        }
+      ],
       gallery: [],
-      galleryLayout: "grid",
-      links: []
+      galleryLayout: "grid"
     },
 
     {
-      slug: "relaxing-audio-experience",
-      title: "Relaxing Audio Experience",
+      slug: "study-music-player",
+      title: "Study Music Player",
       category: "immersive",
-      type: "Interactive · Unity",
-      tagline: "A calm study space with audio and a focus timer.",
-      summary: "An interactive Unity experience that combines a calming environment, study audio and a Pomodoro-style focus timer.",
+      type: "Interactive website",
+      tagline: "An ambient music player with a built-in Pomodoro timer.",
+      summary: "An ambient study music player with a Pomodoro timer built in: 25-minute study blocks and 5-minute breaks that cycle automatically and sync with playback.",
       status: "",
       size: "s",
       hidden: false,
       cover: "",
-      year: "",
+      context: "RMIT University",
+      year: "Aug 2025",
       role: "",
       collaborators: [],
-      tools: ["Unity"],
-      sections: [],
+      tools: ["JavaScript", "CSS", "HTML", "Illustrator"],
+      links: [{ label: "Open the player", url: "https://maewnic.github.io/Assignment2/mediaPlayer/" }],
+      sections: [
+        {
+          title: "Design",
+          text: "The play and pause button is oversized and centred, and the spacebar toggles playback. The headphones icon is a hand-drawn Illustrator design, and the background is a photo of the Twelve Apostles that I took myself.\n\nI moved the volume slider to a more accessible place and built custom range sliders to match the rest of the look.",
+          media: []
+        }
+      ],
       gallery: [],
-      galleryLayout: "grid",
-      links: []
+      galleryLayout: "grid"
     },
+
+    /* ================================ CONTENT & MEDIA ================================ */
 
     {
       slug: "tsa-content",
-      title: "TSA Event Recaps & Reels",
+      title: "TSA",
       category: "content",
       type: "Video production · Content creation",
-      tagline: "Event recaps that play like a short TV game show, plus promo and sponsor reels.",
-      summary: "Content for the University of Melbourne Thai Student Association. I made most of the recap videos for their events. I narrate what's happening, film it, edit it, caption it and do the voice acting over it, so each recap plays like a short TV game show rather than a typical club event video.",
+      tagline: "Game-show style event recaps, plus promo and sponsor reels.",
+      summary: "Content for the Melbourne University Thai Student Association (MUTSA). I made most of the event recap videos. I narrate what's happening, film it, edit it, caption it and do the voice acting over it, so each recap plays like a short TV game show instead of a typical club event video. I also make meme-style promo reels and sponsor reels.",
       status: "",
       size: "l",
       hidden: false,
       cover: "",
-      year: "",
-      role: "Narration, filming, editing, captions and voice acting",
+      context: "Melbourne University Thai Student Association (MUTSA)",
+      year: "Sep 2024 – Present",
+      role: "PR content creator: narration, filming, editing, captions and voice acting",
       collaborators: [],
-      tools: [],
-      // Add your videos here. Vertical Shorts/reels are shown in phone shape.
-      mediaRows: [
-        {
-          title: "Event recaps",
-          text: "",
-          media: []                 // e.g. { type: "youtube", url: "https://youtu.be/..." }
-        },
-        {
-          title: "Promo & sponsor reels",
-          text: "Meme-style promo reels and sponsor reels for the association.",
-          media: []                 // e.g. { type: "instagram", url: "https://www.instagram.com/reel/..." }
-        }
+      tools: ["CapCut"],
+      links: [
+        { label: "TSA on Instagram", url: "https://www.instagram.com/tsa_unimelb/" }
       ],
+
+      // HIGHLIGHT REELS: plays one clip after another (the next starts when one ends).
+      // Room for 3 for now. The first one waits for you to press play.
+      // Use a YouTube link, or your own file:  { type: "video", url: "assets/video/clip1.mp4", title: "..." }
+      highlightsText: "",
+      highlights: [
+        // { type: "youtube", url: "https://youtu.be/...", title: "Highlight 1" },
+        // { type: "youtube", url: "https://youtu.be/...", title: "Highlight 2" },
+        // { type: "youtube", url: "https://youtu.be/...", title: "Highlight 3" }
+      ],
+
+      // THREE CATEGORIES shown as tabs. Paste reel links into media. Empty tabs stay hidden.
+      tabs: [
+        { title: "Recap Videos",   text: "", media: [
+          { type: "instagram", url: "https://www.instagram.com/reel/DXBQEq8iafh/" }   // test reel, swap for the real ones
+        ] },
+        { title: "Promo Videos",   text: "", media: [] },
+        { title: "Sponsor Videos", text: "", media: [] }
+      ],
+
       sections: [],
       gallery: [],
-      galleryLayout: "grid",
-      links: []
+      galleryLayout: "grid"
     },
 
     {
-      slug: "3d-diorama",
-      title: "3D Diorama",
-      category: "visual",
-      type: "3D model",
-      tagline: "A painted-style watch and lotus diorama.",
-      summary: "A 3D diorama of a Rolex wristwatch on a pink lotus base. I learned Substance 3D Painter from scratch for this one, using the painted 3D look of Puss in Boots: The Last Wish as the art reference.",
+      slug: "dms-facilitator",
+      title: "DMS Facilitator",
+      category: "content",
+      type: "Graphic design · Social posts",
+      tagline: "Event posters and Instagram posts for the RMIT Digital Media Students.",
+      summary: "Posters and Instagram posts I designed for DMS (Digital Media Students), the community for RMIT's Bachelor of Design (Digital Media) students. It grew out of my facilitator role in semester 2, 2026.",
       status: "",
       size: "m",
       hidden: false,
       cover: "",
-      year: "",
-      role: "",
+      context: "RMIT University · Digital Media Students (DMS)",
+      year: "Semester 2, 2026",
+      role: "Student facilitator: poster and social post design",
       collaborators: [],
-      tools: ["Maya", "Substance 3D Painter"],
+      tools: [],
+      links: [
+        { label: "DMS on Instagram", url: "https://www.instagram.com/rmitdmstudents/" }
+      ],
+      // POSTS: paste Instagram post links here. The post itself is embedded, no image needed.
+      mediaRows: [
+        { title: "Posts", text: "", media: [
+          { type: "instagram", url: "https://www.instagram.com/p/Dck4HE2EqaU/" }
+          // add more posts here, one line each, separated by commas
+        ] }
+      ],
       sections: [],
       gallery: [],
-      galleryLayout: "grid",
-      links: []                     // e.g. { label: "View on Sketchfab", url: "https://sketchfab.com/..." }
-    }
+      galleryLayout: "grid"
+    },
 
-    /* ----- READY-MADE TEMPLATES (copy one out of this comment to use it) -----
-
-    ,{
-      slug: "video-podcast",
-      title: "Video Podcast",
+    {
+      slug: "permsin",
+      title: "Permsin",
       category: "content",
-      type: "Video production",
-      tagline: "",
-      summary: "",
+      type: "Design internship · Video & print",
+      tagline: "A video podcast and a catalogue cover for a Thai steel company.",
+      summary: "During my design internship at Permsin Steel Works PCL in Samut Sakhon, Thailand, I designed a product catalogue. I came back in December 2024, after starting university, to produce a video podcast called เหล็กTalk.",
+      status: "",
       size: "s",
-      hero: { type: "youtube", url: "" },
+      hidden: false,
+      cover: "",
+      context: "Permsin Steel Works PCL · Design Internship",
+      year: "2024",
+      role: "Design intern: catalogue design and video podcast production",
+      collaborators: [],
       tools: [],
-      sections: []
+      links: [],
+      sections: [
+        { title: "Video podcast: เหล็กTalk", text: "", media: [{ type: "youtube", url: "https://youtu.be/dp0DqXh2xhg" }] },
+        { title: "Catalogue cover",           text: "", media: [] }    // e.g. { type: "image", url: "assets/projects/permsin/catalogue.jpg", alt: "Catalogue cover" }
+      ],
+      gallery: [],
+      galleryLayout: "grid"
+    },
+
+    /* ================================== VISUAL DESIGN ================================== */
+
+    {
+      slug: "given-watch",
+      title: "Given Watch",
+      category: "visual",
+      type: "3D diorama",
+      tagline: "A painted-style diorama of a Rolex passed down from my father, with a lotus.",
+      summary: "A 3D diorama built around a Rolex passed down from my father, paired with a lotus, which represents growth in Thai Buddhism. I went for an illustrative look instead of a commercial showroom render.",
+      status: "",
+      size: "m",
+      hidden: false,
+      cover: "",
+      hero: { type: "sketchfab", url: "https://sketchfab.com/3d-models/given-watch-43e90112cd2f402995447d18973c80bf" },
+      context: "RMIT University",
+      year: "Mar – May 2026",
+      role: "",
+      collaborators: [],
+      tools: ["Maya", "Substance Painter", "Clip Studio Paint", "Sketchfab"],
+      links: [{ label: "View on Sketchfab", url: "https://skfb.ly/pKMOO" }],
+      sections: [
+        {
+          title: "The look",
+          text: "I textured the piece in Clip Studio Paint first, then brought it into Substance Painter for a painted, illustrative finish that references the look of Puss in Boots: The Last Wish.",
+          media: []
+        },
+        {
+          title: "Making it",
+          text: "The watch was modelled and animated in Maya, and the lighting was staged in Sketchfab.",
+          media: []
+        }
+      ],
+      gallery: [],
+      galleryLayout: "grid"
     }
+
+    /* ----- READY-MADE TEMPLATE (copy it out of this comment to use it) -----
 
     ,{
       slug: "photography",
@@ -341,21 +508,27 @@ const PORTFOLIO = {
   experience: [
     {
       title: "Student Facilitator",
-      org: "RMIT University",
+      org: "RMIT University, Bachelor of Design (Digital Media)",
       period: "Aug 2026 – Present",
-      text: "Organising activities for Digital Media students and supporting the wider university community."
+      text: "Organising activities and events for Bachelor of Design (Digital Media) students in a paid facilitator role. Co-organised a free Melbourne Now or Never gallery as a team of two, drawing up to 30 attendees."
+    },
+    {
+      title: "General Committee, formerly PR Officer",
+      org: "Melbourne University Thai Student Association (MUTSA)",
+      period: "Sep 2024 – Present",
+      text: "Joined as a PR intern (Sep 2024 – Jun 2025), became Public Relations Officer (Jul 2025 – Aug 2026), and joined the General Committee in Sep 2026. I give feedback and practical suggestions while major initiatives are planned, and produce multimedia content, including event recap videos and reels, to keep members engaged and support communication with sponsors."
     },
     {
       title: "Student Representative, Design in Digital Media",
       org: "RMIT Student Staff Consultative Committee (SSCC)",
-      period: "",
+      period: "Apr 2025 – Present",
       text: "Student representation and engagement within the Digital Media program."
     },
     {
-      title: "PR / Content Creator",
-      org: "University of Melbourne Thai Student Association",
-      period: "",
-      text: "Creating social media content, event recaps, photography and short-form video."
+      title: "Design Intern",
+      org: "Permsin Steel Works PCL, Samut Sakhon, Thailand",
+      period: "Mar – Jun 2024, Dec 2024",
+      text: "Designed a product catalogue during the first stint, then came back in December 2024, after starting at university, to produce the video podcast."
     }
   ],
 
@@ -363,9 +536,10 @@ const PORTFOLIO = {
   // Software is not listed here on purpose: the "Tools" list on the About page is built
   // automatically from the tools you put in your projects.
   skills: [
-    { group: "Immersive & Interactive", items: ["Virtual environments", "VR / immersive experience", "3D environment design", "Interactive media", "Level design"] },
+    { group: "Immersive & Interactive", items: ["Virtual environments", "VR / immersive experience", "3D environment design", "Interactive media", "Level design", "Sound design"] },
     { group: "Visual & Design",         items: ["3D design", "Graphic design", "Visual composition", "Photography", "Illustration"] },
     { group: "Content & Media",         items: ["Video editing", "Short-form video", "Social media content", "Content creation", "Digital storytelling"] },
-    { group: "Creative Practice",       items: ["Concept development", "Experience design", "Visual storytelling", "Collaboration", "Creative direction / ideation"] }
+    { group: "Creative Practice",       items: ["Concept development", "Experience design", "Visual storytelling", "Collaboration", "Creative direction / ideation"] },
+    { group: "People & Community",      items: ["Community building", "Workshop facilitation", "Peer mentoring", "Public speaking", "Collaborative communication"] }
   ]
 };

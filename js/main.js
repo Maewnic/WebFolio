@@ -85,6 +85,100 @@
       list.map(function (m) { return mediaHTML(m, title); }).join("") + "</div>";
   }
 
+  /* ------------------------------------------- highlight reels (auto-advance) */
+  var ytQueue = null;
+  function loadYouTubeAPI(cb) {
+    if (window.YT && window.YT.Player) { cb(); return; }
+    if (!ytQueue) {
+      ytQueue = [];
+      var s = document.createElement("script");
+      s.src = "https://www.youtube.com/iframe_api";
+      document.head.appendChild(s);
+      window.onYouTubeIframeAPIReady = function () { var q = ytQueue; ytQueue = []; q.forEach(function (f) { f(); }); };
+    }
+    ytQueue.push(cb);
+  }
+
+  function highlightsHTML(list, text) {
+    list = arr(list).filter(function (m) { return m && m.url; });
+    if (!list.length) return "";
+    return '<section class="container hl reveal" id="hl">' +
+      '<div class="psec-grid"><h2>Highlight reels</h2><div class="psec-text">' + (text ? paras(text) : "<p>Clips from the recap videos. Press play and the next one follows when each one ends.</p>") + "</div></div>" +
+      '<div class="hl-stage"><div class="hl-player" aria-live="polite"></div><ol class="hl-list">' +
+      list.map(function (m, i) {
+        return '<li><button type="button" class="hl-item" aria-current="' + (i === 0 ? "true" : "false") + '"><span class="hl-num">' + (i + 1) + "</span><span>" + esc(m.title || "Highlight " + (i + 1)) + "</span></button></li>";
+      }).join("") + "</ol></div></section>";
+  }
+
+  function setupHighlights(list) {
+    var root = $("#hl");
+    if (!root) return;
+    list = arr(list).filter(function (m) { return m && m.url; });
+    var stage = $(".hl-player", root), btns = root.querySelectorAll(".hl-item"), idx = 0, player = null;
+
+    function clear() {
+      if (player && player.destroy) { try { player.destroy(); } catch (e) {} }
+      player = null; stage.innerHTML = "";
+    }
+    function next() { if (idx + 1 < list.length) play(idx + 1, true); else play(0, false); }
+    function play(i, auto) {
+      idx = i; var m = list[i]; clear();
+      stage.classList.toggle("vertical", isVertical(m) || m.vertical === true);
+      [].forEach.call(btns, function (b, k) { b.setAttribute("aria-current", k === i ? "true" : "false"); });
+      if (m.type === "video") {
+        var v = document.createElement("video");
+        v.controls = true; v.playsInline = true; v.preload = "metadata"; v.src = m.url;
+        if (m.poster) v.poster = m.poster;
+        v.addEventListener("ended", next);
+        stage.appendChild(v);
+        if (auto) { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); }
+        return;
+      }
+      var y = youtubeInfo(m.url);
+      if (!y) return;
+      var slot = document.createElement("div");
+      stage.appendChild(slot);
+      loadYouTubeAPI(function () {
+        if (idx !== i) return;
+        player = new window.YT.Player(slot, {
+          host: "https://www.youtube-nocookie.com", videoId: y.id,
+          playerVars: { autoplay: auto ? 1 : 0, rel: 0, playsinline: 1 },
+          events: { onStateChange: function (e) { if (e.data === 0) next(); } }
+        });
+      });
+    }
+    [].forEach.call(btns, function (b, i) { b.addEventListener("click", function () { play(i, true); }); });
+    play(0, false);   // first one waits for you to press play (no surprise sound)
+  }
+
+  /* ------------------------------------------------ tabs of videos/reels */
+  function tabsHTML(tabs) {
+    tabs = arr(tabs).map(function (t) { return { title: t.title, text: t.text, media: arr(t.media).filter(function (m) { return m && m.url; }) }; })
+      .filter(function (t) { return t.media.length; });
+    if (!tabs.length) return "";
+    return '<section class="container ptabs reveal" id="ptabs"><div class="tabbar" role="tablist">' +
+      tabs.map(function (t, i) {
+        return '<button type="button" role="tab" class="chip" data-i="' + i + '" aria-selected="' + (i === 0 ? "true" : "false") + '">' + esc(t.title) + " <span>" + t.media.length + "</span></button>";
+      }).join("") + "</div>" +
+      tabs.map(function (t, i) {
+        return '<div role="tabpanel" class="tabpanel" data-i="' + i + '"' + (i ? " hidden" : "") + ">" +
+          (t.text ? '<div class="psec-text tab-text">' + paras(t.text) + "</div>" : "") + mediaGroup(t.media, t.title) + "</div>";
+      }).join("") + "</section>";
+  }
+
+  function setupTabs() {
+    var root = $("#ptabs");
+    if (!root) return;
+    root.addEventListener("click", function (e) {
+      var b = e.target.closest(".chip");
+      if (!b) return;
+      var i = b.getAttribute("data-i");
+      [].forEach.call(root.querySelectorAll(".chip"), function (c) { c.setAttribute("aria-selected", c === b ? "true" : "false"); });
+      [].forEach.call(root.querySelectorAll(".tabpanel"), function (p) { p.hidden = p.getAttribute("data-i") !== i; });
+      if (window.instgrm && window.instgrm.Embeds) window.instgrm.Embeds.process();
+    });
+  }
+
   /* ------------------------------------------------------------- tiles/cards */
   function coverHTML(p) {
     if (p.cover) return '<img src="' + esc(p.cover) + '" alt="' + esc(p.coverAlt || p.title) + '" loading="lazy" decoding="async">';
@@ -234,10 +328,17 @@
       '<a class="crumb" href="work.html#' + esc(p.category) + '">&larr; Work / ' + esc(cat.label) + "</a>" +
       '<p class="eyebrow">' + esc(p.type || cat.label) + (p.status ? ' <span class="badge badge--inline">' + esc(p.status) + "</span>" : "") + "</p>" +
       "<h1>" + esc(p.title) + "</h1>" +
-      (p.summary ? '<p class="lead">' + esc(p.summary) + "</p>" : "") + "</header>";
+      (p.summary ? '<p class="lead">' + esc(p.summary) + "</p>" : "") +
+      (function () {
+        var ls = arr(p.links).filter(function (l) { return l && l.url; });
+        return ls.length ? '<div class="btn-row head-links">' + ls.map(function (l) {
+          return '<a class="btn btn--ghost" href="' + esc(l.url) + '" target="_blank" rel="noopener">' + esc(l.label || "View") + " &nearr;</a>";
+        }).join("") + "</div>" : "";
+      })() + "</header>";
 
     /* meta row */
     var meta = [];
+    if (p.context) meta.push(["Made for", esc(p.context)]);
     if (p.role) meta.push(["Role", esc(p.role)]);
     var collabs = arr(p.collaborators).filter(function (c) { return c && c.name; });
     if (collabs.length) meta.push(["With", collabs.map(function (c) { return esc(c.name) + (c.role ? " — " + esc(c.role) : ""); }).join("<br>")]);
@@ -250,6 +351,10 @@
     /* hero media: video/embed if given, else the cover image. Nothing if neither. */
     var heroHTML = p.hero && p.hero.url ? mediaHTML(p.hero, p.title) : (p.cover ? '<figure class="media media-image"><img src="' + esc(p.cover) + '" alt="' + esc(p.coverAlt || p.title) + '" decoding="async"></figure>' : "");
     if (heroHTML) h += '<section class="container project-hero reveal">' + heroHTML + "</section>";
+
+    /* highlight reels, then tabs of videos/reels (skipped when empty) */
+    h += highlightsHTML(p.highlights, p.highlightsText);
+    h += tabsHTML(p.tabs);
 
     /* story sections and video groups (empty ones are skipped) */
     function block(s) {
@@ -272,20 +377,14 @@
         }).join("") + "</div></section>";
     }
 
-    /* links */
-    var links = arr(p.links).filter(function (l) { return l && l.url; });
-    if (links.length) {
-      h += '<section class="container plinks">' + links.map(function (l) {
-        return '<a class="btn btn--ghost" href="' + esc(l.url) + '" target="_blank" rel="noopener">' + esc(l.label || "View") + " &nearr;</a>";
-      }).join("") + "</section>";
-    }
-
     /* next / back */
     var idx = projects.indexOf(p), next = projects.length > 1 ? projects[(idx + 1) % projects.length] : null;
     h += '<nav class="container pnav" aria-label="Project navigation"><a class="btn btn--ghost" href="work.html#' + esc(p.category) + '">&larr; Back to work</a>' +
       (next ? '<a class="pnav-next" href="' + projectUrl(next) + '"><span>Next project</span><strong>' + esc(next.title) + " &rarr;</strong></a>" : "") + "</nav>";
 
     box.innerHTML = h;
+    setupHighlights(p.highlights);
+    setupTabs();
   }
 
   /* ------------------------------------------------------------------- about */
@@ -293,7 +392,7 @@
     var t = arr(S.about);
     $("#about-text").innerHTML = t.map(function (x, i) { return '<p class="' + (i === 0 ? "lead" : "") + '">' + esc(x) + "</p>"; }).join("");
     $("#about-photo").innerHTML = S.aboutPhoto ? '<img src="' + esc(S.aboutPhoto) + '" alt="Photo of ' + esc(S.name) + '" decoding="async">' : '<div class="dream" aria-hidden="true"></div>';
-    $("#about-facts").innerHTML = [S.fullName, S.education, S.from, S.location]
+    $("#about-facts").innerHTML = [S.fullName, S.education, S.from, S.languages, S.location]
       .filter(Boolean).map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("");
 
     $("#experience").innerHTML = arr(P.experience).map(function (e) {
