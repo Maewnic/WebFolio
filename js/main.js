@@ -73,6 +73,12 @@
       return '<div class="media media-video"><iframe title="' + esc(m.title || title || "3D model") + '" loading="lazy" src="https://sketchfab.com/models/' +
         sk[1] + '/embed" allow="autoplay; fullscreen; xr-spatial-tracking" allowfullscreen></iframe></div>';
     }
+    if (t === "embed") {
+      // Click-to-load: shows a poster first, then loads the live page inside the site.
+      return '<div class="media media-embed"><div class="embed-frame" data-src="' + esc(url) + '" data-title="' + esc(m.title || title || "Interactive page") + '">' +
+        (m.poster ? '<img class="embed-poster" src="' + esc(m.poster) + '" alt="" loading="lazy" decoding="async">' : '<div class="tint tint-immersive embed-poster"></div>') +
+        '<button type="button" class="embed-start"><span>' + esc(m.label || "Try it here") + "</span></button></div></div>";
+    }
     return '<figure class="media media-image"><img src="' + esc(url) + '" alt="' + esc(m.alt || "") + '" loading="lazy" decoding="async">' +
       (m.caption ? "<figcaption>" + esc(m.caption) + "</figcaption>" : "") + "</figure>";
   }
@@ -185,8 +191,9 @@
     return '<div class="tint tint-' + esc(p.category) + '" aria-hidden="true"></div>';
   }
   function tileHTML(p, cls) {
+    var contain = p.coverFit === "contain" || p.coverFit === "fit";
     return '<a class="tile ' + cls + ' reveal" href="' + projectUrl(p) + '" data-cat="' + esc(p.category) + '">' +
-      '<div class="tile-media">' + coverHTML(p) + (p.status ? '<span class="badge">' + esc(p.status) + "</span>" : "") + "</div>" +
+      '<div class="tile-media' + (p.coverFit === "fit" ? " is-fit" : contain ? " is-contain" : "") + '"' + (contain && p.coverBg ? ' style="background:' + esc(p.coverBg) + '"' : "") + ">" + coverHTML(p) + (p.status ? '<span class="badge">' + esc(p.status) + "</span>" : "") + "</div>" +
       '<div class="tile-body"><p class="tile-cat">' + esc(catOf(p.category).label) + "</p>" +
       "<h3>" + esc(p.title) + "</h3>" +
       (p.tagline ? '<p class="tile-text">' + esc(p.tagline) + "</p>" : "") + "</div></a>";
@@ -349,7 +356,7 @@
     }
 
     /* hero media: video/embed if given, else the cover image. Nothing if neither. */
-    var heroHTML = p.hero && p.hero.url ? mediaHTML(p.hero, p.title) : (p.cover ? '<figure class="media media-image"><img src="' + esc(p.cover) + '" alt="' + esc(p.coverAlt || p.title) + '" decoding="async"></figure>' : "");
+    var heroHTML = p.hero && p.hero.url ? mediaHTML(p.hero, p.title) : (p.cover && p.coverFit !== "contain" && p.coverFit !== "fit" ? '<figure class="media media-image"><img src="' + esc(p.cover) + '" alt="' + esc(p.coverAlt || p.title) + '" decoding="async"></figure>' : "");
     if (heroHTML) h += '<section class="container project-hero reveal">' + heroHTML + "</section>";
 
     /* highlight reels, then tabs of videos/reels (skipped when empty) */
@@ -458,6 +465,23 @@
     });
   }
 
+  function setupEmbeds() {
+    document.addEventListener("click", function (e) {
+      var b = e.target.closest(".embed-start");
+      if (!b) return;
+      var frame = b.closest(".embed-frame");
+      if (!frame) return;
+      var f = document.createElement("iframe");
+      f.src = frame.getAttribute("data-src");
+      f.title = frame.getAttribute("data-title") || "Interactive page";
+      f.setAttribute("allow", "autoplay; fullscreen");
+      f.setAttribute("allowfullscreen", "");
+      frame.innerHTML = "";
+      frame.classList.add("is-live");
+      frame.appendChild(f);
+    });
+  }
+
   function loadInstagram() {
     if (!document.querySelector(".instagram-media")) return;
     var s = document.createElement("script");
@@ -479,6 +503,7 @@
   if (page === "contact") renderContact();
   buildFooter();
   setupLightbox();
+  setupEmbeds();
   setupReveal();
   loadInstagram();
 })();

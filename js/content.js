@@ -24,9 +24,11 @@
      tagline       one short sentence shown on the project card
      summary       the intro paragraph at the top of the project page
      status        e.g. "In progress" (shows a small label). Leave "" when finished.
-     size          "l" (large), "m" (medium) or "s" (small): how big the card is on the Work page
+     size          "l" (large), "w" (wide half), "m" (medium) or "s" (small): how big the card is on the Work page
      hidden        true = keep it in the file but don't show it on the site yet
      cover         the main image (card + top of the project page)
+     coverFit      "contain" shows a logo whole with space around it, "fit" shows the whole image with no space
+                   (set coverBg to the background colour, e.g. "#ffffff")
      hero          optional: show a video/embed at the top instead of the cover image
      context       e.g. "RMIT University · Virtual Environment" (shows as "Made for")
      role          what you did
@@ -49,6 +51,8 @@
      { type: "audio",      url: "assets/audio/x.mp3" }
      { type: "image",      url: "assets/projects/x/01.jpg", alt: "..." }
      { type: "video",      url: "assets/video/x.mp4" }   your own video file (highlights only; keep files small)
+     { type: "embed",      url: "https://...", poster: "assets/x.jpg", label: "Try it here" }
+                                                         a live web page you made, loaded inside the page when clicked
    ========================================================================== */
 
 const PORTFOLIO = {
@@ -65,7 +69,7 @@ const PORTFOLIO = {
 
     heroImage: "",            // big image on the home page, e.g. "assets/projects/lakes-echo/cover.jpg"
     heroAlt: "",
-    aboutPhoto: "",           // your photo for the About page, e.g. "assets/me.jpg"
+    aboutPhoto: "assets/me.jpg",   // your photo for the About page
 
     aboutTeaser: "I like turning ideas into experiences people can see, explore and engage with, whether that's a virtual environment, a video or a piece of content.",
 
@@ -94,7 +98,7 @@ const PORTFOLIO = {
 
   /* ----------------------------- HOME: SELECTED WORK ----------------------------- */
   // The first one is shown biggest. Use project slugs.
-  featured: ["lakes-echo", "hikari", "keep-it-in", "tsa-content"],
+  featured: ["lakes-echo", "hikari", "tsa-content", "keep-it-in"],
 
   /* ----------------------------- PROJECTS ----------------------------- */
   projects: [
@@ -111,7 +115,7 @@ const PORTFOLIO = {
       status: "",
       size: "l",
       hidden: false,
-      cover: "",
+      cover: "assets/projects/lakes-echo/cover.jpg",
       hero: { type: "youtube", url: "https://youtu.be/8VPb5HJ2Dcs" },
       context: "RMIT University · Heighten: Multi-Sensory Experience",
       year: "Aug – Oct 2025",
@@ -155,7 +159,7 @@ const PORTFOLIO = {
       status: "",
       size: "l",
       hidden: false,
-      cover: "",
+      cover: "assets/projects/hikari/cover.jpg",
       context: "",
       year: "Dec 2024 – Jun 2026",
       role: "Founding team: world building, brand design, VIP and staff operations",
@@ -191,9 +195,9 @@ const PORTFOLIO = {
       tagline: "A surreal chase toward a toilet, built around story, sound and level design.",
       summary: "A short Unity experience that explores emotional state through environment and sound alone, with no dialogue and no UI. It's the piece where I focused most on storytelling and level design.",
       status: "",
-      size: "m",
+      size: "l",
       hidden: false,
-      cover: "",
+      cover: "assets/projects/keep-it-in/cover.jpg",
       hero: { type: "youtube", url: "https://youtu.be/7GCy969uqHU" },
       context: "RMIT University · Virtual Environment",
       year: "Aug – Oct 2025",
@@ -227,7 +231,7 @@ const PORTFOLIO = {
       status: "",
       size: "s",
       hidden: false,
-      cover: "",
+      cover: "assets/projects/liminal-lavatory/cover.jpg",
       hero: { type: "youtube", url: "https://youtu.be/C0TI0wnjY78" },
       context: "RMIT University · Heighten: Multi-Sensory Experience",
       year: "",
@@ -250,7 +254,8 @@ const PORTFOLIO = {
       status: "",
       size: "s",
       hidden: false,
-      cover: "",
+      cover: "assets/projects/haul/cover.jpg",
+      hero: { type: "youtube", url: "https://youtu.be/gFsbdSgHLlI" },
       context: "RMIT University · Minimalism, Limits & Constraints",
       year: "",
       role: "",
@@ -272,7 +277,7 @@ const PORTFOLIO = {
       status: "In progress",
       size: "m",
       hidden: false,
-      cover: "",
+      cover: "assets/projects/drift/cover.jpg",
       context: "RMIT University · AI Studio",
       year: "2026",
       role: "",
@@ -298,9 +303,10 @@ const PORTFOLIO = {
       tagline: "An educational website where scrolling up is climbing into space.",
       summary: "A scroll-driven infographic that turns scrolling into a climb from the ground to space. It's built with vanilla JavaScript and CSS, using real atmospheric data.",
       status: "",
-      size: "s",
+      size: "w",
       hidden: false,
-      cover: "",
+      cover: "assets/projects/scroll-to-space/cover.jpg",
+      hero: { type: "embed", url: "https://maewnic.github.io/Assignment3_ScrollToSpace/", poster: "assets/projects/scroll-to-space/cover.jpg", label: "Try it here" },
       context: "RMIT University",
       year: "Oct 2025",
       role: "",
@@ -326,9 +332,10 @@ const PORTFOLIO = {
       tagline: "An ambient music player with a built-in Pomodoro timer.",
       summary: "An ambient study music player with a Pomodoro timer built in: 25-minute study blocks and 5-minute breaks that cycle automatically and sync with playback.",
       status: "",
-      size: "s",
+      size: "w",
       hidden: false,
-      cover: "",
+      cover: "assets/projects/study-music-player/cover.jpg",
+      hero: { type: "embed", url: "https://maewnic.github.io/Assignment2/mediaPlayer/", poster: "assets/projects/study-music-player/cover.jpg", label: "Try it here" },
       context: "RMIT University",
       year: "Aug 2025",
       role: "",
@@ -358,7 +365,9 @@ const PORTFOLIO = {
       status: "",
       size: "l",
       hidden: false,
-      cover: "",
+      cover: "assets/projects/tsa-content/cover.jpg",
+      coverFit: "contain",       // logo: shown whole instead of cropped
+      coverBg: "#ffffff",
       context: "Melbourne University Thai Student Association (MUTSA)",
       year: "Sep 2024 – Present",
       role: "PR content creator: narration, filming, editing, captions and voice acting",
@@ -402,7 +411,9 @@ const PORTFOLIO = {
       status: "",
       size: "m",
       hidden: false,
-      cover: "",
+      cover: "assets/projects/dms-facilitator/cover.png",
+      coverFit: "contain",
+      coverBg: "#eef2fa",
       context: "RMIT University · Digital Media Students (DMS)",
       year: "Semester 2, 2026",
       role: "Student facilitator: poster and social post design",
@@ -433,7 +444,9 @@ const PORTFOLIO = {
       status: "",
       size: "s",
       hidden: false,
-      cover: "",
+      cover: "assets/projects/permsin/cover.jpg",
+      coverFit: "fit",
+      coverBg: "#282828",
       context: "Permsin Steel Works PCL · Design Internship",
       year: "2024",
       role: "Design intern: catalogue design and video podcast production",
@@ -460,7 +473,7 @@ const PORTFOLIO = {
       status: "",
       size: "m",
       hidden: false,
-      cover: "",
+      cover: "assets/projects/given-watch/cover.jpg",
       hero: { type: "sketchfab", url: "https://sketchfab.com/3d-models/given-watch-43e90112cd2f402995447d18973c80bf" },
       context: "RMIT University",
       year: "Mar – May 2026",
