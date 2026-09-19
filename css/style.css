@@ -172,7 +172,7 @@ h2 em,
   z-index: 20;
   background: color-mix(in srgb, var(--bg) 60%, transparent);
   -webkit-backdrop-filter: blur(15px) saturate(1.4);
-  backdrop-filter: blur(40px) saturate(1.4);
+  backdrop-filter: blur(15px) saturate(1.4);
   border-bottom: 1px solid transparent;
 }
 .header-row {
