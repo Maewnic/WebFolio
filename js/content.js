@@ -67,8 +67,8 @@ const PORTFOLIO = {
     from: "From Thailand, studying in Melbourne",
     languages: "English (fluent), Thai (native)",
 
-    heroImage: "",            // big image on the home page, e.g. "assets/projects/lakes-echo/cover.jpg"
-    heroAlt: "",
+    heroImage: "assets/hero.jpg",   // big image on the home page
+    heroAlt: "Portrait of Munich under string lights at night",
     aboutPhoto: "assets/me.jpg",   // your photo for the About page
 
     aboutTeaser: "I like turning ideas into experiences people can see, explore and engage with, whether that's a virtual environment, a video or a piece of content.",
@@ -165,12 +165,12 @@ const PORTFOLIO = {
       role: "Founding team: world building, brand design, VIP and staff operations",
       collaborators: [],
       tools: ["Unity", "ProBuilder", "VRChat"],
-      links: [],
+      links: [{ label: "Hikari on Instagram", url: "https://www.instagram.com/hikarizo.vrc/" }],
       sections: [
         {
           title: "The world",
           text: "Guests arrive through a torii gate entrance into an interconnected VIP lounge, with a full sauna and onsen area linked by bridges and walkways. They can order from an in-world chef, listen to live singers, and play chess, Othello and pool, while staff dressed as maiko and geisha host the evening.\n\nHikari ran as a weekly event on Wednesdays at 8pm (GMT+7), mainly for Thai players.\n\nEarly builds used free and marketplace assets. Over time I moved toward original geometry made with ProBuilder in Unity, especially for the indoor spaces.",
-          media: []
+          media: [{ type: "instagram", url: "https://www.instagram.com/reel/DWu4b81Ado0/" }]
         },
         {
           title: "Brand",
@@ -221,51 +221,6 @@ const PORTFOLIO = {
       galleryLayout: "grid"
     },
 
-    {
-      slug: "liminal-lavatory",
-      title: "Liminal Lavatory",
-      category: "immersive",
-      type: "VR multisensory experience",
-      tagline: "The Keep It In! bathroom maze, reworked as a VR multisensory experience.",
-      summary: "A sub-project that reuses the bathroom maze from Keep It In! and turns it into a VR multisensory experience.",
-      status: "",
-      size: "s",
-      hidden: false,
-      cover: "assets/projects/liminal-lavatory/cover.jpg",
-      hero: { type: "youtube", url: "https://youtu.be/C0TI0wnjY78" },
-      context: "RMIT University · Heighten: Multi-Sensory Experience",
-      year: "",
-      role: "",
-      collaborators: [],
-      tools: ["Unity"],
-      links: [],
-      sections: [],
-      gallery: [],
-      galleryLayout: "grid"
-    },
-
-    {
-      slug: "haul",
-      title: "HAUL",
-      category: "immersive",
-      type: "Game · Procedural rhetoric",
-      tagline: "A shopping game where the only way to win is to walk away.",
-      summary: "A game about shopping where the player wins by walking away. It's a procedural rhetoric piece: the point about consumption is made through the rules, not through text.",
-      status: "",
-      size: "s",
-      hidden: false,
-      cover: "assets/projects/haul/cover.jpg",
-      hero: { type: "youtube", url: "https://youtu.be/gFsbdSgHLlI" },
-      context: "RMIT University · Minimalism, Limits & Constraints",
-      year: "",
-      role: "",
-      collaborators: [],
-      tools: [],
-      links: [],
-      sections: [],
-      gallery: [],
-      galleryLayout: "grid"
-    },
 
     {
       slug: "drift",
@@ -294,6 +249,51 @@ const PORTFOLIO = {
       gallery: [],
       galleryLayout: "grid"
     },
+    {
+      slug: "haul",
+      title: "HAUL",
+      category: "immersive",
+      type: "Game · Procedural rhetoric",
+      tagline: "A shopping game where the only way to win is to walk away.",
+      summary: "A game about shopping where the player wins by walking away. It's a procedural rhetoric piece: the point about consumption is made through the rules, not through text.",
+      status: "",
+      size: "s",
+      hidden: false,
+      cover: "assets/projects/haul/cover.jpg",
+      hero: { type: "youtube", url: "https://youtu.be/gFsbdSgHLlI" },
+      context: "RMIT University · Minimalism, Limits & Constraints",
+      year: "",
+      role: "",
+      collaborators: [],
+      tools: [],
+      links: [],
+      sections: [],
+      gallery: [],
+      galleryLayout: "grid"
+    },
+    {
+      slug: "liminal-lavatory",
+      title: "Liminal Lavatory",
+      category: "immersive",
+      type: "VR multisensory experience",
+      tagline: "The Keep It In! bathroom maze, reworked as a VR multisensory experience.",
+      summary: "A sub-project that reuses the bathroom maze from Keep It In! and turns it into a VR multisensory experience.",
+      status: "",
+      size: "s",
+      hidden: false,
+      cover: "assets/projects/liminal-lavatory/cover.jpg",
+      hero: { type: "youtube", url: "https://youtu.be/C0TI0wnjY78" },
+      context: "RMIT University · Heighten: Multi-Sensory Experience",
+      year: "",
+      role: "",
+      collaborators: [],
+      tools: ["Unity"],
+      links: [],
+      sections: [],
+      gallery: [],
+      galleryLayout: "grid"
+    },
+
 
     {
       slug: "scroll-to-space",
