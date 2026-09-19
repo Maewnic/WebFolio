@@ -3,28 +3,51 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Home</title>
+  <meta name="description" content="Munich (Witthawin Batsomboon), a Digital Media creative in Melbourne exploring immersive experiences, visual storytelling and digital environments.">
+  <title>Munich</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
 </head>
-<body data-page="home" data-title="Home">
+<body data-page="home">
   <div id="site-header"></div>
   <main>
     <section class="container hero">
-      <p class="eyebrow reveal" data-site="tagline"></p>
-      <h1 class="reveal">Hi, I'm <span data-site="name"></span>.</h1>
-      <p class="lead reveal" data-site="intro"></p>
+      <div class="hero-text">
+        <p class="eyebrow reveal">Digital Media creative</p>
+        <h1 class="reveal" id="hero-title"></h1>
+        <p class="lead reveal" id="hero-intro"></p>
+        <p class="hero-loc reveal" id="hero-loc"></p>
+        <div class="btn-row reveal">
+          <a class="btn" href="work.html">Explore Work</a>
+          <a class="btn btn--ghost" href="about.html">About Me</a>
+        </div>
+      </div>
+      <div class="hero-visual reveal" id="hero-visual"></div>
     </section>
 
-    <section class="container">
-      <div class="paths" data-cards="paths"></div>
+    <section class="container section" id="featured-section">
+      <div class="section-head">
+        <h2>Selected <em>work</em></h2>
+        <a class="text-link" href="work.html">View all work</a>
+      </div>
+      <div class="featured" id="featured"></div>
     </section>
 
     <section class="container section">
-      <div class="about">
-        <div class="photo reveal" data-photo></div>
+      <div class="section-head">
+        <h2>Explore by <em>area</em></h2>
+      </div>
+      <div id="cats"></div>
+    </section>
+
+    <section class="container section">
+      <div class="teaser">
+        <h2 class="reveal">A bit <em>about me</em></h2>
         <div class="reveal">
-          <h2>About</h2>
-          <p data-site="about"></p>
+          <p class="lead" id="teaser-text"></p>
+          <a class="btn btn--ghost" href="about.html" style="margin-top:22px">About me</a>
         </div>
       </div>
     </section>
