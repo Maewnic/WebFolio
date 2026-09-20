@@ -1535,12 +1535,31 @@ body {
   height: 980px;
   z-index: -1;
   pointer-events: none;
-  background:
-    radial-gradient(60% 46% at 6% 18%, var(--sky-1) 0%, transparent 68%),
-    radial-gradient(52% 50% at 96% 26%, #dbe6f5 0%, transparent 66%),
-    radial-gradient(46% 30% at 52% 0%, #eef2fa 0%, transparent 72%);
+  overflow: hidden;
   -webkit-mask-image: linear-gradient(#000 55%, transparent);
   mask-image: linear-gradient(#000 55%, transparent);
+}
+/* silky pastel water ripples (assets/bg-waves.jpg), drifting very slowly */
+.sky::before {
+  content: "";
+  position: absolute;
+  inset: -3% -3% 0;
+  background: #d6e2f5 url("../assets/bg-waves.jpg") center top / cover no-repeat;
+  animation: skyDrift 60s ease-in-out infinite alternate;
+  will-change: transform;
+}
+@keyframes skyDrift {
+  from {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  to {
+    transform: translate3d(-2%, 1.5%, 0) scale(1.06);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sky::before {
+    animation: none;
+  }
 }
 .sky-arc {
   position: absolute;
@@ -1642,17 +1661,6 @@ body {
   height: 100%;
   object-fit: cover;
   object-position: 50% 40%;
-}
-.hero-glass {
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 34%;
-  height: 46%;
-  background: rgba(255, 255, 255, 0.14);
-  -webkit-backdrop-filter: blur(6px);
-  backdrop-filter: blur(6px);
-  border-left: 1px solid rgba(255, 255, 255, 0.35);
 }
 .hero-tag {
   position: absolute;
@@ -1894,17 +1902,7 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 50% 26%;
-}
-.home-about-photo::after {
-  content: "";
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: 12%;
-  background: rgba(255, 255, 255, 0.16);
-  border-right: 1px solid rgba(255, 255, 255, 0.4);
-  -webkit-backdrop-filter: blur(5px);
-  backdrop-filter: blur(5px);
+  object-position: 40% 30%;
 }
 .home-about-text .eyebrow {
   font-size: 0.68rem;
@@ -1927,9 +1925,8 @@ body {
 .site-footer {
   border-top: 0;
   background:
-    radial-gradient(70% 110% at 78% 105%, var(--sky-2) 0%, transparent 70%),
-    radial-gradient(50% 80% at 12% 0%, #e9eff8 0%, transparent 70%),
-    linear-gradient(180deg, #f1f4f9 0%, #dde6f2 100%);
+    linear-gradient(180deg, var(--bg) 0%, rgba(251, 251, 249, 0.35) 38%, rgba(251, 251, 249, 0.08) 100%),
+    #d6e2f5 url("../assets/bg-waves.jpg") 70% 70% / cover no-repeat;
 }
 .footer-title {
   font-size: clamp(2.2rem, 5vw, 3.6rem);

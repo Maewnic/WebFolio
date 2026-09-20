@@ -71,6 +71,7 @@ const PORTFOLIO = {
     heroImage: "assets/hero.jpg",   // big image on the home page
     heroAlt: "Portrait of Munich under string lights at night",
     aboutPhoto: "assets/me.jpg",   // your photo for the About page
+    homeAboutImage: "assets/home-about.jpg",   // the photo in the "About me" block on the home page
 
     // Words between *stars* are shown in italics.
     aboutTeaser: "I like *turning ideas* into experiences people can *see, explore* and engage with, whether that's a virtual environment, a video or a piece of content.",

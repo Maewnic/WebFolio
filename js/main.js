@@ -385,7 +385,7 @@
       '<i class="orb orb-1" aria-hidden="true"></i><i class="orb orb-2" aria-hidden="true"></i>' +
       '<div class="hero-photo">' + (S.heroImage
         ? '<img src="' + esc(S.heroImage) + '" alt="' + esc(S.heroAlt || "") + '" decoding="async">'
-        : '<div class="dream" aria-hidden="true"></div>') + '<i class="hero-glass" aria-hidden="true"></i></div>' +
+        : '<div class="dream" aria-hidden="true"></div>') + '</div>' +
       (tags.length ? '<p class="hero-tag" aria-hidden="true">' + tags.map(function (t) { return "<span>" + esc(t) + "</span>"; }).join("") + "</p>" : "");
 
     /* short skills block */
