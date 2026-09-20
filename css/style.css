@@ -1999,6 +1999,10 @@ body {
   min-height: 0;
   padding: 48px 52px;
   gap: 44px;
+  /* lighter blur and tint so the waves behind stay visible through the panel */
+  background: rgba(255, 255, 255, 0.28);
+  -webkit-backdrop-filter: blur(6px) saturate(1.2);
+  backdrop-filter: blur(6px) saturate(1.2);
 }
 .hero-visual {
   width: min(100%, 360px);
