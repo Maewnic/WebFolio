@@ -153,9 +153,9 @@
       '<div class="psec-grid"><h2>Highlight reels</h2><div class="psec-text">' +
       (text ? paras(text) : "<p>A few favourites. Use the arrows to move through them.</p>") + "</div></div>" +
       '<div class="reel-carousel" role="group" aria-roledescription="carousel" aria-label="Highlight reels">' +
-      '<button type="button" class="reel-arrow reel-prev" aria-label="Previous reel">&larr;</button>' +
+      '<button type="button" class="reel-side reel-prev" aria-label="Previous reel"><span class="reel-side-arrow">&larr;</span><span class="reel-side-kind"></span></button>' +
       '<div class="reel-frame"><span class="reel-label" hidden></span><div class="reel-slot" aria-live="polite"></div></div>' +
-      '<button type="button" class="reel-arrow reel-next" aria-label="Next reel">&rarr;</button>' +
+      '<button type="button" class="reel-side reel-next" aria-label="Next reel"><span class="reel-side-arrow">&rarr;</span><span class="reel-side-kind"></span></button>' +
       "</div>" +
       '<div class="reel-nav"><span class="reel-count"></span><span class="reel-dots">' +
       list.map(function (m, i) { return '<button type="button" class="reel-dot" aria-label="Reel ' + (i + 1) + '"></button>'; }).join("") +
@@ -174,6 +174,9 @@
       slot.classList.toggle("is-video", m.type !== "instagram");
       if (m.label) { label.textContent = m.label; label.setAttribute("data-kind", String(m.label).toLowerCase()); label.hidden = false; } else { label.hidden = true; }
       count.textContent = (idx + 1) + " / " + n;
+      var pv = list[(idx - 1 + n) % n], nx = list[(idx + 1) % n];
+      $(".reel-prev .reel-side-kind", root).textContent = (pv.label || "Previous") + " · " + (((idx - 1 + n) % n) + 1);
+      $(".reel-next .reel-side-kind", root).textContent = (nx.label || "Next") + " · " + (((idx + 1) % n) + 1);
       [].forEach.call(dots, function (d, k) { d.setAttribute("aria-current", k === idx ? "true" : "false"); });
       if (m.type === "instagram") processInstagram();
     }
