@@ -425,8 +425,11 @@ const PORTFOLIO = {
       // POSTS: paste Instagram post links here. The post itself is embedded, no image needed.
       mediaRows: [
         { title: "Posts", text: "", media: [
-          { type: "instagram", url: "https://www.instagram.com/p/Dck4HE2EqaU/" }
-          // add more posts here, one line each, separated by commas
+          // newest first. Add a new post at the top, one line each, separated by commas
+          { type: "instagram", url: "https://www.instagram.com/p/Ddfiu3PqOK9/" },
+          { type: "instagram", url: "https://www.instagram.com/p/DdWDDsxK8bZ/" },
+          { type: "instagram", url: "https://www.instagram.com/p/Dck4HE2EqaU/" },
+          { type: "instagram", url: "https://www.instagram.com/p/DcYGSSjEvs-/" }
         ] }
       ],
       sections: [],

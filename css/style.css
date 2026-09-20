@@ -750,11 +750,14 @@ h2 em,
 .media-instagram {
   display: flex;
   justify-content: center;
+  border-radius: var(--radius);
+  overflow: hidden;
 }
 .media-instagram .instagram-media {
   max-width: 100% !important;
   min-width: 0 !important;
   margin: 0 !important;
+  border-radius: var(--radius) !important;
 }
 
 .media-group.is-stack {
