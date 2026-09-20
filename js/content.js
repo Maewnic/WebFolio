@@ -68,8 +68,8 @@ const PORTFOLIO = {
     from: "From Thailand, studying in Melbourne",
     languages: "English (fluent), Thai (native)",
 
-    heroImage: "assets/hero.jpg",   // big image on the home page
-    heroAlt: "Portrait of Munich under string lights at night",
+    heroImage: "assets/hero-palms.jpg",   // big image on the home page
+    heroAlt: "Munich standing beneath tall palm trees against a blue sky",
     aboutPhoto: "assets/me.jpg",   // your photo for the About page
     homeAboutImage: "assets/home-about.jpg",   // the photo in the "About me" block on the home page
 

@@ -5,11 +5,11 @@
    ========================================================================== */
 :root {
   /* colour */
-  --bg: #fbfbf9;
-  --bg-soft: #f2f4f8;
+  --bg: #f4f7fb;
+  --bg-soft: #e9eef6;
   --ink: #1c2233;
   --muted: #646a7e;
-  --line: #e3e6ee;
+  --line: #dbe3ee;
   --accent: #4d63c9;
   --on-ink: #ffffff;
 
@@ -1544,7 +1544,7 @@ body {
   content: "";
   position: absolute;
   inset: -3% -3% 0;
-  background: #d6e2f5 url("../assets/bg-waves.jpg") center top / cover no-repeat;
+  background: #e4ebf5 url("../assets/bg-waves.jpg") center top / cover no-repeat;
   animation: skyDrift 60s ease-in-out infinite alternate;
   will-change: transform;
 }
@@ -1687,38 +1687,6 @@ body {
   width: 100%;
   background: var(--ink);
   opacity: 0.5;
-}
-/* glassy orbs behind the photo */
-.orb {
-  position: absolute;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: -1;
-  background: radial-gradient(
-    circle at 36% 30%,
-    rgba(255, 255, 255, 0.95) 0%,
-    rgba(214, 226, 244, 0.5) 45%,
-    rgba(190, 208, 236, 0.16) 70%,
-    transparent 74%
-  );
-  border: 1px solid rgba(255, 255, 255, 0.8);
-  box-shadow:
-    inset 0 0 40px rgba(255, 255, 255, 0.7),
-    0 0 60px rgba(180, 200, 232, 0.35);
-}
-.orb-1 {
-  width: 470px;
-  height: 470px;
-  left: -300px;
-  top: -8%;
-  opacity: 0.85;
-}
-.orb-2 {
-  width: 300px;
-  height: 300px;
-  left: -215px;
-  top: 12%;
-  opacity: 0.9;
 }
 
 /* ---------- skills (home) ---------- */
@@ -1925,8 +1893,8 @@ body {
 .site-footer {
   border-top: 0;
   background:
-    linear-gradient(180deg, var(--bg) 0%, rgba(251, 251, 249, 0.35) 38%, rgba(251, 251, 249, 0.08) 100%),
-    #d6e2f5 url("../assets/bg-waves.jpg") 70% 70% / cover no-repeat;
+    linear-gradient(180deg, var(--bg) 0%, rgba(244, 247, 251, 0.4) 40%, rgba(244, 247, 251, 0.05) 100%),
+    #e4ebf5 url("../assets/bg-waves.jpg") 70% 70% / cover no-repeat;
 }
 .footer-title {
   font-size: clamp(2.2rem, 5vw, 3.6rem);
@@ -1950,16 +1918,6 @@ body {
   }
   .hero-tag {
     right: -24px;
-  }
-  .orb-1 {
-    left: auto;
-    right: -40px;
-    top: -60px;
-    width: 340px;
-    height: 340px;
-  }
-  .orb-2 {
-    display: none;
   }
   .hs-grid {
     grid-template-columns: repeat(2, 1fr);
@@ -2012,5 +1970,167 @@ body {
   }
   .home-about-photo {
     aspect-ratio: 4 / 3;
+  }
+}
+
+
+/* ==========================================================================
+   FROSTED-GLASS THEME (soft blue-grey page, glass panels)
+   ========================================================================== */
+body {
+  background:
+    radial-gradient(55% 30% at 92% 46%, #dde7f5 0%, transparent 70%),
+    radial-gradient(50% 30% at 4% 72%, #e3eaf6 0%, transparent 70%), var(--bg);
+}
+.glass {
+  background: rgba(255, 255, 255, 0.46);
+  border: 1px solid rgba(255, 255, 255, 0.78);
+  border-radius: 26px;
+  -webkit-backdrop-filter: blur(22px) saturate(1.25);
+  backdrop-filter: blur(22px) saturate(1.25);
+  box-shadow:
+    0 30px 80px rgba(70, 95, 140, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+.hero-wrap {
+  padding-top: 28px;
+}
+.hero.glass {
+  min-height: 0;
+  padding: 48px 52px;
+  gap: 44px;
+}
+.hero-visual {
+  width: min(100%, 360px);
+}
+.hero-photo {
+  aspect-ratio: 4 / 5;
+}
+.hero-photo img {
+  object-position: 50% 38%;
+}
+.hero-tag {
+  right: -44px;
+}
+
+/* selected work: glass cards with small tags */
+.feat-tile.glass {
+  padding: 10px 10px 16px;
+  border-radius: 20px;
+  box-shadow:
+    0 18px 50px rgba(70, 95, 140, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  transition:
+    transform 0.4s var(--ease),
+    box-shadow 0.4s var(--ease);
+}
+.feat-tile.glass:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 26px 60px rgba(70, 95, 140, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+.feat-tile .feat-media {
+  border-radius: 14px;
+  margin-bottom: 14px;
+}
+.feat-info {
+  padding: 0 8px;
+}
+.feat-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-top: 12px;
+}
+.mini-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.mini-tag {
+  padding: 4px 11px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid var(--line);
+  font-size: 0.68rem;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.feat-arrow {
+  transition: transform 0.3s var(--ease);
+}
+.feat-tile:hover .feat-arrow {
+  transform: translateX(5px);
+}
+
+/* area list inside one glass panel */
+.home #cats {
+  padding: 4px 32px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.46);
+  border: 1px solid rgba(255, 255, 255, 0.78);
+  -webkit-backdrop-filter: blur(22px) saturate(1.25);
+  backdrop-filter: blur(22px) saturate(1.25);
+  box-shadow:
+    0 24px 60px rgba(70, 95, 140, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+.home #cats .cat-row:first-child {
+  border-top: 0;
+}
+.home #cats .cat-row:last-child {
+  border-bottom: 0;
+}
+
+/* about (home) inside a glass panel */
+.home-about.glass {
+  padding: 28px;
+  gap: 48px;
+}
+.home-about-photo {
+  border-radius: 16px;
+  box-shadow: none;
+}
+.home-about-text {
+  padding-right: 24px;
+}
+
+@media (max-width: 960px) {
+  .hero.glass {
+    padding: 32px 28px;
+    gap: 32px;
+  }
+  .hero-visual {
+    width: min(78%, 340px);
+    margin-left: 0;
+  }
+  .hero-tag {
+    right: -20px;
+  }
+  .home-about.glass {
+    gap: 28px;
+  }
+}
+@media (max-width: 640px) {
+  .hero.glass {
+    padding: 26px 20px 30px;
+    border-radius: 22px;
+  }
+  .hero-visual {
+    width: 82%;
+  }
+  .hero-tag {
+    right: -12px;
+  }
+  .home #cats {
+    padding: 2px 18px;
+  }
+  .home-about.glass {
+    padding: 16px;
+  }
+  .home-about-text {
+    padding: 0 6px 8px;
   }
 }

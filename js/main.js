@@ -369,11 +369,13 @@
   }
   function featTileHTML(p, n) {
     var contain = p.coverFit === "contain" || p.coverFit === "fit";
-    return '<a class="feat-tile reveal" href="' + projectUrl(p) + '">' +
+    var chips = String(p.type || "").split(" · ").filter(Boolean).slice(0, 2);
+    return '<a class="feat-tile glass reveal" href="' + projectUrl(p) + '">' +
       '<div class="feat-media tile-media' + (p.coverFit === "fit" ? " is-fit" : contain ? " is-contain" : "") + '"' + (contain && p.coverBg ? ' style="background:' + esc(p.coverBg) + '"' : "") + ">" + coverHTML(p) + "</div>" +
-      '<p class="feat-cat">' + pad2(n) + " / " + esc(catOf(p.category).label) + "</p>" +
+      '<div class="feat-info"><p class="feat-cat">' + pad2(n) + " / " + esc(catOf(p.category).label) + "</p>" +
       "<h3>" + esc(p.title) + "</h3>" +
-      (p.type ? '<p class="feat-tags">' + esc(p.type) + "</p>" : "") + "</a>";
+      '<div class="feat-foot"><span class="mini-tags">' + chips.map(function (c) { return '<span class="mini-tag">' + esc(c) + "</span>"; }).join("") +
+      '</span><span class="feat-arrow" aria-hidden="true">&rarr;</span></div></div></a>';
   }
 
   function renderHome() {
@@ -382,7 +384,6 @@
     $("#hero-loc").textContent = S.location;
     var tags = arr(S.heroTags);
     $("#hero-visual").innerHTML =
-      '<i class="orb orb-1" aria-hidden="true"></i><i class="orb orb-2" aria-hidden="true"></i>' +
       '<div class="hero-photo">' + (S.heroImage
         ? '<img src="' + esc(S.heroImage) + '" alt="' + esc(S.heroAlt || "") + '" decoding="async">'
         : '<div class="dream" aria-hidden="true"></div>') + '</div>' +
