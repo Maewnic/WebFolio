@@ -157,7 +157,7 @@
       '<div class="reel-frame"><span class="reel-label" hidden></span><div class="reel-slot" aria-live="polite"></div></div>' +
       '<button type="button" class="reel-side reel-next" aria-label="Next reel"><span class="reel-side-arrow">&rarr;</span><span class="reel-side-kind"></span></button>' +
       "</div>" +
-      '<div class="reel-foot"><div class="reel-timer" aria-hidden="true"><i></i></div>' +
+      '<div class="reel-foot">' +
       '<div class="reel-nav"><span class="reel-count"></span><span class="reel-dots">' +
       list.map(function (m, i) { return '<button type="button" class="reel-dot" aria-label="Reel ' + (i + 1) + '"></button>'; }).join("") +
       "</span></div></div></section>";
@@ -168,56 +168,9 @@
     if (!root) return;
     var slot = $(".reel-slot", root), label = $(".reel-label", root), count = $(".reel-count", root);
     var dots = root.querySelectorAll(".reel-dot"), idx = 0, n = list.length;
-    var timer = $(".reel-timer", root), frame = $(".reel-frame", root);
-    var SECONDS = 6;                           // how long each reel waits before the next one
-    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    var inView = false, hovering = false, touched = false, poll = null, started = false;
-
-    /* the timer bar only moves while the carousel is on screen, the pointer is away from
-       the reel, and nobody has pressed play (or otherwise clicked inside the reel) */
-    function syncTimer() {
-      if (!started) return;
-      timer.classList.toggle("is-paused", !inView || hovering || document.hidden);
-    }
-    function stopTimer(hide) {
-      clearInterval(poll); poll = null; started = false;
-      timer.classList.remove("is-running", "is-paused");
-      timer.style.opacity = hide ? "0" : "";
-    }
-    function startTimer() {
-      stopTimer(false);
-      if (reduce || touched) { timer.style.opacity = "0"; return; }
-      // wait until the reel has actually appeared, then count 6 seconds
-      var tries = 0;
-      poll = setInterval(function () {
-        tries++;
-        if (slot.querySelector("iframe") || tries > 25) {
-          clearInterval(poll); poll = null;
-          void timer.offsetWidth;              // restart the animation from empty
-          timer.classList.add("is-running");
-          started = true; syncTimer();
-        }
-      }, 200);
-    }
-    timer.addEventListener("animationend", function () { if (started) show(idx + 1); });
-    frame.addEventListener("pointerenter", function (e) { if (e.pointerType !== "touch") { hovering = true; syncTimer(); } });
-    frame.addEventListener("pointerleave", function () { hovering = false; syncTimer(); });
-    document.addEventListener("visibilitychange", syncTimer);
-    if ("IntersectionObserver" in window) {
-      new IntersectionObserver(function (es) { inView = es[0].isIntersecting; syncTimer(); }, { threshold: 0.4 }).observe(root.querySelector(".reel-carousel"));
-    } else { inView = true; }
-    // clicking play inside Instagram's player moves focus into its iframe: treat that as "they're watching"
-    window.addEventListener("blur", function () {
-      setTimeout(function () {
-        var a = document.activeElement;
-        if (a && a.tagName === "IFRAME" && slot.contains(a)) { touched = true; stopTimer(true); }
-      }, 0);
-    });
-
-    function show(i, manual) {
+    function show(i) {
       idx = (i + n) % n;                       // loops around at both ends
       var m = list[idx];
-      touched = false;
       slot.innerHTML = mediaHTML(m, m.title || "Highlight reel");
       slot.classList.toggle("is-video", m.type !== "instagram");
       if (m.label) { label.textContent = m.label; label.setAttribute("data-kind", String(m.label).toLowerCase()); label.hidden = false; } else { label.hidden = true; }
@@ -226,7 +179,7 @@
       $(".reel-prev .reel-side-kind", root).textContent = (pv.label || "Previous") + " · " + (((idx - 1 + n) % n) + 1);
       $(".reel-next .reel-side-kind", root).textContent = (nx.label || "Next") + " · " + (((idx + 1) % n) + 1);
       [].forEach.call(dots, function (d, k) { d.setAttribute("aria-current", k === idx ? "true" : "false"); });
-      if (m.type === "instagram") { processInstagram(); startTimer(); } else { stopTimer(true); }
+      if (m.type === "instagram") processInstagram();
     }
     $(".reel-prev", root).addEventListener("click", function () { show(idx - 1); });
     $(".reel-next", root).addEventListener("click", function () { show(idx + 1); });
@@ -357,7 +310,7 @@
     var current = page === "project" ? "work" : page;
     el.innerHTML =
       '<header class="site-header"><div class="container header-row">' +
-      '<a class="brand" href="index.html">' + esc(S.name) + "</a>" +
+      '<a class="brand" href="index.html">' + esc(S.name) + ".</a>" +
       '<button class="nav-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="Menu"><span></span><span></span></button>' +
       '<nav id="main-nav" class="main-nav" aria-label="Main"><ul>' +
       nav.map(function (n) {
@@ -378,6 +331,7 @@
     var out = [];
     if (S.email) out.push({ label: "Email", text: S.email, href: "mailto:" + S.email });
     if (S.linkedin) out.push({ label: "LinkedIn", text: "LinkedIn", href: S.linkedin, ext: true });
+    if (S.github) out.push({ label: "GitHub", text: "GitHub" + (S.alias ? " (" + S.alias + ")" : ""), href: S.github, ext: true });
     if (S.instagram) out.push({ label: "Instagram", text: "Instagram", href: S.instagram, ext: true });
     if (S.youtube) out.push({ label: "YouTube", text: "YouTube", href: S.youtube, ext: true });
     return out;
@@ -392,25 +346,64 @@
     el.innerHTML =
       '<footer class="site-footer"><div class="container footer-grid">' +
       '<div><p class="footer-title">Let’s make something <em>interesting</em>.</p>' +
-      '<a class="btn" href="contact.html">Get in touch</a></div>' +
+      '<a class="btn" href="contact.html">Get in touch <span aria-hidden="true">&rarr;</span></a></div>' +
       '<div class="footer-side">' + (links ? '<ul class="footer-links">' + links + "</ul>" : "") +
-      '<p class="footer-note">' + esc(S.name) + " · " + esc(S.location) + " · &copy; " + new Date().getFullYear() + "</p></div>" +
+      '<p class="footer-note">' + esc(S.name) + (S.alias ? " (" + esc(S.alias) + ")" : "") + " · " + esc(S.location) + " · &copy; " + new Date().getFullYear() + "</p></div>" +
       "</div></footer>";
   }
 
   /* -------------------------------------------------------------------- home */
+  function emph(t) { return esc(t).replace(/\*([^*]+)\*/g, "<em>$1</em>"); }
+  function pad2(n) { return (n < 10 ? "0" : "") + n; }
+
+  function featMainHTML(p, n) {
+    var contain = p.coverFit === "contain" || p.coverFit === "fit";
+    var tags = arr(p.tools).length ? arr(p.tools).slice(0, 4).join(" · ") : (p.type || "");
+    return '<a class="feat-main reveal" href="' + projectUrl(p) + '">' +
+      '<div class="feat-media tile-media' + (p.coverFit === "fit" ? " is-fit" : contain ? " is-contain" : "") + '"' + (contain && p.coverBg ? ' style="background:' + esc(p.coverBg) + '"' : "") + ">" + coverHTML(p) + "</div>" +
+      '<div class="feat-card"><p class="feat-cat">' + pad2(n) + " / " + esc(catOf(p.category).label) + "</p>" +
+      "<h3>" + esc(p.title) + "</h3>" +
+      (p.tagline ? '<p class="feat-text">' + esc(p.tagline) + "</p>" : "") +
+      (tags ? '<p class="feat-tags">' + esc(tags) + "</p>" : "") +
+      '<span class="feat-link">Explore project <span aria-hidden="true">&rarr;</span></span></div></a>';
+  }
+  function featTileHTML(p, n) {
+    var contain = p.coverFit === "contain" || p.coverFit === "fit";
+    return '<a class="feat-tile reveal" href="' + projectUrl(p) + '">' +
+      '<div class="feat-media tile-media' + (p.coverFit === "fit" ? " is-fit" : contain ? " is-contain" : "") + '"' + (contain && p.coverBg ? ' style="background:' + esc(p.coverBg) + '"' : "") + ">" + coverHTML(p) + "</div>" +
+      '<p class="feat-cat">' + pad2(n) + " / " + esc(catOf(p.category).label) + "</p>" +
+      "<h3>" + esc(p.title) + "</h3>" +
+      (p.type ? '<p class="feat-tags">' + esc(p.type) + "</p>" : "") + "</a>";
+  }
+
   function renderHome() {
-    $("#hero-title").innerHTML = "Hi, I’m <em>" + esc(S.name) + "</em>.";
+    $("#hero-title").innerHTML = "Hi, I’m <em>" + esc(S.name) + ".</em>";
     $("#hero-intro").textContent = S.intro;
     $("#hero-loc").textContent = S.location;
-    $("#hero-visual").innerHTML = S.heroImage
-      ? '<img src="' + esc(S.heroImage) + '" alt="' + esc(S.heroAlt || "") + '" decoding="async">'
-      : '<div class="dream" aria-hidden="true"></div>';
+    var tags = arr(S.heroTags);
+    $("#hero-visual").innerHTML =
+      '<i class="orb orb-1" aria-hidden="true"></i><i class="orb orb-2" aria-hidden="true"></i>' +
+      '<div class="hero-photo">' + (S.heroImage
+        ? '<img src="' + esc(S.heroImage) + '" alt="' + esc(S.heroAlt || "") + '" decoding="async">'
+        : '<div class="dream" aria-hidden="true"></div>') + '<i class="hero-glass" aria-hidden="true"></i></div>' +
+      (tags.length ? '<p class="hero-tag" aria-hidden="true">' + tags.map(function (t) { return "<span>" + esc(t) + "</span>"; }).join("") + "</p>" : "");
 
+    /* short skills block */
+    var hs = arr(P.homeSkills);
+    if (hs.length) {
+      $("#home-skills").innerHTML = hs.map(function (g, i) {
+        return '<article class="hs-card reveal"><span class="hs-num">' + pad2(i + 1) + "</span><h3>" + esc(g.title) + "</h3><ul>" +
+          arr(g.items).map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("") + "</ul></article>";
+      }).join("");
+    } else {
+      $("#skills-section").hidden = true;
+    }
+
+    /* selected work: the first one big with a glass card, the rest in a row */
     var feat = arr(P.featured).map(findProject).filter(Boolean);
-    var box = $("#featured");
     if (feat.length) {
-      box.innerHTML = feat.map(function (p, i) { return tileHTML(p, "f" + Math.min(i, 3)); }).join("");
+      $("#featured").innerHTML = featMainHTML(feat[0], 1) +
+        (feat.length > 1 ? '<div class="feat-row">' + feat.slice(1).map(function (p, i) { return featTileHTML(p, i + 2); }).join("") + "</div>" : "");
     } else {
       $("#featured-section").hidden = true;
     }
@@ -425,7 +418,11 @@
         '<span class="cat-count">' + n + (n === 1 ? " project" : " projects") + "</span>" +
         '<span class="cat-arrow" aria-hidden="true">&rarr;</span></a>';
     }).join("");
-    $("#teaser-text").textContent = S.aboutTeaser || "";
+
+    var ph = S.homeAboutImage || S.aboutPhoto;
+    if (ph) { $("#home-about-photo").innerHTML = '<img src="' + esc(ph) + '" alt="' + esc(S.aboutAlt || "Portrait of " + S.name) + '" loading="lazy" decoding="async">'; }
+    else { $("#home-about-photo").hidden = true; }
+    $("#teaser-text").innerHTML = emph(S.aboutTeaser || "");
   }
 
   /* -------------------------------------------------------------------- work */

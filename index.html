@@ -3,7 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Munich (Witthawin Batsomboon), a Digital Media creative in Melbourne exploring immersive experiences, visual storytelling and digital environments.">
+  <meta name="description" content="Munich (also known as Maewnic; Witthawin Batsomboon), a Digital Media creative in Melbourne exploring immersive experiences, visual storytelling and digital environments.">
+  <meta name="keywords" content="Munich, Maewnic, Witthawin Batsomboon, Digital Media, RMIT, Melbourne, portfolio">
   <title>Munich</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -12,7 +13,9 @@
 </head>
 <body data-page="home">
   <div id="site-header"></div>
-  <main>
+  <main class="home">
+    <div class="sky" aria-hidden="true"><i class="sky-arc"></i></div>
+
     <section class="container hero">
       <div class="hero-text">
         <p class="eyebrow reveal">Digital Media creative</p>
@@ -20,19 +23,33 @@
         <p class="lead reveal" id="hero-intro"></p>
         <p class="hero-loc reveal" id="hero-loc"></p>
         <div class="btn-row reveal">
-          <a class="btn" href="work.html">Explore Work</a>
+          <a class="btn" href="work.html">Explore Work <span aria-hidden="true">&rarr;</span></a>
           <a class="btn btn--ghost" href="about.html">About Me</a>
         </div>
       </div>
       <div class="hero-visual reveal" id="hero-visual"></div>
     </section>
 
+    <section class="container section" id="skills-section">
+      <div class="section-head">
+        <div>
+          <p class="kicker">What I do</p>
+          <h2>Skills &amp; <em>focus.</em></h2>
+        </div>
+        <a class="text-link text-link--arrow" href="about.html#skills">All skills <span aria-hidden="true">&rarr;</span></a>
+      </div>
+      <div class="hs-grid" id="home-skills"></div>
+    </section>
+
     <section class="container section" id="featured-section">
       <div class="section-head">
-        <h2>Selected <em>work</em></h2>
-        <a class="text-link" href="work.html">View all work</a>
+        <div>
+          <p class="kicker">Things I’ve been making</p>
+          <h2>Selected <em>work.</em></h2>
+        </div>
+        <a class="text-link text-link--arrow" href="work.html">View all work <span aria-hidden="true">&rarr;</span></a>
       </div>
-      <div class="featured" id="featured"></div>
+      <div class="feat" id="featured"></div>
     </section>
 
     <section class="container section">
@@ -43,11 +60,12 @@
     </section>
 
     <section class="container section">
-      <div class="teaser">
-        <h2 class="reveal">A bit <em>about me</em></h2>
-        <div class="reveal">
-          <p class="lead" id="teaser-text"></p>
-          <a class="btn btn--ghost" href="about.html" style="margin-top:22px">About me</a>
+      <div class="home-about">
+        <figure class="home-about-photo reveal" id="home-about-photo"></figure>
+        <div class="home-about-text reveal">
+          <p class="eyebrow">About me</p>
+          <p class="home-quote" id="teaser-text"></p>
+          <a class="btn btn--ghost" href="about.html">More about me <span aria-hidden="true">&rarr;</span></a>
         </div>
       </div>
     </section>

@@ -61,6 +61,7 @@ const PORTFOLIO = {
   site: {
     name: "Munich",
     fullName: "Witthawin Batsomboon",
+    alias: "Maewnic",   // your online username; shown in About, Contact, the footer and search text
     intro: "A Digital Media creative exploring immersive experiences, visual storytelling and digital environments.",
     location: "Melbourne · RMIT Digital Media",
     education: "Bachelor of Design (Digital Media), RMIT University (2024–2027), specialising in virtual environment design",
@@ -71,10 +72,13 @@ const PORTFOLIO = {
     heroAlt: "Portrait of Munich under string lights at night",
     aboutPhoto: "assets/me.jpg",   // your photo for the About page
 
-    aboutTeaser: "I like turning ideas into experiences people can see, explore and engage with, whether that's a virtual environment, a video or a piece of content.",
+    // Words between *stars* are shown in italics.
+    aboutTeaser: "I like *turning ideas* into experiences people can *see, explore* and engage with, whether that's a virtual environment, a video or a piece of content.",
+
+    heroTags: ["Create", "Explore", "Connect"],   // the small glass label next to your photo on the home page
 
     about: [
-      "I'm Munich, a Digital Media student at RMIT University based in Melbourne.",
+      "I'm Munich (I go by Maewnic online), a Digital Media student at RMIT University based in Melbourne.",
       "I enjoy creating digital experiences that combine visual design, technology and storytelling. My work currently focuses on immersive environments and interactive experiences, while I also explore video, social content, photography and visual design.",
       "I'm particularly interested in turning ideas into experiences people can see, explore and engage with, whether that's through a virtual environment, a video, or a piece of digital content.",
       "Outside of making things, I enjoy meeting people, having conversations, discovering new ideas, singing, watching movies and animation, and exploring whatever catches my curiosity."
@@ -83,6 +87,7 @@ const PORTFOLIO = {
     // Contact. Leave a value as "" and it won't show.
     email: "Witthawin.munich@gmail.com",
     linkedin: "https://www.linkedin.com/in/witthawin-batsomboon/",
+    github: "https://github.com/Maewnic",
     instagram: "",
     youtube: ""
   },
@@ -581,6 +586,14 @@ const PORTFOLIO = {
   /* ----------------------------- SKILLS ----------------------------- */
   // Software is not listed here on purpose: the "Tools" list on the About page is built
   // automatically from the tools you put in your projects.
+  // The short skills block on the home page (the full list is on the About page).
+  homeSkills: [
+    { title: "Immersive & Interactive", items: ["Virtual environments", "VR experiences", "Level design", "Sound design"] },
+    { title: "Content & Media",         items: ["Video editing", "Short-form video", "Social media content", "Storytelling"] },
+    { title: "Visual Design",           items: ["3D design", "Graphic design", "Photography", "Illustration"] },
+    { title: "People & Community",      items: ["Community building", "Workshop facilitation", "Public speaking", "Peer mentoring"] }
+  ],
+
   skills: [
     { group: "Immersive & Interactive", items: ["Virtual environments", "VR / immersive experience", "3D environment design", "Interactive media", "Level design", "Sound design"] },
     { group: "Visual & Design",         items: ["3D design", "Graphic design", "Visual composition", "Photography", "Illustration"] },
