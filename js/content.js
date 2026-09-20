@@ -377,23 +377,53 @@ const PORTFOLIO = {
         { label: "TSA on Instagram", url: "https://www.instagram.com/tsa_unimelb/" }
       ],
 
-      // HIGHLIGHT REELS: plays one clip after another (the next starts when one ends).
-      // Room for 3 for now. The first one waits for you to press play.
-      // Use a YouTube link, or your own file:  { type: "video", url: "assets/video/clip1.mp4", title: "..." }
-      highlightsText: "",
+      // HIGHLIGHT REELS: one big reel at a time with left/right arrows (loops around).
+      // Each one can have a label shown in the top-right corner: "Recap", "Promo" or "Sponsor".
+      // Instagram reels can't auto-play the next one, so the arrows do the switching.
+      highlightsText: "A few of my favourites across the three kinds of content. Use the arrows to move through them.",
       highlights: [
-        // { type: "youtube", url: "https://youtu.be/...", title: "Highlight 1" },
-        // { type: "youtube", url: "https://youtu.be/...", title: "Highlight 2" },
-        // { type: "youtube", url: "https://youtu.be/...", title: "Highlight 3" }
+        { type: "instagram", url: "https://www.instagram.com/reel/DXBQEq8iafh/", label: "Recap" },
+        { type: "instagram", url: "https://www.instagram.com/reel/DHXv7YfSWy7/", label: "Recap" },
+        { type: "instagram", url: "https://www.instagram.com/reel/DP0_X91iWNm/", label: "Promo" },
+        { type: "instagram", url: "https://www.instagram.com/reel/Db2VteHpvpA/", label: "Sponsor" },
+        { type: "instagram", url: "https://www.instagram.com/reel/DIoE2tPJSIv/", label: "Recap" },
+        { type: "instagram", url: "https://www.instagram.com/reel/DXqvghGidtw/", label: "Sponsor" }
       ],
 
-      // THREE CATEGORIES shown as tabs. Paste reel links into media. Empty tabs stay hidden.
+      // THREE CATEGORIES shown as tabs, newest first. Only the first few load at once,
+      // the rest appear with "Show more". Empty tabs stay hidden.
       tabs: [
-        { title: "Recap Videos",   text: "", media: [
-          { type: "instagram", url: "https://www.instagram.com/reel/DXBQEq8iafh/" }   // test reel, swap for the real ones
+        { title: "Recap Videos", text: "", media: [
+          { type: "instagram", url: "https://www.instagram.com/reel/DbcY8tZJgGe/" },
+          { type: "instagram", url: "https://www.instagram.com/reel/DX5nCMHpOAT/" },
+          { type: "instagram", url: "https://www.instagram.com/reel/DXoGNSLCXbd/" },
+          { type: "instagram", url: "https://www.instagram.com/reel/DXBQEq8iafh/" },
+          { type: "instagram", url: "https://www.instagram.com/reel/DV0HKtlCQIB/" },
+          { type: "instagram", url: "https://www.instagram.com/reel/DPJKJEniR0J/" },
+          { type: "instagram", url: "https://www.instagram.com/reel/DOixCDkCVW9/" },
+          { type: "instagram", url: "https://www.instagram.com/reel/DM-IBt-pNYG/" },
+          { type: "instagram", url: "https://www.instagram.com/reel/DK8mEV9J9fQ/" },
+          { type: "instagram", url: "https://www.instagram.com/reel/DI_Ma31J1Zs/" },
+          { type: "instagram", url: "https://www.instagram.com/reel/DIoE2tPJSIv/" },
+          { type: "instagram", url: "https://www.instagram.com/reel/DHXv7YfSWy7/" },
+          { type: "instagram", url: "https://www.instagram.com/reel/DAihzqdyoB2/" }
         ] },
-        { title: "Promo Videos",   text: "", media: [] },
-        { title: "Sponsor Videos", text: "", media: [] }
+        { title: "Promo Videos", text: "", media: [
+          { type: "instagram", url: "https://www.instagram.com/reel/DYyz9GsJ_tQ/" },
+          { type: "instagram", url: "https://www.instagram.com/reel/DYt0fYjp0Eu/" },
+          { type: "instagram", url: "https://www.instagram.com/reel/DXY3dUAiZek/" },
+          { type: "instagram", url: "https://www.instagram.com/reel/DQFrYImE7Lt/" },
+          { type: "instagram", url: "https://www.instagram.com/reel/DP8JU6-iY98/" },
+          { type: "instagram", url: "https://www.instagram.com/reel/DP0_X91iWNm/" },
+          { type: "instagram", url: "https://www.instagram.com/reel/DKMxUe9JriQ/" },
+          { type: "instagram", url: "https://www.instagram.com/reel/DIGLnx5JwU6/" }
+        ] },
+        { title: "Sponsor Videos", text: "", media: [
+          { type: "instagram", url: "https://www.instagram.com/reel/DcQPXCdJIAe/" },
+          { type: "instagram", url: "https://www.instagram.com/reel/Db2VteHpvpA/" },
+          { type: "instagram", url: "https://www.instagram.com/reel/DbumuT8JR3n/" },
+          { type: "instagram", url: "https://www.instagram.com/reel/DXqvghGidtw/" }
+        ] }
       ],
 
       sections: [],

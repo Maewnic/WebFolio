@@ -44,7 +44,12 @@
     return false;
   }
 
-  function mediaHTML(m, title) {
+  function igBlockquote(clean) {
+    return '<blockquote class="instagram-media" data-instgrm-permalink="' + esc(clean) +
+      '" data-instgrm-version="14"><a href="' + esc(clean) + '" target="_blank" rel="noopener">View on Instagram</a></blockquote>';
+  }
+
+  function mediaHTML(m, title, lazy) {
     if (!m || !m.url) return "";
     var url = m.url, t = m.type || "image";
 
@@ -57,8 +62,9 @@
     }
     if (t === "instagram") {
       var clean = url.split("?")[0];
-      return '<div class="media media-instagram"><blockquote class="instagram-media" data-instgrm-permalink="' + esc(clean) +
-        '" data-instgrm-version="14"><a href="' + esc(clean) + '" target="_blank" rel="noopener">View on Instagram</a></blockquote></div>';
+      // lazy = only load the Instagram embed when it is about to be seen (keeps big lists fast)
+      if (lazy) return '<div class="media media-instagram is-lazy" data-ig="' + esc(clean) + '"><div class="ig-skeleton" aria-hidden="true"></div></div>';
+      return '<div class="media media-instagram">' + igBlockquote(clean) + "</div>";
     }
     if (t === "soundcloud") {
       return '<div class="media media-audio"><iframe title="' + esc(m.title || title || "Audio") + '" loading="lazy" src="https://w.soundcloud.com/player/?url=' +
@@ -83,12 +89,45 @@
       (m.caption ? "<figcaption>" + esc(m.caption) + "</figcaption>" : "") + "</figure>";
   }
 
-  function mediaGroup(list, title) {
+  function mediaGroup(list, title, opts) {
+    opts = opts || {};
     list = arr(list).filter(function (m) { return m && m.url; });
     if (!list.length) return "";
     var vertical = list.every(isVertical) && list.length > 1;
-    return '<div class="media-group ' + (vertical ? "is-row" : "is-stack") + '">' +
-      list.map(function (m) { return mediaHTML(m, title); }).join("") + "</div>";
+    var page = opts.page || 0;
+    var html = '<div class="media-group ' + (vertical ? "is-row" : "is-stack") + '"' + (page ? ' data-page="' + page + '"' : "") + ">" +
+      list.map(function (m, i) {
+        var h = mediaHTML(m, title, opts.lazy);
+        return page && i >= page ? h.replace("<div ", "<div hidden ") : h;
+      }).join("") + "</div>";
+    if (page && list.length > page) {
+      html += '<p class="more-wrap"><button type="button" class="btn btn--ghost more-btn">Show more <span>(' + (list.length - page) + " more)</span></button></p>";
+    }
+    return html;
+  }
+
+  /* Instagram: load the embed script once, then (re)process whatever is on the page */
+  var igLoading = false;
+  function processInstagram() {
+    if (window.instgrm && window.instgrm.Embeds) { window.instgrm.Embeds.process(); return; }
+    if (igLoading) return;
+    igLoading = true;
+    var sc = document.createElement("script");
+    sc.async = true;
+    sc.src = "https://www.instagram.com/embed.js";
+    sc.onload = function () { if (window.instgrm) window.instgrm.Embeds.process(); };
+    document.body.appendChild(sc);
+  }
+  // turn visible lazy placeholders inside `root` into real Instagram embeds
+  function hydrateInstagram(root) {
+    var any = false;
+    [].forEach.call((root || document).querySelectorAll(".media-instagram.is-lazy"), function (el) {
+      if (el.hidden || el.closest("[hidden]")) return;
+      el.classList.remove("is-lazy");
+      el.innerHTML = igBlockquote(el.getAttribute("data-ig"));
+      any = true;
+    });
+    if (any) processInstagram();
   }
 
   /* ------------------------------------------- highlight reels (auto-advance) */
@@ -105,9 +144,52 @@
     ytQueue.push(cb);
   }
 
+  function isReelList(list) {
+    return list.some(function (m) { return m.type === "instagram"; });
+  }
+
+  function reelCarouselHTML(list, text) {
+    return '<section class="container hl hl--reels reveal" id="hl">' +
+      '<div class="psec-grid"><h2>Highlight reels</h2><div class="psec-text">' +
+      (text ? paras(text) : "<p>A few favourites. Use the arrows to move through them.</p>") + "</div></div>" +
+      '<div class="reel-carousel" role="group" aria-roledescription="carousel" aria-label="Highlight reels">' +
+      '<button type="button" class="reel-arrow reel-prev" aria-label="Previous reel">&larr;</button>' +
+      '<div class="reel-frame"><span class="reel-label" hidden></span><div class="reel-slot" aria-live="polite"></div></div>' +
+      '<button type="button" class="reel-arrow reel-next" aria-label="Next reel">&rarr;</button>' +
+      "</div>" +
+      '<div class="reel-nav"><span class="reel-count"></span><span class="reel-dots">' +
+      list.map(function (m, i) { return '<button type="button" class="reel-dot" aria-label="Reel ' + (i + 1) + '"></button>'; }).join("") +
+      "</span></div></section>";
+  }
+
+  function setupReelCarousel(list) {
+    var root = $("#hl");
+    if (!root) return;
+    var slot = $(".reel-slot", root), label = $(".reel-label", root), count = $(".reel-count", root);
+    var dots = root.querySelectorAll(".reel-dot"), idx = 0, n = list.length;
+    function show(i) {
+      idx = (i + n) % n;                       // loops around at both ends
+      var m = list[idx];
+      slot.innerHTML = mediaHTML(m, m.title || "Highlight reel");
+      slot.classList.toggle("is-video", m.type !== "instagram");
+      if (m.label) { label.textContent = m.label; label.setAttribute("data-kind", String(m.label).toLowerCase()); label.hidden = false; } else { label.hidden = true; }
+      count.textContent = (idx + 1) + " / " + n;
+      [].forEach.call(dots, function (d, k) { d.setAttribute("aria-current", k === idx ? "true" : "false"); });
+      if (m.type === "instagram") processInstagram();
+    }
+    $(".reel-prev", root).addEventListener("click", function () { show(idx - 1); });
+    $(".reel-next", root).addEventListener("click", function () { show(idx + 1); });
+    [].forEach.call(dots, function (d, k) { d.addEventListener("click", function () { show(k); }); });
+    root.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowLeft") { show(idx - 1); } else if (e.key === "ArrowRight") { show(idx + 1); }
+    });
+    show(0);
+  }
+
   function highlightsHTML(list, text) {
     list = arr(list).filter(function (m) { return m && m.url; });
     if (!list.length) return "";
+    if (isReelList(list)) return reelCarouselHTML(list, text);
     return '<section class="container hl reveal" id="hl">' +
       '<div class="psec-grid"><h2>Highlight reels</h2><div class="psec-text">' + (text ? paras(text) : "<p>Clips from the recap videos. Press play and the next one follows when each one ends.</p>") + "</div></div>" +
       '<div class="hl-stage"><div class="hl-player" aria-live="polite"></div><ol class="hl-list">' +
@@ -120,6 +202,7 @@
     var root = $("#hl");
     if (!root) return;
     list = arr(list).filter(function (m) { return m && m.url; });
+    if (isReelList(list)) { setupReelCarousel(list); return; }
     var stage = $(".hl-player", root), btns = root.querySelectorAll(".hl-item"), idx = 0, player = null;
 
     function clear() {
@@ -168,7 +251,7 @@
       }).join("") + "</div>" +
       tabs.map(function (t, i) {
         return '<div role="tabpanel" class="tabpanel" data-i="' + i + '"' + (i ? " hidden" : "") + ">" +
-          (t.text ? '<div class="psec-text tab-text">' + paras(t.text) + "</div>" : "") + mediaGroup(t.media, t.title) + "</div>";
+          (t.text ? '<div class="psec-text tab-text">' + paras(t.text) + "</div>" : "") + mediaGroup(t.media, t.title, { lazy: true, page: 6 }) + "</div>";
       }).join("") + "</section>";
   }
 
@@ -176,13 +259,24 @@
     var root = $("#ptabs");
     if (!root) return;
     root.addEventListener("click", function (e) {
+      var more = e.target.closest(".more-btn");
+      if (more) {
+        var panel = more.closest(".tabpanel"), grp = $(".media-group", panel), page = +grp.getAttribute("data-page") || 6;
+        var hid = grp.querySelectorAll(":scope > [hidden]");
+        [].slice.call(hid, 0, page).forEach(function (el) { el.hidden = false; });
+        var left = grp.querySelectorAll(":scope > [hidden]").length;
+        if (left) { $("span", more).textContent = "(" + left + " more)"; } else { more.parentNode.remove(); }
+        hydrateInstagram(panel);
+        return;
+      }
       var b = e.target.closest(".chip");
       if (!b) return;
       var i = b.getAttribute("data-i");
       [].forEach.call(root.querySelectorAll(".chip"), function (c) { c.setAttribute("aria-selected", c === b ? "true" : "false"); });
       [].forEach.call(root.querySelectorAll(".tabpanel"), function (p) { p.hidden = p.getAttribute("data-i") !== i; });
-      if (window.instgrm && window.instgrm.Embeds) window.instgrm.Embeds.process();
+      hydrateInstagram(root);
     });
+    hydrateInstagram(root);
   }
 
   /* ------------------------------------------------------------- tiles/cards */
@@ -484,11 +578,7 @@
 
   function loadInstagram() {
     if (!document.querySelector(".instagram-media")) return;
-    var s = document.createElement("script");
-    s.async = true;
-    s.src = "https://www.instagram.com/embed.js";
-    s.onload = function () { if (window.instgrm) window.instgrm.Embeds.process(); };
-    document.body.appendChild(s);
+    processInstagram();
   }
 
   /* -------------------------------------------------------------------- go */
