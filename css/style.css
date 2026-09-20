@@ -2362,3 +2362,37 @@ body {
 /* spacing polish: gap below page heads, no doubled chip padding */
 .page-head, .project-head { margin-bottom: 28px; }
 .chips { padding-top: 0; }
+
+/* water wash runs up behind the header (no cut under the menu bar), and on short
+   pages fades out before the footer instead of stopping in a hard edge */
+.sky,
+.has-sky .sky {
+  top: -74px;
+  bottom: auto;
+  height: min(834px, calc(100% + 74px));
+}
+@media (max-width: 960px) {
+  .sky,
+  .has-sky .sky {
+    height: min(794px, calc(100% + 74px));
+  }
+}
+
+/* footer waves fade in from the page instead of starting with a hard edge */
+.site-footer {
+  position: relative;
+  isolation: isolate;
+  background: none;
+}
+.site-footer::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(244, 247, 251, 0.5) 0%, rgba(244, 247, 251, 0.25) 40%, rgba(244, 247, 251, 0.05) 100%),
+    #e4ebf5 url("../assets/bg-waves.jpg") 70% 70% / cover no-repeat;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 55%);
+  mask-image: linear-gradient(180deg, transparent 0%, #000 55%);
+}

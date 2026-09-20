@@ -335,7 +335,7 @@
     if (S.email) out.push({ label: "Email", text: S.email, href: "mailto:" + S.email });
     if (S.linkedin) out.push({ label: "LinkedIn", text: "LinkedIn", href: S.linkedin, ext: true });
     if (S.github) out.push({ label: "GitHub", text: "GitHub" + (S.alias ? " (" + S.alias + ")" : ""), href: S.github, ext: true });
-    if (S.instagram) out.push({ label: "Instagram", text: "Instagram", href: S.instagram, ext: true });
+    if (S.instagram) out.push({ label: "Instagram", text: "Instagram" + (S.alias ? " (" + S.alias + ")" : ""), href: S.instagram, ext: true });
     if (S.youtube) out.push({ label: "YouTube", text: "YouTube", href: S.youtube, ext: true });
     return out;
   }

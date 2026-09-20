@@ -88,8 +88,8 @@ const PORTFOLIO = {
     // Contact. Leave a value as "" and it won't show.
     email: "Witthawin.munich@gmail.com",
     linkedin: "https://www.linkedin.com/in/witthawin-batsomboon/",
-    github: "https://github.com/Maewnic",
-    instagram: "",
+    github: "",
+    instagram: "https://www.instagram.com/maewnic/",
     youtube: ""
   },
 
