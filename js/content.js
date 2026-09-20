@@ -79,7 +79,7 @@ const PORTFOLIO = {
     heroTags: ["Create", "Explore", "Connect"],   // the small glass label next to your photo on the home page
 
     about: [
-      "I'm Munich (I go by Maewnic online), a Digital Media student at RMIT University based in Melbourne.",
+      "I'm Munich (I go by @Maewnic online).",
       "I enjoy creating digital experiences that combine visual design, technology and storytelling. My work currently focuses on immersive environments and interactive experiences, while I also explore video, social content, photography and visual design.",
       "I'm particularly interested in turning ideas into experiences people can see, explore and engage with, whether that's through a virtual environment, a video, or a piece of digital content.",
       "Outside of making things, I enjoy meeting people, having conversations, discovering new ideas, singing, watching movies and animation, and exploring whatever catches my curiosity."
@@ -510,7 +510,7 @@ const PORTFOLIO = {
       tagline: "A painted-style diorama of a Rolex passed down from my father, with a lotus.",
       summary: "A 3D diorama built around a Rolex passed down from my father, paired with a lotus, which represents growth in Thai Buddhism. I went for an illustrative look instead of a commercial showroom render.",
       status: "",
-      size: "m",
+      size: "l",
       hidden: false,
       cover: "assets/projects/given-watch/cover.jpg",
       hero: { type: "sketchfab", url: "https://sketchfab.com/3d-models/given-watch-43e90112cd2f402995447d18973c80bf" },
@@ -529,6 +529,69 @@ const PORTFOLIO = {
         {
           title: "Making it",
           text: "The watch was modelled and animated in Maya, and the lighting was staged in Sketchfab.",
+          media: []
+        }
+      ],
+      gallery: [],
+      galleryLayout: "grid"
+    },
+
+    {
+      slug: "glanx",
+      title: "Glanx",
+      category: "visual",
+      type: "Brand & interface design",
+      tagline: "A made-up smart glasses brand: logo, interface, packaging, posters and website.",
+      summary: "My high school Art Design board from 2023. I invented Glanx, a smart glasses company set in the near future, and designed its logo, operating system interface, packaging, poster, billboard and website. This is where I started combining my own photography with graphic design, using Photoshop and Lightroom.",
+      status: "",
+      size: "m",
+      hidden: false,
+      cover: "assets/projects/glanx/cover.jpg",
+      coverAlt: "Glanx packaging and poster designs from the design board",
+      hero: { type: "image", url: "assets/projects/glanx/board.jpg", alt: "The full Glanx design board: three panels of logo, interface, packaging, poster and website work" },
+      context: "High school · Art Design class",
+      year: "2023",
+      role: "Concept, photography, graphic design and editing",
+      collaborators: [],
+      tools: ["Photoshop", "Lightroom"],
+      links: [],
+      sections: [
+        {
+          title: "The brief",
+          text: "Set in the near future, when smart glasses have stopped looking chunky and weird and look like ordinary glasses. Glanx is a new company that has nailed what smart glasses need: a 3D display using stereoscopic technology, a built-in gyroscope that tracks head movement so a screen or 3D object stays where you place it, duo speakers, and a camera for photos and video.\n\nThey can stay this thin because the computing happens in the cloud and links to your phone, and they charge through a magnetic field from the phone.",
+          media: []
+        },
+        {
+          title: "Logo",
+          text: "I started with a page of sketches and letterforms, then developed the ones I liked in colour. The final mark is a pair of linked G shapes that also read as a pair of glasses, in a blue-to-pink gradient.",
+          media: [{ type: "image", url: "assets/projects/glanx/logo.jpg", alt: "Glanx logo sketches, developments and the final logo" }]
+        },
+        {
+          title: "Operating system",
+          text: "Bubbles OS is the interface you see through the lens: weather, music, maps and a voice assistant in soft, glassy bubbles. I sketched the layouts first, then designed a set of icons and widgets and placed them over my own photos to show how it would look in real life.",
+          media: [{ type: "image", url: "assets/projects/glanx/os.jpg", alt: "Operating system sketches, icons and the final Bubbles OS screens seen through glasses" }]
+        },
+        {
+          title: "Packaging",
+          text: "Tall boxes for two models, using portraits I photographed and edited, the logo and the same blue-to-pink colours. The board shows the development stage, the final designs and mockups of the boxes.",
+          media: [{ type: "image", url: "assets/projects/glanx/packaging.jpg", alt: "Glanx packaging development, final designs and box mockups" }]
+        },
+        {
+          title: "Poster and billboard",
+          text: "The poster is built around one line, \u201CTake a glance into the future with Glanx\u201D, with the product and a portrait layered into shapes and patterns. The same look carries over to a wide billboard.",
+          media: [
+            { type: "image", url: "assets/projects/glanx/poster.jpg", alt: "Glanx poster concepts, developments and the final Introducing Glanx poster" },
+            { type: "image", url: "assets/projects/glanx/billboard.jpg", alt: "Glanx billboard concepts, final billboard and poster mockups" }
+          ]
+        },
+        {
+          title: "Website",
+          text: "I sketched the website first, developed two layouts, then finished a full landing page with the product, its features and a subscribe area. It is shown on screens in the mockups at the bottom of the board.",
+          media: [{ type: "image", url: "assets/projects/glanx/website.jpg", alt: "Glanx website concepts, developments, the final page and screen mockups" }]
+        },
+        {
+          title: "About these photos",
+          text: "The original files were on my school cloud account, which was deleted after I left, so this project is shown from photos of the printed board.",
           media: []
         }
       ],
