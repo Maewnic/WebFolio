@@ -1402,17 +1402,20 @@ body {
 
 /* ---------- highlight reels carousel (Instagram) ---------- */
 /* big reel in the middle, faded neighbours peeking in on both sides */
+.hl--reels {
+  --reel-w: 390px;
+}
 .reel-carousel {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 598px minmax(0, 1fr);
+  grid-template-columns: minmax(0, 1fr) var(--reel-w) minmax(0, 1fr);
   justify-content: center;
-  align-items: start;
+  align-items: center;
   gap: 28px;
   margin-top: 64px;
 }
 .reel-frame {
   position: relative;
-  width: 598px;
+  width: var(--reel-w);
 }
 .reel-label {
   position: absolute;
@@ -1427,25 +1430,27 @@ body {
   text-transform: uppercase;
 }
 .reel-slot {
-  width: 520px;
+  width: calc(var(--reel-w) / 1.15);
   zoom: 1.15;
   min-height: 560px;
   border-radius: var(--radius);
   overflow: hidden;
-  background: var(--bg-soft);
 }
 .reel-slot .media-instagram {
-  border-radius: 0;
+  display: block;
+  border-radius: var(--radius);
+}
+.reel-slot .instagram-media {
+  width: 100% !important;
+  min-width: 0 !important;
 }
 .reel-slot .media-video {
   border-radius: 0;
 }
 .reel-side {
-  position: sticky;
-  top: calc(50vh - 190px);
   width: 100%;
   max-width: 250px;
-  height: 380px;
+  height: 470px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -1498,12 +1503,44 @@ body {
   text-transform: uppercase;
   color: var(--muted);
 }
+.reel-foot {
+  width: var(--reel-w);
+  max-width: 100%;
+  margin: 22px auto 0;
+}
+.reel-timer {
+  height: 3px;
+  border-radius: 3px;
+  background: var(--line);
+  overflow: hidden;
+}
+.reel-timer i {
+  display: block;
+  height: 100%;
+  background: var(--ink);
+  transform-origin: left center;
+  transform: scaleX(0);
+}
+.reel-timer.is-running i {
+  animation: reelTimer 6s linear forwards;
+}
+.reel-timer.is-paused i {
+  animation-play-state: paused;
+}
+@keyframes reelTimer {
+  from {
+    transform: scaleX(0);
+  }
+  to {
+    transform: scaleX(1);
+  }
+}
 .reel-nav {
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 18px;
-  margin-top: 22px;
+  margin-top: 14px;
   font-size: 0.9rem;
   color: var(--muted);
 }
@@ -1549,15 +1586,18 @@ body {
 
 /* tablets: no zoom, smaller frame */
 @media (max-width: 1000px) {
+  .hl--reels {
+    --reel-w: 400px;
+  }
   .reel-carousel {
-    grid-template-columns: minmax(0, 1fr) 520px minmax(0, 1fr);
     gap: 16px;
   }
-  .reel-frame {
-    width: 520px;
-  }
   .reel-slot {
+    width: 100%;
     zoom: 1;
+  }
+  .reel-side {
+    height: 380px;
   }
 }
 
@@ -1574,12 +1614,17 @@ body {
     margin-top: 40px;
     width: 100%;
   }
+  .reel-foot {
+    width: 100%;
+  }
   .reel-slot {
     width: 100%;
     min-height: 480px;
   }
+  .reel-carousel {
+    align-items: start;
+  }
   .reel-side {
-    position: static;
     max-width: none;
     height: 48px;
     flex-direction: row;

@@ -157,9 +157,10 @@
       '<div class="reel-frame"><span class="reel-label" hidden></span><div class="reel-slot" aria-live="polite"></div></div>' +
       '<button type="button" class="reel-side reel-next" aria-label="Next reel"><span class="reel-side-arrow">&rarr;</span><span class="reel-side-kind"></span></button>' +
       "</div>" +
+      '<div class="reel-foot"><div class="reel-timer" aria-hidden="true"><i></i></div>' +
       '<div class="reel-nav"><span class="reel-count"></span><span class="reel-dots">' +
       list.map(function (m, i) { return '<button type="button" class="reel-dot" aria-label="Reel ' + (i + 1) + '"></button>'; }).join("") +
-      "</span></div></section>";
+      "</span></div></div></section>";
   }
 
   function setupReelCarousel(list) {
@@ -167,9 +168,56 @@
     if (!root) return;
     var slot = $(".reel-slot", root), label = $(".reel-label", root), count = $(".reel-count", root);
     var dots = root.querySelectorAll(".reel-dot"), idx = 0, n = list.length;
-    function show(i) {
+    var timer = $(".reel-timer", root), frame = $(".reel-frame", root);
+    var SECONDS = 6;                           // how long each reel waits before the next one
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    var inView = false, hovering = false, touched = false, poll = null, started = false;
+
+    /* the timer bar only moves while the carousel is on screen, the pointer is away from
+       the reel, and nobody has pressed play (or otherwise clicked inside the reel) */
+    function syncTimer() {
+      if (!started) return;
+      timer.classList.toggle("is-paused", !inView || hovering || document.hidden);
+    }
+    function stopTimer(hide) {
+      clearInterval(poll); poll = null; started = false;
+      timer.classList.remove("is-running", "is-paused");
+      timer.style.opacity = hide ? "0" : "";
+    }
+    function startTimer() {
+      stopTimer(false);
+      if (reduce || touched) { timer.style.opacity = "0"; return; }
+      // wait until the reel has actually appeared, then count 6 seconds
+      var tries = 0;
+      poll = setInterval(function () {
+        tries++;
+        if (slot.querySelector("iframe") || tries > 25) {
+          clearInterval(poll); poll = null;
+          void timer.offsetWidth;              // restart the animation from empty
+          timer.classList.add("is-running");
+          started = true; syncTimer();
+        }
+      }, 200);
+    }
+    timer.addEventListener("animationend", function () { if (started) show(idx + 1); });
+    frame.addEventListener("pointerenter", function (e) { if (e.pointerType !== "touch") { hovering = true; syncTimer(); } });
+    frame.addEventListener("pointerleave", function () { hovering = false; syncTimer(); });
+    document.addEventListener("visibilitychange", syncTimer);
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (es) { inView = es[0].isIntersecting; syncTimer(); }, { threshold: 0.4 }).observe(root.querySelector(".reel-carousel"));
+    } else { inView = true; }
+    // clicking play inside Instagram's player moves focus into its iframe: treat that as "they're watching"
+    window.addEventListener("blur", function () {
+      setTimeout(function () {
+        var a = document.activeElement;
+        if (a && a.tagName === "IFRAME" && slot.contains(a)) { touched = true; stopTimer(true); }
+      }, 0);
+    });
+
+    function show(i, manual) {
       idx = (i + n) % n;                       // loops around at both ends
       var m = list[idx];
+      touched = false;
       slot.innerHTML = mediaHTML(m, m.title || "Highlight reel");
       slot.classList.toggle("is-video", m.type !== "instagram");
       if (m.label) { label.textContent = m.label; label.setAttribute("data-kind", String(m.label).toLowerCase()); label.hidden = false; } else { label.hidden = true; }
@@ -178,7 +226,7 @@
       $(".reel-prev .reel-side-kind", root).textContent = (pv.label || "Previous") + " · " + (((idx - 1 + n) % n) + 1);
       $(".reel-next .reel-side-kind", root).textContent = (nx.label || "Next") + " · " + (((idx + 1) % n) + 1);
       [].forEach.call(dots, function (d, k) { d.setAttribute("aria-current", k === idx ? "true" : "false"); });
-      if (m.type === "instagram") processInstagram();
+      if (m.type === "instagram") { processInstagram(); startTimer(); } else { stopTimer(true); }
     }
     $(".reel-prev", root).addEventListener("click", function () { show(idx - 1); });
     $(".reel-next", root).addEventListener("click", function () { show(idx + 1); });
