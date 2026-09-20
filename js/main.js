@@ -290,11 +290,14 @@
   }
   function tileHTML(p, cls) {
     var contain = p.coverFit === "contain" || p.coverFit === "fit";
-    return '<a class="tile ' + cls + ' reveal" href="' + projectUrl(p) + '" data-cat="' + esc(p.category) + '">' +
+    var chips = String(p.type || "").split(" · ").filter(Boolean).slice(0, 2);
+    return '<a class="tile glass ' + cls + ' reveal" href="' + projectUrl(p) + '" data-cat="' + esc(p.category) + '">' +
       '<div class="tile-media' + (p.coverFit === "fit" ? " is-fit" : contain ? " is-contain" : "") + '"' + (contain && p.coverBg ? ' style="background:' + esc(p.coverBg) + '"' : "") + ">" + coverHTML(p) + (p.status ? '<span class="badge">' + esc(p.status) + "</span>" : "") + "</div>" +
       '<div class="tile-body"><p class="tile-cat">' + esc(catOf(p.category).label) + "</p>" +
       "<h3>" + esc(p.title) + "</h3>" +
-      (p.tagline ? '<p class="tile-text">' + esc(p.tagline) + "</p>" : "") + "</div></a>";
+      (p.tagline ? '<p class="tile-text">' + esc(p.tagline) + "</p>" : "") +
+      '<div class="feat-foot"><span class="mini-tags">' + chips.map(function (c) { return '<span class="mini-tag">' + esc(c) + "</span>"; }).join("") +
+      '</span><span class="feat-arrow" aria-hidden="true">&rarr;</span></div></div></a>';
   }
 
   /* ---------------------------------------------------------- header / footer */
@@ -634,6 +637,13 @@
   document.title = ({ home: "", work: "Work | ", about: "About | ", contact: "Contact | " }[page] || "") + S.name;
   if (page === "home") document.title = S.name + " | Digital Media Creative";
 
+  (function addSky() {
+    var m = $("main");
+    if (m && !$(".sky", m)) {
+      m.classList.add("has-sky");
+      m.insertAdjacentHTML("afterbegin", '<div class="sky" aria-hidden="true"></div>');
+    }
+  })();
   buildHeader();
   if (page === "home") renderHome();
   if (page === "work") renderWork();

@@ -1524,7 +1524,8 @@ body {
 }
 
 /* the soft blue wash behind the top of the page */
-.home {
+.home,
+.has-sky {
   position: relative;
   isolation: isolate;
   overflow-x: clip;
@@ -2138,3 +2139,226 @@ body {
     padding: 0 6px 8px;
   }
 }
+
+
+/* ==========================================================================
+   SAME GLASS THEME ON EVERY PAGE (work, project, about, contact)
+   ========================================================================== */
+.has-sky .sky {
+  height: 760px;
+}
+
+/* page headers sit in a soft glass panel, like the home hero */
+.page-head,
+.project-head {
+  position: relative;
+  isolation: isolate;
+  margin-top: 28px;
+  padding: 44px calc(var(--gutter) + 44px) 44px;
+}
+.page-head::before,
+.project-head::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: var(--gutter);
+  right: var(--gutter);
+  top: 0;
+  bottom: 0;
+  border-radius: 26px;
+  background: rgba(255, 255, 255, 0.34);
+  border: 1px solid rgba(255, 255, 255, 0.78);
+  -webkit-backdrop-filter: blur(8px) saturate(1.2);
+  backdrop-filter: blur(8px) saturate(1.2);
+  box-shadow:
+    0 30px 80px rgba(70, 95, 140, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+.page-head h1 {
+  margin-top: 12px;
+}
+
+/* work: filter chips and project cards */
+.chips {
+  padding-top: 28px;
+}
+.chip {
+  background: rgba(255, 255, 255, 0.55);
+  border-color: rgba(255, 255, 255, 0.85);
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+}
+.chip[aria-pressed="true"],
+.chip[aria-selected="true"] {
+  background: var(--ink);
+  border-color: var(--ink);
+}
+.work-grid {
+  gap: 28px;
+}
+.work-grid .tile.glass {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 10px 18px;
+  border-radius: 20px;
+  box-shadow:
+    0 18px 50px rgba(70, 95, 140, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85);
+  transition:
+    transform 0.4s var(--ease),
+    box-shadow 0.4s var(--ease);
+}
+.work-grid .tile.glass:hover {
+  transform: translateY(-4px);
+  box-shadow:
+    0 26px 60px rgba(70, 95, 140, 0.16),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+.tile.glass .tile-media {
+  border-radius: 14px;
+}
+.tile.glass .tile-body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  padding: 16px 10px 0;
+}
+.tile.glass h3 {
+  font-size: clamp(1.4rem, 2.2vw, 1.8rem);
+}
+.tile.glass .feat-foot {
+  margin-top: auto;
+  padding-top: 14px;
+}
+.tile.glass:hover .feat-arrow {
+  transform: translateX(5px);
+}
+
+/* project page: details strip */
+.meta {
+  padding: 28px 36px;
+  border: 1px solid rgba(255, 255, 255, 0.78);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.46);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+  backdrop-filter: blur(16px) saturate(1.2);
+  box-shadow:
+    0 20px 60px rgba(70, 95, 140, 0.09),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+
+/* about */
+.about {
+  padding: 28px;
+  gap: 48px;
+  align-items: center;
+  border-radius: 26px;
+  background: rgba(255, 255, 255, 0.46);
+  border: 1px solid rgba(255, 255, 255, 0.78);
+  -webkit-backdrop-filter: blur(20px) saturate(1.25);
+  backdrop-filter: blur(20px) saturate(1.25);
+  box-shadow:
+    0 30px 80px rgba(70, 95, 140, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+.about-photo {
+  border-radius: 16px;
+}
+.about-text {
+  padding-right: 20px;
+}
+#experience {
+  padding: 4px 36px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.46);
+  border: 1px solid rgba(255, 255, 255, 0.78);
+  -webkit-backdrop-filter: blur(20px) saturate(1.25);
+  backdrop-filter: blur(20px) saturate(1.25);
+  box-shadow:
+    0 24px 60px rgba(70, 95, 140, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+#experience .exp:first-child {
+  border-top: 0;
+}
+#experience .exp:last-child {
+  border-bottom: 0;
+}
+.skills {
+  gap: 18px;
+}
+.skill-group {
+  padding: 24px 22px 18px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.78);
+  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(12px);
+  box-shadow:
+    0 14px 40px rgba(70, 95, 140, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+.chips-static li {
+  background: rgba(255, 255, 255, 0.6);
+  border-color: rgba(255, 255, 255, 0.85);
+}
+
+/* contact */
+.contact-list {
+  padding: 4px 36px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.46);
+  border: 1px solid rgba(255, 255, 255, 0.78);
+  -webkit-backdrop-filter: blur(20px) saturate(1.25);
+  backdrop-filter: blur(20px) saturate(1.25);
+  box-shadow:
+    0 24px 60px rgba(70, 95, 140, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+.contact-list li:first-child {
+  border-top: 0;
+}
+.contact-list li:last-child {
+  border-bottom: 0;
+}
+
+@media (max-width: 960px) {
+  .about {
+    padding: 20px;
+    gap: 28px;
+  }
+  .about-text {
+    padding-right: 0;
+  }
+  .meta {
+    padding: 24px 24px;
+  }
+}
+@media (max-width: 640px) {
+  .page-head,
+  .project-head {
+    margin-top: 16px;
+    padding: 30px calc(var(--gutter) + 20px) 30px;
+  }
+  .page-head::before,
+  .project-head::before {
+    border-radius: 22px;
+  }
+  .work-grid {
+    gap: 18px;
+  }
+  #experience,
+  .contact-list {
+    padding: 2px 18px;
+  }
+  .about {
+    padding: 14px;
+  }
+  .meta {
+    padding: 20px 18px;
+  }
+}
+
+/* spacing polish: gap below page heads, no doubled chip padding */
+.page-head, .project-head { margin-bottom: 28px; }
+.chips { padding-top: 0; }
