@@ -359,11 +359,19 @@
   function emph(t) { return esc(t).replace(/\*([^*]+)\*/g, "<em>$1</em>"); }
   function pad2(n) { return (n < 10 ? "0" : "") + n; }
 
+  /* the picture on the home page's Selected work: homeCover (with homePos = focus point) if set, else the normal cover */
+  function featMediaHTML(p) {
+    if (p.homeCover) {
+      return '<div class="feat-media tile-media"><img src="' + esc(p.homeCover) + '" alt="' + esc(p.homeAlt || p.coverAlt || p.title) + '" decoding="async" style="object-position:' + esc(p.homePos || "50% 50%") + '"></div>';
+    }
+    var contain = p.coverFit === "contain" || p.coverFit === "fit";
+    return '<div class="feat-media tile-media' + (p.coverFit === "fit" ? " is-fit" : contain ? " is-contain" : "") + '"' + (contain && p.coverBg ? ' style="background:' + esc(p.coverBg) + '"' : "") + ">" + coverHTML(p) + "</div>";
+  }
   function featMainHTML(p, n) {
     var contain = p.coverFit === "contain" || p.coverFit === "fit";
     var tags = arr(p.tools).length ? arr(p.tools).slice(0, 4).join(" · ") : (p.type || "");
     return '<a class="feat-main" href="' + projectUrl(p) + '">' +
-      '<div class="feat-media tile-media' + (p.coverFit === "fit" ? " is-fit" : contain ? " is-contain" : "") + '"' + (contain && p.coverBg ? ' style="background:' + esc(p.coverBg) + '"' : "") + ">" + coverHTML(p) + "</div>" +
+      featMediaHTML(p) +
       '<div class="feat-card"><p class="feat-cat">' + pad2(n) + " / " + esc(catOf(p.category).label) + "</p>" +
       "<h3>" + esc(p.title) + "</h3>" +
       (p.tagline ? '<p class="feat-text">' + esc(p.tagline) + "</p>" : "") +
@@ -374,7 +382,7 @@
     var contain = p.coverFit === "contain" || p.coverFit === "fit";
     var chips = String(p.type || "").split(" · ").filter(Boolean).slice(0, 2);
     return '<a class="feat-tile glass" href="' + projectUrl(p) + '">' +
-      '<div class="feat-media tile-media' + (p.coverFit === "fit" ? " is-fit" : contain ? " is-contain" : "") + '"' + (contain && p.coverBg ? ' style="background:' + esc(p.coverBg) + '"' : "") + ">" + coverHTML(p) + "</div>" +
+      featMediaHTML(p) +
       '<div class="feat-info"><p class="feat-cat">' + pad2(n) + " / " + esc(catOf(p.category).label) + "</p>" +
       "<h3>" + esc(p.title) + "</h3>" +
       '<div class="feat-foot"><span class="mini-tags">' + chips.map(function (c) { return '<span class="mini-tag">' + esc(c) + "</span>"; }).join("") +

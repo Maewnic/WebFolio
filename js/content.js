@@ -29,6 +29,7 @@
      cover         the main image (card + top of the project page)
      coverFit      "contain" shows a logo whole with space around it, "fit" shows the whole image with no space
                    (set coverBg to the background colour, e.g. "#ffffff")
+     homeCover     optional: a different picture for this project on the home page's Selected work (homePos = "50% 50%" picks which part stays in view)
      hero          optional: show a video/embed at the top instead of the cover image
      context       e.g. "RMIT University · Virtual Environment" (shows as "Made for")
      role          what you did
@@ -166,6 +167,9 @@ const PORTFOLIO = {
       size: "l",
       hidden: false,
       cover: "assets/projects/hikari/cover.jpg",
+      homeCover: "assets/projects/hikari/home.jpg",   // picture used on the home page's Selected work
+      homePos: "50% 42%",                             // which part stays in view when it is cropped
+      homeAlt: "Inside the Hikari world in VRChat at night: a torii gate, lanterns and a glowing stage over the water",
       context: "",
       year: "Dec 2024 – Jun 2026",
       role: "Founding team: world building, brand design, VIP and staff operations",
@@ -372,6 +376,9 @@ const PORTFOLIO = {
       size: "l",
       hidden: false,
       cover: "assets/projects/tsa-content/cover.jpg",
+      homeCover: "assets/projects/tsa-content/home.jpg",
+      homePos: "50% 66%",
+      homeAlt: "Group photo of TSA members cheering on the beach",
       coverFit: "contain",       // logo: shown whole instead of cropped
       coverBg: "#ffffff",
       context: "Melbourne University Thai Student Association (MUTSA)",
