@@ -5,19 +5,19 @@
    ========================================================================== */
 :root {
   /* colour */
-  --bg: #f4f7fb;
-  --bg-soft: #e9eef6;
-  --ink: #1c2233;
-  --muted: #646a7e;
-  --line: #dbe3ee;
-  --accent: #4d63c9;
+  --bg: #f3f7fc;
+  --bg-soft: #e8eef7;
+  --ink: #1a2135;
+  --muted: #626980;
+  --line: #d9e3f0;
+  --accent: #425cd4;
   --on-ink: #ffffff;
 
   /* soft tints used behind projects that don't have an image yet */
-  --tint-immersive: #dbe4fb;
-  --tint-content: #fbe4da;
-  --tint-visual: #dfeee3;
-  --tint-photo: #efe8db;
+  --tint-immersive: #d8e3fe;
+  --tint-content: #fee3d7;
+  --tint-visual: #deefe2;
+  --tint-photo: #f1e9d9;
 
   /* type */
   --font-display: "Instrument Serif", Georgia, "Times New Roman", serif;
@@ -247,8 +247,8 @@ h2 em,
   height: 100%;
   background:
     radial-gradient(60% 55% at 28% 30%, #d9e4ff 0%, transparent 70%),
-    radial-gradient(55% 50% at 78% 72%, #fde2e8 0%, transparent 70%),
-    radial-gradient(60% 60% at 68% 18%, #e4f3ef 0%, transparent 72%), #f4f6fb;
+    radial-gradient(55% 50% at 78% 72%, #ffe0e7 0%, transparent 70%),
+    radial-gradient(60% 60% at 68% 18%, #e3f4f0 0%, transparent 72%), #f3f6fc;
   background-size: 140% 140%;
   animation: drift 20s ease-in-out infinite alternate;
 }
@@ -276,12 +276,12 @@ h2 em,
 }
 .tint-visual {
   background:
-    radial-gradient(70% 60% at 30% 25%, #f1f8f3 0%, transparent 70%),
+    radial-gradient(70% 60% at 30% 25%, #f0f9f3 0%, transparent 70%),
     var(--tint-visual);
 }
 .tint-photo {
   background:
-    radial-gradient(70% 60% at 30% 25%, #faf6ee 0%, transparent 70%),
+    radial-gradient(70% 60% at 30% 25%, #fbf6ed 0%, transparent 70%),
     var(--tint-photo);
 }
 
@@ -609,7 +609,7 @@ h2 em,
   width: 100%;
   height: 100%;
   border: 0;
-  background: #fff;
+  background: #ffffff;
 }
 .embed-start {
   position: absolute;
@@ -621,8 +621,8 @@ h2 em,
   cursor: pointer;
   background: linear-gradient(
     to top,
-    rgba(28, 34, 51, 0.42),
-    rgba(28, 34, 51, 0.06)
+    rgba(26, 33, 53, 0.42),
+    rgba(26, 33, 53, 0.06)
   );
   font-family: var(--font-body);
 }
@@ -725,7 +725,7 @@ h2 em,
   height: 100%;
   border: 0;
   display: block;
-  background: #000;
+  background: #000000;
 }
 .hl-list {
   display: grid;
@@ -1073,7 +1073,7 @@ h2 em,
   align-items: center;
   justify-content: center;
   padding: 24px;
-  background: rgba(20, 24, 38, 0.9);
+  background: rgba(18, 23, 40, 0.9);
   cursor: zoom-out;
 }
 .lightbox img {
@@ -1090,7 +1090,7 @@ h2 em,
   border: 0;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.14);
-  color: #fff;
+  color: #ffffff;
   font-size: 1.8rem;
   line-height: 1;
   cursor: pointer;
@@ -1310,7 +1310,7 @@ body {
   padding: 6px 16px;
   border-radius: 999px;
   background: var(--ink);
-  color: var(--on-ink, #fff);
+  color: var(--on-ink, #ffffff);
   font-size: 0.76rem;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -1354,13 +1354,13 @@ body {
 }
 .reel-prev {
   justify-self: end;
-  -webkit-mask-image: linear-gradient(to right, transparent, #000 75%);
-  mask-image: linear-gradient(to right, transparent, #000 75%);
+  -webkit-mask-image: linear-gradient(to right, transparent, #000000 75%);
+  mask-image: linear-gradient(to right, transparent, #000000 75%);
 }
 .reel-next {
   justify-self: start;
-  -webkit-mask-image: linear-gradient(to left, transparent, #000 75%);
-  mask-image: linear-gradient(to left, transparent, #000 75%);
+  -webkit-mask-image: linear-gradient(to left, transparent, #000000 75%);
+  mask-image: linear-gradient(to left, transparent, #000000 75%);
 }
 .reel-side:hover,
 .reel-side:focus-visible {
@@ -1381,7 +1381,7 @@ body {
 .reel-side:hover .reel-side-arrow,
 .reel-side:focus-visible .reel-side-arrow {
   background: var(--ink);
-  color: var(--on-ink, #fff);
+  color: var(--on-ink, #ffffff);
 }
 .reel-side-kind {
   font-size: 0.74rem;
@@ -1519,8 +1519,8 @@ body {
 :root {
   --glass: rgba(255, 255, 255, 0.55);
   --glass-line: rgba(255, 255, 255, 0.7);
-  --sky-1: #dfe8f6;
-  --sky-2: #c9d8ec;
+  --sky-1: #dde8f8;
+  --sky-2: #c6d8ef;
 }
 
 /* the soft blue wash behind the top of the page */
@@ -1537,15 +1537,15 @@ body {
   z-index: -1;
   pointer-events: none;
   overflow: hidden;
-  -webkit-mask-image: linear-gradient(#000 55%, transparent);
-  mask-image: linear-gradient(#000 55%, transparent);
+  -webkit-mask-image: linear-gradient(#000000 55%, transparent);
+  mask-image: linear-gradient(#000000 55%, transparent);
 }
 /* silky pastel water ripples (assets/bg-waves.jpg), drifting very slowly */
 .sky::before {
   content: "";
   position: absolute;
   inset: -3% -3% 0;
-  background: #e4ebf5 url("../assets/bg-waves.jpg") center top / cover no-repeat;
+  background: #e2ebf7 url("../assets/bg-waves.jpg") center top / cover no-repeat;
   animation: skyDrift 60s ease-in-out infinite alternate;
   will-change: transform;
 }
@@ -1569,7 +1569,7 @@ body {
   width: 720px;
   height: 720px;
   border-radius: 50%;
-  border: 70px solid rgba(190, 208, 236, 0.28);
+  border: 70px solid rgba(186, 207, 240, 0.28);
   filter: blur(28px);
 }
 
@@ -1655,7 +1655,7 @@ body {
   border-radius: 14px;
   overflow: hidden;
   background: var(--bg-soft);
-  box-shadow: 0 30px 70px rgba(70, 95, 140, 0.18);
+  box-shadow: 0 30px 70px rgba(64, 93, 146, 0.18);
 }
 .hero-photo img {
   width: 100%;
@@ -1679,7 +1679,7 @@ body {
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--muted);
-  box-shadow: 0 10px 30px rgba(70, 95, 140, 0.1);
+  box-shadow: 0 10px 30px rgba(64, 93, 146, 0.1);
 }
 .hero-tag::after {
   content: "";
@@ -1703,7 +1703,7 @@ body {
   border: 1px solid var(--glass-line);
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.7) inset,
-    0 14px 40px rgba(70, 95, 140, 0.06);
+    0 14px 40px rgba(64, 93, 146, 0.06);
   -webkit-backdrop-filter: blur(10px);
   backdrop-filter: blur(10px);
   transition:
@@ -1714,7 +1714,7 @@ body {
   transform: translateY(-4px);
   box-shadow:
     0 1px 0 rgba(255, 255, 255, 0.7) inset,
-    0 20px 46px rgba(70, 95, 140, 0.12);
+    0 20px 46px rgba(64, 93, 146, 0.12);
 }
 .hs-num {
   font-size: 0.7rem;
@@ -1784,7 +1784,7 @@ body {
   border: 1px solid var(--glass-line);
   -webkit-backdrop-filter: blur(20px) saturate(1.2);
   backdrop-filter: blur(20px) saturate(1.2);
-  box-shadow: 0 18px 50px rgba(40, 60, 100, 0.18);
+  box-shadow: 0 18px 50px rgba(35, 58, 105, 0.18);
 }
 .feat-cat {
   font-size: 0.66rem;
@@ -1865,7 +1865,7 @@ body {
   border-radius: 14px;
   overflow: hidden;
   background: var(--bg-soft);
-  box-shadow: 0 24px 60px rgba(70, 95, 140, 0.14);
+  box-shadow: 0 24px 60px rgba(64, 93, 146, 0.14);
 }
 .home-about-photo img {
   width: 100%;
@@ -1881,7 +1881,7 @@ body {
   font-family: var(--font-display);
   font-size: clamp(1.5rem, 2.6vw, 2.15rem);
   line-height: 1.22;
-  color: #39415a;
+  color: #363f5d;
   margin: 14px 0 26px;
   max-width: 24ch;
 }
@@ -1894,8 +1894,8 @@ body {
 .site-footer {
   border-top: 0;
   background:
-    linear-gradient(180deg, var(--bg) 0%, rgba(244, 247, 251, 0.4) 40%, rgba(244, 247, 251, 0.05) 100%),
-    #e4ebf5 url("../assets/bg-waves.jpg") 70% 70% / cover no-repeat;
+    linear-gradient(180deg, var(--bg) 0%, rgba(243, 247, 252, 0.4) 40%, rgba(243, 247, 252, 0.05) 100%),
+    #e2ebf7 url("../assets/bg-waves.jpg") 70% 70% / cover no-repeat;
 }
 .footer-title {
   font-size: clamp(2.2rem, 5vw, 3.6rem);
@@ -1980,8 +1980,8 @@ body {
    ========================================================================== */
 body {
   background:
-    radial-gradient(55% 30% at 92% 46%, #dde7f5 0%, transparent 70%),
-    radial-gradient(50% 30% at 4% 72%, #e3eaf6 0%, transparent 70%), var(--bg);
+    radial-gradient(55% 30% at 92% 46%, #dbe7f7 0%, transparent 70%),
+    radial-gradient(50% 30% at 4% 72%, #e1eaf8 0%, transparent 70%), var(--bg);
 }
 .glass {
   background: rgba(255, 255, 255, 0.46);
@@ -1990,7 +1990,7 @@ body {
   -webkit-backdrop-filter: blur(22px) saturate(1.25);
   backdrop-filter: blur(22px) saturate(1.25);
   box-shadow:
-    0 30px 80px rgba(70, 95, 140, 0.12),
+    0 30px 80px rgba(64, 93, 146, 0.12),
     inset 0 1px 0 rgba(255, 255, 255, 0.85);
 }
 .hero-wrap {
@@ -2023,7 +2023,7 @@ body {
   padding: 10px 10px 16px;
   border-radius: 20px;
   box-shadow:
-    0 18px 50px rgba(70, 95, 140, 0.1),
+    0 18px 50px rgba(64, 93, 146, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.85);
   transition:
     transform 0.4s var(--ease),
@@ -2032,7 +2032,7 @@ body {
 .feat-tile.glass:hover {
   transform: translateY(-4px);
   box-shadow:
-    0 26px 60px rgba(70, 95, 140, 0.16),
+    0 26px 60px rgba(64, 93, 146, 0.16),
     inset 0 1px 0 rgba(255, 255, 255, 0.85);
 }
 .feat-tile .feat-media {
@@ -2079,7 +2079,7 @@ body {
   -webkit-backdrop-filter: blur(22px) saturate(1.25);
   backdrop-filter: blur(22px) saturate(1.25);
   box-shadow:
-    0 24px 60px rgba(70, 95, 140, 0.1),
+    0 24px 60px rgba(64, 93, 146, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.85);
 }
 .home #cats .cat-row:first-child {
@@ -2171,7 +2171,7 @@ body {
   -webkit-backdrop-filter: blur(8px) saturate(1.2);
   backdrop-filter: blur(8px) saturate(1.2);
   box-shadow:
-    0 30px 80px rgba(70, 95, 140, 0.12),
+    0 30px 80px rgba(64, 93, 146, 0.12),
     inset 0 1px 0 rgba(255, 255, 255, 0.85);
 }
 .page-head h1 {
@@ -2202,7 +2202,7 @@ body {
   padding: 10px 10px 18px;
   border-radius: 20px;
   box-shadow:
-    0 18px 50px rgba(70, 95, 140, 0.1),
+    0 18px 50px rgba(64, 93, 146, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.85);
   transition:
     transform 0.4s var(--ease),
@@ -2211,7 +2211,7 @@ body {
 .work-grid .tile.glass:hover {
   transform: translateY(-4px);
   box-shadow:
-    0 26px 60px rgba(70, 95, 140, 0.16),
+    0 26px 60px rgba(64, 93, 146, 0.16),
     inset 0 1px 0 rgba(255, 255, 255, 0.85);
 }
 .tile.glass .tile-media {
@@ -2243,7 +2243,7 @@ body {
   -webkit-backdrop-filter: blur(16px) saturate(1.2);
   backdrop-filter: blur(16px) saturate(1.2);
   box-shadow:
-    0 20px 60px rgba(70, 95, 140, 0.09),
+    0 20px 60px rgba(64, 93, 146, 0.09),
     inset 0 1px 0 rgba(255, 255, 255, 0.85);
 }
 
@@ -2258,7 +2258,7 @@ body {
   -webkit-backdrop-filter: blur(20px) saturate(1.25);
   backdrop-filter: blur(20px) saturate(1.25);
   box-shadow:
-    0 30px 80px rgba(70, 95, 140, 0.12),
+    0 30px 80px rgba(64, 93, 146, 0.12),
     inset 0 1px 0 rgba(255, 255, 255, 0.85);
 }
 .about-photo {
@@ -2275,7 +2275,7 @@ body {
   -webkit-backdrop-filter: blur(20px) saturate(1.25);
   backdrop-filter: blur(20px) saturate(1.25);
   box-shadow:
-    0 24px 60px rgba(70, 95, 140, 0.1),
+    0 24px 60px rgba(64, 93, 146, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.85);
 }
 #experience .exp:first-child {
@@ -2295,7 +2295,7 @@ body {
   -webkit-backdrop-filter: blur(12px);
   backdrop-filter: blur(12px);
   box-shadow:
-    0 14px 40px rgba(70, 95, 140, 0.06),
+    0 14px 40px rgba(64, 93, 146, 0.06),
     inset 0 1px 0 rgba(255, 255, 255, 0.7);
 }
 .chips-static li {
@@ -2312,7 +2312,7 @@ body {
   -webkit-backdrop-filter: blur(20px) saturate(1.25);
   backdrop-filter: blur(20px) saturate(1.25);
   box-shadow:
-    0 24px 60px rgba(70, 95, 140, 0.1),
+    0 24px 60px rgba(64, 93, 146, 0.1),
     inset 0 1px 0 rgba(255, 255, 255, 0.85);
 }
 .contact-list li:first-child {
@@ -2391,8 +2391,118 @@ body {
   z-index: -1;
   pointer-events: none;
   background:
-    linear-gradient(180deg, rgba(244, 247, 251, 0.5) 0%, rgba(244, 247, 251, 0.25) 40%, rgba(244, 247, 251, 0.05) 100%),
-    #e4ebf5 url("../assets/bg-waves.jpg") 70% 70% / cover no-repeat;
-  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 55%);
-  mask-image: linear-gradient(180deg, transparent 0%, #000 55%);
+    linear-gradient(180deg, rgba(243, 247, 252, 0.5) 0%, rgba(243, 247, 252, 0.25) 40%, rgba(243, 247, 252, 0.05) 100%),
+    #e2ebf7 url("../assets/bg-waves.jpg") 70% 70% / cover no-repeat;
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000000 55%);
+  mask-image: linear-gradient(180deg, transparent 0%, #000000 55%);
+}
+
+
+/* ==========================================================================
+   SELECTED WORK ROTATOR (home): 7 second timer line, smooth swap
+   ========================================================================== */
+.feat {
+  --gap: 24px;
+  --feat-ms: 7000ms;
+  --feat-dur: 950ms;
+  gap: 22px;
+  grid-template-columns: minmax(0, 1fr);
+}
+.feat-timer {
+  height: 2px;
+  border-radius: 2px;
+  overflow: hidden;
+  background: color-mix(in srgb, var(--ink) 13%, transparent);
+}
+.feat-timer i {
+  display: block;
+  height: 100%;
+  background: var(--ink);
+  transform: scaleX(0);
+  transform-origin: left center;
+}
+.feat-timer i.is-run {
+  animation: featFill var(--feat-ms) linear forwards;
+}
+@keyframes featFill {
+  to {
+    transform: scaleX(1);
+  }
+}
+.feat:hover .feat-timer i,
+.feat:focus-within .feat-timer i,
+.feat.is-paused .feat-timer i {
+  animation-play-state: paused;
+}
+
+/* top project: old one fades out while the new one fades in on the same spot */
+.feat-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+.feat-top > .feat-main {
+  grid-area: 1 / 1;
+  transition: opacity var(--feat-dur) var(--ease);
+}
+.feat-top > .feat-main.is-in {
+  opacity: 0;
+}
+.feat-top > .feat-main.is-out {
+  pointer-events: none;
+}
+.feat.is-swapping .feat-top > .feat-main.is-in {
+  opacity: 1;
+}
+.feat.is-swapping .feat-top > .feat-main.is-out {
+  opacity: 0;
+}
+
+/* the row: a track that slides one tile to the left */
+.feat-row.feat-track {
+  display: flex;
+  gap: var(--gap);
+  --tw: calc((100% - (var(--per, 3) - 1) * var(--gap)) / var(--per, 3));
+  transition: transform var(--feat-dur) cubic-bezier(0.65, 0, 0.25, 1);
+}
+.feat-track > .feat-tile {
+  flex: 0 0 var(--tw);
+  min-width: 0;
+  transition:
+    opacity calc(var(--feat-dur) * 0.75) var(--ease),
+    transform var(--feat-dur) var(--ease),
+    box-shadow 0.4s var(--ease);
+}
+.feat.is-swapping .feat-row.feat-track {
+  transform: translateX(calc(-1 * (var(--tw) + var(--gap))));
+}
+/* the far-left tile melts up into the big project */
+.feat-track > .feat-tile.is-leaving {
+  opacity: 0;
+  transform: translateY(-36px) scale(0.94);
+  pointer-events: none;
+}
+/* the old top project slides in from the right as the newest tile */
+.feat-track > .feat-tile.is-in {
+  opacity: 0;
+}
+.feat.is-swapping .feat-track > .feat-tile.is-in {
+  opacity: 1;
+  transition-delay: 120ms;
+}
+.feat.no-anim,
+.feat.no-anim * {
+  transition: none !important;
+}
+@media (max-width: 640px) {
+  .feat {
+    --gap: 14px;
+  }
+  .feat-row.feat-track {
+    --tw: 82%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .feat {
+    --feat-dur: 1ms !important;
+  }
 }

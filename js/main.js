@@ -362,7 +362,7 @@
   function featMainHTML(p, n) {
     var contain = p.coverFit === "contain" || p.coverFit === "fit";
     var tags = arr(p.tools).length ? arr(p.tools).slice(0, 4).join(" · ") : (p.type || "");
-    return '<a class="feat-main reveal" href="' + projectUrl(p) + '">' +
+    return '<a class="feat-main" href="' + projectUrl(p) + '">' +
       '<div class="feat-media tile-media' + (p.coverFit === "fit" ? " is-fit" : contain ? " is-contain" : "") + '"' + (contain && p.coverBg ? ' style="background:' + esc(p.coverBg) + '"' : "") + ">" + coverHTML(p) + "</div>" +
       '<div class="feat-card"><p class="feat-cat">' + pad2(n) + " / " + esc(catOf(p.category).label) + "</p>" +
       "<h3>" + esc(p.title) + "</h3>" +
@@ -373,12 +373,82 @@
   function featTileHTML(p, n) {
     var contain = p.coverFit === "contain" || p.coverFit === "fit";
     var chips = String(p.type || "").split(" · ").filter(Boolean).slice(0, 2);
-    return '<a class="feat-tile glass reveal" href="' + projectUrl(p) + '">' +
+    return '<a class="feat-tile glass" href="' + projectUrl(p) + '">' +
       '<div class="feat-media tile-media' + (p.coverFit === "fit" ? " is-fit" : contain ? " is-contain" : "") + '"' + (contain && p.coverBg ? ' style="background:' + esc(p.coverBg) + '"' : "") + ">" + coverHTML(p) + "</div>" +
       '<div class="feat-info"><p class="feat-cat">' + pad2(n) + " / " + esc(catOf(p.category).label) + "</p>" +
       "<h3>" + esc(p.title) + "</h3>" +
       '<div class="feat-foot"><span class="mini-tags">' + chips.map(function (c) { return '<span class="mini-tag">' + esc(c) + "</span>"; }).join("") +
       '</span><span class="feat-arrow" aria-hidden="true">&rarr;</span></div></div></a>';
+  }
+
+  /* Selected work rotator. The top project fades to the next one, the row shifts left, the
+     left-most tile melts into the top and the old top slides in on the right as the last tile. */
+  var FEAT_MS = 7000, FEAT_SWAP_MS = 950;
+  function setupFeatured(list) {
+    var box = $("#featured"), len = list.length, cur = 0, busy = false, paused = { seen: false, tab: false };
+    function at(i) { return list[((i % len) + len) % len]; }
+    function el(html) { var d = document.createElement("div"); d.innerHTML = html; return d.firstChild; }
+
+    box.classList.add("reveal");
+    box.innerHTML = (len > 1 ? '<div class="feat-timer" aria-hidden="true"><i></i></div>' : "") +
+      '<div class="feat-top"></div>' +
+      (len > 1 ? '<div class="feat-row feat-track" style="--per:' + (len - 1) + '"></div>' : "");
+    var top = $(".feat-top", box), track = $(".feat-track", box), bar = $(".feat-timer i", box);
+    top.appendChild(el(featMainHTML(at(0).p, at(0).n)));
+    for (var k = 1; k < len; k++) track.appendChild(el(featTileHTML(at(k).p, at(k).n)));
+    if (len < 2) return;
+
+    box.style.setProperty("--feat-ms", FEAT_MS + "ms");
+    box.style.setProperty("--feat-dur", FEAT_SWAP_MS + "ms");
+
+    function startTimer() {
+      bar.classList.remove("is-run");
+      void bar.offsetWidth;
+      bar.classList.add("is-run");
+    }
+    function syncPause() { box.classList.toggle("is-paused", !paused.seen || paused.tab); }
+
+    function advance() {
+      if (busy) return;
+      busy = true;
+      var next = (cur + 1) % len;
+      var oldMain = top.firstElementChild, leaving = track.firstElementChild;
+      var newMain = el(featMainHTML(at(next).p, at(next).n));
+      var incoming = el(featTileHTML(at(cur).p, at(cur).n));
+      newMain.classList.add("is-in");
+      oldMain.classList.add("is-out");
+      incoming.classList.add("is-in");
+      top.appendChild(newMain);
+      track.appendChild(incoming);
+      void box.offsetWidth;
+      box.classList.add("is-swapping");
+      leaving.classList.add("is-leaving");
+      startTimer();
+      setTimeout(function () {
+        oldMain.remove();
+        leaving.remove();
+        newMain.classList.remove("is-in");
+        incoming.classList.remove("is-in");
+        box.classList.add("no-anim");
+        box.classList.remove("is-swapping");
+        void box.offsetWidth;
+        box.classList.remove("no-anim");
+        cur = next;
+        busy = false;
+      }, FEAT_SWAP_MS + 60);
+    }
+
+    bar.addEventListener("animationend", advance);
+    /* only run while the section is on screen and the tab is in front */
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (es) {
+        paused.seen = es[0].isIntersecting;
+        syncPause();
+      }, { threshold: 0.25 }).observe(box);
+    } else { paused.seen = true; }
+    document.addEventListener("visibilitychange", function () { paused.tab = document.hidden; syncPause(); });
+    syncPause();
+    startTimer();
   }
 
   function renderHome() {
@@ -403,11 +473,10 @@
       $("#skills-section").hidden = true;
     }
 
-    /* selected work: the first one big with a glass card, the rest in a row */
+    /* selected work: one big project on top, the rest in a row underneath; they rotate every 7 seconds */
     var feat = arr(P.featured).map(findProject).filter(Boolean);
     if (feat.length) {
-      $("#featured").innerHTML = featMainHTML(feat[0], 1) +
-        (feat.length > 1 ? '<div class="feat-row">' + feat.slice(1).map(function (p, i) { return featTileHTML(p, i + 2); }).join("") + "</div>" : "");
+      setupFeatured(feat.map(function (p, i) { return { p: p, n: i + 1 }; }));
     } else {
       $("#featured-section").hidden = true;
     }
