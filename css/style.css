@@ -1545,7 +1545,7 @@ body {
   content: "";
   position: absolute;
   inset: -3% -3% 0;
-  background: #ddeafc url("../assets/bg-waves.jpg") center top / cover no-repeat;
+  background: #ddeafc url("../assets/bg-waves-top.jpg") center top / cover no-repeat;
   animation: skyDrift 60s ease-in-out infinite alternate;
   will-change: transform;
 }
@@ -2731,4 +2731,57 @@ body {
 }
 .media-group.is-pair > :first-child:nth-last-child(odd) {
   grid-column: 1 / -1; /* an odd number of photos: the first one runs full width */
+}
+
+
+/* ==========================================================================
+   COLOUR WASHES DOWN THE PAGE BODY + STACKED SELECTED WORK ON PHONES
+   ========================================================================== */
+/* soft coloured clouds that repeat down the page, so the middle isn't a flat colour */
+body {
+  background:
+    radial-gradient(ellipse 46% 300px at 4% 300px, rgba(190, 172, 255, 0.4), transparent 72%) 0 0 / 100% 2000px repeat-y,
+    radial-gradient(ellipse 44% 320px at 98% 800px, rgba(140, 214, 246, 0.4), transparent 72%) 0 0 / 100% 2000px repeat-y,
+    radial-gradient(ellipse 42% 280px at 8% 1250px, rgba(255, 186, 214, 0.34), transparent 72%) 0 0 / 100% 2000px repeat-y,
+    radial-gradient(ellipse 44% 300px at 96% 1600px, rgba(160, 184, 255, 0.38), transparent 72%) 0 0 / 100% 2000px repeat-y,
+    var(--bg);
+}
+
+/* phones: Selected work shows all four. The top project first, then the other three
+   stacked underneath as compact rows. On each swap the stack slides UP instead of left. */
+@media (max-width: 640px) {
+  .feat-row.feat-track {
+    flex-direction: column;
+    gap: 12px;
+  }
+  .feat-track > .feat-tile {
+    flex: 0 0 auto;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 116px minmax(0, 1fr);
+    gap: 14px;
+    align-items: center;
+    padding: 8px;
+  }
+  .feat-tile .feat-media {
+    aspect-ratio: 1 / 1;
+    margin-bottom: 0;
+    border-radius: 12px;
+  }
+  .feat-tile .feat-info {
+    padding: 0 4px 0 0;
+  }
+  .feat-tile h3 {
+    font-size: 1.3rem;
+    margin-top: 2px;
+  }
+  .feat-tile .feat-foot {
+    margin-top: 8px;
+  }
+  .feat-tile .mini-tag:nth-child(n + 2) {
+    display: none; /* one tag is enough in the compact rows */
+  }
+  .feat.is-swapping .feat-row.feat-track {
+    transform: translateY(calc(-1 * var(--shift-y, 0px)));
+  }
 }

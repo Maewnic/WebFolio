@@ -391,7 +391,7 @@
       '</span><span class="feat-arrow" aria-hidden="true">&rarr;</span></div></div></a>';
   }
 
-  /* Selected work rotator. The top project fades to the next one, the row shifts left, the
+  /* Selected work rotator. The top project fades to the next one, the row shifts left (up on phones), the
      left-most tile slides away and the old top slides in on the right as the last tile. */
   var FEAT_MS = 8000, FEAT_SWAP_MS = 950;
   function setupFeatured(list) {
@@ -422,6 +422,12 @@
       busy = true;
       var next = (cur + 1) % len;
       var oldMain = top.firstElementChild, leaving = track.firstElementChild;
+      /* phones stack the tiles: slide up by one tile, and hold the height so the page doesn't jump */
+      var stacked = getComputedStyle(track).flexDirection === "column", wrap = track.parentNode;
+      if (stacked) {
+        box.style.setProperty("--shift-y", (leaving.offsetHeight + (parseFloat(getComputedStyle(track).rowGap) || 0)) + "px");
+        wrap.style.height = wrap.offsetHeight + "px";
+      }
       var newMain = el(featMainHTML(at(next).p, at(next).n));
       var incoming = el(featTileHTML(at(cur).p, at(cur).n));
       newMain.classList.add("is-in");
@@ -440,6 +446,7 @@
         incoming.classList.remove("is-in");
         box.classList.add("no-anim");
         box.classList.remove("is-swapping");
+        wrap.style.height = "";
         void box.offsetWidth;
         box.classList.remove("no-anim");
         cur = next;
