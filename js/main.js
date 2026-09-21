@@ -359,9 +359,10 @@
   function emph(t) { return esc(t).replace(/\*([^*]+)\*/g, "<em>$1</em>"); }
   function pad2(n) { return (n < 10 ? "0" : "") + n; }
 
-  /* the picture on the home page's Selected work: homeCover (with homePos = focus point) if set, else the normal cover */
-  function featMediaHTML(p) {
-    if (p.homeCover) {
+  /* the picture on the home page's Selected work: the big top project uses homeCover (with homePos = focus point)
+     if set; the small tiles in the row always use the normal cover */
+  function featMediaHTML(p, big) {
+    if (big && p.homeCover) {
       return '<div class="feat-media tile-media"><img src="' + esc(p.homeCover) + '" alt="' + esc(p.homeAlt || p.coverAlt || p.title) + '" decoding="async" style="object-position:' + esc(p.homePos || "50% 50%") + '"></div>';
     }
     var contain = p.coverFit === "contain" || p.coverFit === "fit";
@@ -371,7 +372,7 @@
     var contain = p.coverFit === "contain" || p.coverFit === "fit";
     var tags = arr(p.tools).length ? arr(p.tools).slice(0, 4).join(" · ") : (p.type || "");
     return '<a class="feat-main" href="' + projectUrl(p) + '">' +
-      featMediaHTML(p) +
+      featMediaHTML(p, true) +
       '<div class="feat-card"><p class="feat-cat">' + pad2(n) + " / " + esc(catOf(p.category).label) + "</p>" +
       "<h3>" + esc(p.title) + "</h3>" +
       (p.tagline ? '<p class="feat-text">' + esc(p.tagline) + "</p>" : "") +
@@ -585,9 +586,60 @@
     h += highlightsHTML(p.highlights, p.highlightsText);
     h += tabsHTML(p.tabs);
 
+    /* photo slideshow: crossfading pictures, arrows, dots, swipe. No auto-play. */
+    function slideshowHTML(list, title) {
+      list = arr(list).filter(function (g) { return g && g.src; });
+      if (!list.length) return "";
+      return '<div class="slides" role="group" aria-roledescription="carousel" aria-label="' + esc((title || "Photos") + " photo slideshow") + '" tabindex="0">' +
+        '<div class="slides-frame">' +
+        list.map(function (g, i) {
+          return '<figure class="slide' + (i === 0 ? " is-on" : "") + '" aria-hidden="' + (i === 0 ? "false" : "true") + '"><img src="' + esc(g.src) + '" alt="' + esc(g.alt || "") + '"' +
+            (i === 0 ? ' decoding="async"' : ' loading="lazy" decoding="async"') + (g.caption ? ' data-cap="' + esc(g.caption) + '"' : "") + "></figure>";
+        }).join("") +
+        (list.length > 1 ? '<button type="button" class="slides-btn slides-prev" aria-label="Previous photo">&larr;</button><button type="button" class="slides-btn slides-next" aria-label="Next photo">&rarr;</button>' : "") +
+        "</div>" +
+        '<div class="slides-foot"><p class="slides-cap" aria-live="polite"></p>' +
+        (list.length > 1 ? '<div class="slides-nav"><span class="slides-count"></span><span class="slides-dots">' +
+          list.map(function (g, i) { return '<button type="button" class="slides-dot" aria-label="Photo ' + (i + 1) + '"></button>'; }).join("") + "</span></div>" : "") +
+        "</div></div>";
+    }
+    function setupSlides(root) {
+      [].forEach.call((root || document).querySelectorAll(".slides"), function (el) {
+        var slides = el.querySelectorAll(".slide"), dots = el.querySelectorAll(".slides-dot"), n = slides.length, idx = 0;
+        var cap = el.querySelector(".slides-cap"), count = el.querySelector(".slides-count");
+        function show(i) {
+          idx = ((i % n) + n) % n;
+          [].forEach.call(slides, function (sl, k) {
+            var on = k === idx;
+            sl.classList.toggle("is-on", on);
+            sl.setAttribute("aria-hidden", on ? "false" : "true");
+          });
+          [].forEach.call(dots, function (d, k) { if (k === idx) d.setAttribute("aria-current", "true"); else d.removeAttribute("aria-current"); });
+          cap.textContent = slides[idx].querySelector("img").getAttribute("data-cap") || "";
+          if (count) count.textContent = (idx + 1) + " / " + n;
+        }
+        var pv = el.querySelector(".slides-prev"), nx = el.querySelector(".slides-next");
+        if (pv) pv.addEventListener("click", function () { show(idx - 1); });
+        if (nx) nx.addEventListener("click", function () { show(idx + 1); });
+        [].forEach.call(dots, function (d, k) { d.addEventListener("click", function () { show(k); }); });
+        el.addEventListener("keydown", function (e) {
+          if (e.key === "ArrowLeft") { show(idx - 1); e.preventDefault(); }
+          else if (e.key === "ArrowRight") { show(idx + 1); e.preventDefault(); }
+        });
+        var x0 = null;
+        el.addEventListener("touchstart", function (e) { x0 = e.touches[0].clientX; }, { passive: true });
+        el.addEventListener("touchend", function (e) {
+          if (x0 === null) return;
+          var dx = e.changedTouches[0].clientX - x0; x0 = null;
+          if (Math.abs(dx) > 40) show(idx + (dx < 0 ? 1 : -1));
+        }, { passive: true });
+        show(0);
+      });
+    }
+
     /* story sections and video groups (empty ones are skipped) */
     function block(s) {
-      var text = paras(s.text), media = mediaGroup(s.media, s.title);
+      var text = paras(s.text), media = mediaGroup(s.media, s.title) + slideshowHTML(s.slideshow, s.title);
       if (!text && !media) return "";
       return '<section class="container psec reveal">' +
         (s.title ? '<div class="psec-grid"><h2>' + esc(s.title) + '</h2><div class="psec-text">' + text + "</div></div>" : (text ? '<div class="psec-text psec-solo">' + text + "</div>" : "")) +
@@ -614,6 +666,7 @@
     box.innerHTML = h;
     setupHighlights(p.highlights);
     setupTabs();
+    setupSlides(box);
   }
 
   /* ------------------------------------------------------------------- about */

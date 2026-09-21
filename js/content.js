@@ -29,7 +29,7 @@
      cover         the main image (card + top of the project page)
      coverFit      "contain" shows a logo whole with space around it, "fit" shows the whole image with no space
                    (set coverBg to the background colour, e.g. "#ffffff")
-     homeCover     optional: a different picture for this project on the home page's Selected work (homePos = "50% 50%" picks which part stays in view)
+     homeCover     optional: a different picture for when this project is the big one on the home page's Selected work (the small tiles keep the cover; homePos = "50% 50%" picks which part stays in view)
      hero          optional: show a video/embed at the top instead of the cover image
      context       e.g. "RMIT University · Virtual Environment" (shows as "Made for")
      role          what you did
@@ -41,6 +41,7 @@
      tabs          groups of videos/reels shown as tabs (see the TSA project)
      sections      [{ title, text, media }]  story sections; text can have several paragraphs
                    separated by a blank line. Empty sections are skipped.
+     sections[].slideshow   optional photo slideshow inside a section (arrows, dots, swipe, no auto-play): [{ src, alt, caption }]
      mediaRows     groups of videos/reels shown together, [{ title, text, media: [ ... ] }]
      gallery       [{ src, alt }] for a picture gallery; galleryLayout: "grid" or "masonry"
 
@@ -167,7 +168,7 @@ const PORTFOLIO = {
       size: "l",
       hidden: false,
       cover: "assets/projects/hikari/cover.jpg",
-      homeCover: "assets/projects/hikari/home.jpg",   // picture used on the home page's Selected work
+      homeCover: "assets/projects/hikari/home.jpg",   // picture shown when it is the big top project on the home page
       homePos: "50% 42%",                             // which part stays in view when it is cropped
       homeAlt: "Inside the Hikari world in VRChat at night: a torii gate, lanterns and a glowing stage over the water",
       context: "",
@@ -180,7 +181,22 @@ const PORTFOLIO = {
         {
           title: "The world",
           text: "Guests arrive through a torii gate entrance into an interconnected VIP lounge, with a full sauna and onsen area linked by bridges and walkways. They can order from an in-world chef, listen to live singers, and play chess, Othello and pool, while staff dressed as maiko and geisha host the evening.\n\nHikari ran as a weekly event on Wednesdays at 8pm (GMT+7), mainly for Thai players.\n\nEarly builds used free and marketplace assets. Over time I moved toward original geometry made with ProBuilder in Unity, especially for the indoor spaces.",
-          media: [{ type: "instagram", url: "https://www.instagram.com/reel/DWu4b81Ado0/" }]
+          media: [{ type: "instagram", url: "https://www.instagram.com/reel/DWu4b81Ado0/" }],
+          slideshow: [
+            { src: "assets/projects/hikari/torii-night.jpg", alt: "The glowing 光 torii gate over the water in the Hikari world at night, with a small boat and lily pads", caption: "The torii gate at the entrance" },
+            { src: "assets/projects/hikari/entrance-night.jpg", alt: "Looking toward the torii gate from a lantern-lit deck at night", caption: "Arriving at the venue" },
+            { src: "assets/projects/hikari/boardwalk-stage.jpg", alt: "A curved wooden walkway leading to the stage area over dark water", caption: "Walkway to the stage" },
+            { src: "assets/projects/hikari/bridge-lanterns.jpg", alt: "A red arched bridge with glowing lanterns and bamboo, leading to a pavilion", caption: "Bridges and lanterns" },
+            { src: "assets/projects/hikari/aerial-north.jpg", alt: "Aerial view of the whole Hikari world at night: pavilions, bridges and lanterns", caption: "The world from above" },
+            { src: "assets/projects/hikari/aerial-lounge.jpg", alt: "Aerial view of the roofs, lounge and event spaces at night", caption: "The lounge and event spaces from above" },
+            { src: "assets/projects/hikari/bar.jpg", alt: "Inside the bar: paper lanterns, wooden counter and noren curtains", caption: "The bar" },
+            { src: "assets/projects/hikari/vip-zone.jpg", alt: "The VIP zone with floor cushions, low tables, posters and the 光 sign", caption: "The VIP zone" },
+            { src: "assets/projects/hikari/sauna-1.jpg", alt: "A wooden sauna room with tiered benches and rolled towels", caption: "Sauna" },
+            { src: "assets/projects/hikari/sauna-2.jpg", alt: "A second sauna room with warm lighting and a dark marble floor", caption: "Sauna, second room" },
+            { src: "assets/projects/hikari/sink-room.jpg", alt: "A wooden washroom with a basin beside the sauna entrance", caption: "Washroom" },
+            { src: "assets/projects/hikari/restroom-1.jpg", alt: "A restroom with a paper screen window, basin and a bamboo plant", caption: "Restroom" },
+            { src: "assets/projects/hikari/restroom-2.jpg", alt: "A second restroom with a shoji window, bamboo and a wooden bench", caption: "Restroom, second room" }
+          ]
         },
         {
           title: "Brand",
@@ -190,7 +206,7 @@ const PORTFOLIO = {
         {
           title: "Community & operations",
           text: "The community grew to 800+ members across platforms, with 10,000+ visitors to the world. I moderated engagement, resolved community issues, and coordinated a small team of volunteer creators, tracking milestones and delegating tasks.\n\nI managed the VIP membership system and staff operations, with a flexible internal accounting structure that tracked monthly and one-off daily VIP purchases against volunteer staff attendance, so revenue could be shared with the staff every month.",
-          media: []
+          media: [{ type: "image", url: "assets/projects/hikari/staff-group.jpg", alt: "The Hikari staff and community together on the wooden deck in VRChat", caption: "The Hikari staff and community" }]
         }
       ],
       gallery: [],
