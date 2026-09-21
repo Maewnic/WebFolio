@@ -1470,7 +1470,7 @@ body {
   .reel-frame {
     grid-column: 1 / -1;
     grid-row: 1;
-    margin-top: 0;
+    margin-top: 46px; /* room for the RECAP / PROMO label that sits above the reel */
     width: 100%;
   }
   .reel-foot {
