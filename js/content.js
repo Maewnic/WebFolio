@@ -107,12 +107,13 @@ const PORTFOLIO = {
 
   /* ----------------------------- HOME: SELECTED WORK ----------------------------- */
   // These rotate on the home page every 8 seconds (the big one at the top, the rest in a row). Use project slugs.
-  featured: ["lakes-echo", "hikari", "tsa-content", "given-watch"],
+  featured: ["tsa-content", "hikari", "lakes-echo", "given-watch"],
 
   /* ----------------------------- PROJECTS ----------------------------- */
   projects: [
 
-    /* ============================ IMMERSIVE & INTERACTIVE ============================ */
+
+    /* The order below is the order on the Work page ("All" tab), and the "Next project" order. */
 
     {
       slug: "lakes-echo",
@@ -154,6 +155,85 @@ const PORTFOLIO = {
           media: []
         }
       ],
+      gallery: [],
+      galleryLayout: "grid"
+    },
+
+    {
+      slug: "tsa-content",
+      title: "TSA",
+      category: "content",
+      type: "Video production · Content creation",
+      tagline: "Game-show style event recaps, plus promo and sponsor reels.",
+      summary: "Content for the Melbourne University Thai Student Association (MUTSA). I made most of the event recap videos. I narrate what's happening, film it, edit it, caption it and do the voice acting over it, so each recap plays like a short TV game show instead of a typical club event video. I also make meme-style promo reels and sponsor reels.",
+      status: "",
+      size: "l",
+      hidden: false,
+      cover: "assets/projects/tsa-content/cover.jpg",
+      homeCover: "assets/projects/tsa-content/home.jpg",
+      homePos: "50% 66%",
+      homeAlt: "Group photo of TSA members cheering on the beach",
+      coverFit: "contain",       // logo: shown whole instead of cropped
+      coverBg: "#ffffff",
+      context: "Melbourne University Thai Student Association (MUTSA)",
+      year: "Sep 2024 – Present",
+      role: "PR content creator: narration, filming, editing, captions and voice acting",
+      collaborators: [],
+      tools: ["CapCut"],
+      links: [
+        { label: "TSA on Instagram", url: "https://www.instagram.com/tsa_unimelb/" }
+      ],
+
+      // HIGHLIGHT REELS: one big reel at a time with left/right arrows (loops around).
+      // Each one can have a label shown in the top-right corner: "Recap", "Promo" or "Sponsor".
+      // Instagram reels can't auto-play the next one, so the arrows do the switching.
+      highlightsText: "A few of my favourites across the three kinds of content. Use the arrows to move through them.",
+      highlights: [
+        { type: "instagram", url: "https://www.instagram.com/reel/DXBQEq8iafh/", label: "Recap" },
+        { type: "instagram", url: "https://www.instagram.com/reel/DHXv7YfSWy7/", label: "Recap" },
+        { type: "instagram", url: "https://www.instagram.com/reel/DP0_X91iWNm/", label: "Promo" },
+        { type: "instagram", url: "https://www.instagram.com/reel/Db2VteHpvpA/", label: "Sponsor" },
+        { type: "instagram", url: "https://www.instagram.com/reel/DIoE2tPJSIv/", label: "Recap" },
+        { type: "instagram", url: "https://www.instagram.com/reel/DXqvghGidtw/", label: "Sponsor" }
+      ],
+
+      // THREE CATEGORIES shown as tabs, newest first. Only the first few load at once,
+      // the rest appear with "Show more". Empty tabs stay hidden.
+      tabs: [
+        { title: "Recap Videos", text: "", media: [
+          { type: "instagram", url: "https://www.instagram.com/reel/DbcY8tZJgGe/" },
+          { type: "instagram", url: "https://www.instagram.com/reel/DX5nCMHpOAT/" },
+          { type: "instagram", url: "https://www.instagram.com/reel/DXoGNSLCXbd/" },
+          { type: "instagram", url: "https://www.instagram.com/reel/DXBQEq8iafh/" },
+          { type: "instagram", url: "https://www.instagram.com/reel/DV0HKtlCQIB/" },
+          { type: "instagram", url: "https://www.instagram.com/reel/DPJKJEniR0J/" },
+          { type: "instagram", url: "https://www.instagram.com/reel/DOixCDkCVW9/" },
+          { type: "instagram", url: "https://www.instagram.com/reel/DM-IBt-pNYG/" },
+          { type: "instagram", url: "https://www.instagram.com/reel/DK8mEV9J9fQ/" },
+          { type: "instagram", url: "https://www.instagram.com/reel/DI_Ma31J1Zs/" },
+          { type: "instagram", url: "https://www.instagram.com/reel/DIoE2tPJSIv/" },
+          { type: "instagram", url: "https://www.instagram.com/reel/DHXv7YfSWy7/" },
+          { type: "instagram", url: "https://www.instagram.com/reel/DAihzqdyoB2/" }
+        ] },
+        { title: "Promo Videos", text: "", media: [
+          { type: "instagram", url: "https://www.instagram.com/reel/DYyz9GsJ_tQ/" },
+          { type: "instagram", url: "https://www.instagram.com/reel/DYt0fYjp0Eu/" },
+          { type: "instagram", url: "https://www.instagram.com/reel/DXY3dUAiZek/" },
+          { type: "instagram", url: "https://www.instagram.com/reel/DQFrYImE7Lt/" },
+          { type: "instagram", url: "https://www.instagram.com/reel/DP8JU6-iY98/" },
+          { type: "instagram", url: "https://www.instagram.com/reel/DP0_X91iWNm/" },
+          { type: "instagram", url: "https://www.instagram.com/reel/DKMxUe9JriQ/" },
+          { type: "instagram", url: "https://www.instagram.com/reel/DIGLnx5JwU6/" }
+        ] },
+        { title: "Sponsor Videos", text: "", media: [
+          { type: "instagram", url: "https://www.instagram.com/reel/DcQPXCdJIAe/" },
+          { type: "instagram", url: "https://www.instagram.com/reel/Db2VteHpvpA/" },
+          { type: "instagram", url: "https://www.instagram.com/reel/DbumuT8JR3n/" },
+          { type: "instagram", url: "https://www.instagram.com/reel/DXqvghGidtw/" }
+        ] }
+      ],
+
+      sections: [],
       gallery: [],
       galleryLayout: "grid"
     },
@@ -252,7 +332,6 @@ const PORTFOLIO = {
       galleryLayout: "grid"
     },
 
-
     {
       slug: "drift",
       title: "DRIFT",
@@ -277,190 +356,6 @@ const PORTFOLIO = {
           media: []
         }
       ],
-      gallery: [],
-      galleryLayout: "grid"
-    },
-    {
-      slug: "haul",
-      title: "HAUL",
-      category: "immersive",
-      type: "Game · Procedural rhetoric",
-      tagline: "A shopping game where the only way to win is to walk away.",
-      summary: "A game about shopping where the player wins by walking away. It's a procedural rhetoric piece: the point about consumption is made through the rules, not through text.",
-      status: "",
-      size: "s",
-      hidden: false,
-      cover: "assets/projects/haul/cover.jpg",
-      hero: { type: "youtube", url: "https://youtu.be/gFsbdSgHLlI" },
-      context: "RMIT University · Minimalism, Limits & Constraints",
-      year: "",
-      role: "",
-      collaborators: [],
-      tools: [],
-      links: [],
-      sections: [],
-      gallery: [],
-      galleryLayout: "grid"
-    },
-    {
-      slug: "liminal-lavatory",
-      title: "Liminal Lavatory",
-      category: "immersive",
-      type: "VR multisensory experience",
-      tagline: "The Keep It In! bathroom maze, reworked as a VR multisensory experience.",
-      summary: "A sub-project that reuses the bathroom maze from Keep It In! and turns it into a VR multisensory experience.",
-      status: "",
-      size: "s",
-      hidden: false,
-      cover: "assets/projects/liminal-lavatory/cover.jpg",
-      hero: { type: "youtube", url: "https://youtu.be/C0TI0wnjY78" },
-      context: "RMIT University · Heighten: Multi-Sensory Experience",
-      year: "",
-      role: "",
-      collaborators: [],
-      tools: ["Unity"],
-      links: [],
-      sections: [],
-      gallery: [],
-      galleryLayout: "grid"
-    },
-
-
-    {
-      slug: "scroll-to-space",
-      title: "Scroll to Space",
-      category: "immersive",
-      type: "Interactive website",
-      tagline: "An educational website where scrolling up is climbing into space.",
-      summary: "A scroll-driven infographic that turns scrolling into a climb from the ground to space. It's built with vanilla JavaScript and CSS, using real atmospheric data.",
-      status: "",
-      size: "w",
-      hidden: false,
-      cover: "assets/projects/scroll-to-space/cover.jpg",
-      hero: { type: "embed", url: "https://maewnic.github.io/Assignment3_ScrollToSpace/", poster: "assets/projects/scroll-to-space/cover.jpg", label: "Try it here" },
-      context: "RMIT University",
-      year: "Oct 2025",
-      role: "",
-      collaborators: [],
-      tools: ["JavaScript", "CSS", "HTML"],
-      links: [{ label: "Open the website", url: "https://maewnic.github.io/Assignment3_ScrollToSpace/" }],
-      sections: [
-        {
-          title: "How it works",
-          text: "The page loads scrolled to the bottom, so scrolling up mirrors climbing. An altitude counter blends a linear scale for the first 80 km with an exponential one after that, reaching 10,000 km. The background darkens from sky blue to black along the way, and hovering reveals captions about each layer.",
-          media: []
-        }
-      ],
-      gallery: [],
-      galleryLayout: "grid"
-    },
-
-    {
-      slug: "study-music-player",
-      title: "Study Music Player",
-      category: "immersive",
-      type: "Interactive website",
-      tagline: "An ambient music player with a built-in Pomodoro timer.",
-      summary: "An ambient study music player with a Pomodoro timer built in: 25-minute study blocks and 5-minute breaks that cycle automatically and sync with playback.",
-      status: "",
-      size: "w",
-      hidden: false,
-      cover: "assets/projects/study-music-player/cover.jpg",
-      hero: { type: "embed", url: "https://maewnic.github.io/Assignment2/mediaPlayer/", poster: "assets/projects/study-music-player/cover.jpg", label: "Try it here" },
-      context: "RMIT University",
-      year: "Aug 2025",
-      role: "",
-      collaborators: [],
-      tools: ["JavaScript", "CSS", "HTML", "Illustrator"],
-      links: [{ label: "Open the player", url: "https://maewnic.github.io/Assignment2/mediaPlayer/" }],
-      sections: [
-        {
-          title: "Design",
-          text: "The play and pause button is oversized and centred, and the spacebar toggles playback. The headphones icon is a hand-drawn Illustrator design, and the background is a photo of the Twelve Apostles that I took myself.\n\nI moved the volume slider to a more accessible place and built custom range sliders to match the rest of the look.",
-          media: []
-        }
-      ],
-      gallery: [],
-      galleryLayout: "grid"
-    },
-
-    /* ================================ CONTENT & MEDIA ================================ */
-
-    {
-      slug: "tsa-content",
-      title: "TSA",
-      category: "content",
-      type: "Video production · Content creation",
-      tagline: "Game-show style event recaps, plus promo and sponsor reels.",
-      summary: "Content for the Melbourne University Thai Student Association (MUTSA). I made most of the event recap videos. I narrate what's happening, film it, edit it, caption it and do the voice acting over it, so each recap plays like a short TV game show instead of a typical club event video. I also make meme-style promo reels and sponsor reels.",
-      status: "",
-      size: "l",
-      hidden: false,
-      cover: "assets/projects/tsa-content/cover.jpg",
-      homeCover: "assets/projects/tsa-content/home.jpg",
-      homePos: "50% 66%",
-      homeAlt: "Group photo of TSA members cheering on the beach",
-      coverFit: "contain",       // logo: shown whole instead of cropped
-      coverBg: "#ffffff",
-      context: "Melbourne University Thai Student Association (MUTSA)",
-      year: "Sep 2024 – Present",
-      role: "PR content creator: narration, filming, editing, captions and voice acting",
-      collaborators: [],
-      tools: ["CapCut"],
-      links: [
-        { label: "TSA on Instagram", url: "https://www.instagram.com/tsa_unimelb/" }
-      ],
-
-      // HIGHLIGHT REELS: one big reel at a time with left/right arrows (loops around).
-      // Each one can have a label shown in the top-right corner: "Recap", "Promo" or "Sponsor".
-      // Instagram reels can't auto-play the next one, so the arrows do the switching.
-      highlightsText: "A few of my favourites across the three kinds of content. Use the arrows to move through them.",
-      highlights: [
-        { type: "instagram", url: "https://www.instagram.com/reel/DXBQEq8iafh/", label: "Recap" },
-        { type: "instagram", url: "https://www.instagram.com/reel/DHXv7YfSWy7/", label: "Recap" },
-        { type: "instagram", url: "https://www.instagram.com/reel/DP0_X91iWNm/", label: "Promo" },
-        { type: "instagram", url: "https://www.instagram.com/reel/Db2VteHpvpA/", label: "Sponsor" },
-        { type: "instagram", url: "https://www.instagram.com/reel/DIoE2tPJSIv/", label: "Recap" },
-        { type: "instagram", url: "https://www.instagram.com/reel/DXqvghGidtw/", label: "Sponsor" }
-      ],
-
-      // THREE CATEGORIES shown as tabs, newest first. Only the first few load at once,
-      // the rest appear with "Show more". Empty tabs stay hidden.
-      tabs: [
-        { title: "Recap Videos", text: "", media: [
-          { type: "instagram", url: "https://www.instagram.com/reel/DbcY8tZJgGe/" },
-          { type: "instagram", url: "https://www.instagram.com/reel/DX5nCMHpOAT/" },
-          { type: "instagram", url: "https://www.instagram.com/reel/DXoGNSLCXbd/" },
-          { type: "instagram", url: "https://www.instagram.com/reel/DXBQEq8iafh/" },
-          { type: "instagram", url: "https://www.instagram.com/reel/DV0HKtlCQIB/" },
-          { type: "instagram", url: "https://www.instagram.com/reel/DPJKJEniR0J/" },
-          { type: "instagram", url: "https://www.instagram.com/reel/DOixCDkCVW9/" },
-          { type: "instagram", url: "https://www.instagram.com/reel/DM-IBt-pNYG/" },
-          { type: "instagram", url: "https://www.instagram.com/reel/DK8mEV9J9fQ/" },
-          { type: "instagram", url: "https://www.instagram.com/reel/DI_Ma31J1Zs/" },
-          { type: "instagram", url: "https://www.instagram.com/reel/DIoE2tPJSIv/" },
-          { type: "instagram", url: "https://www.instagram.com/reel/DHXv7YfSWy7/" },
-          { type: "instagram", url: "https://www.instagram.com/reel/DAihzqdyoB2/" }
-        ] },
-        { title: "Promo Videos", text: "", media: [
-          { type: "instagram", url: "https://www.instagram.com/reel/DYyz9GsJ_tQ/" },
-          { type: "instagram", url: "https://www.instagram.com/reel/DYt0fYjp0Eu/" },
-          { type: "instagram", url: "https://www.instagram.com/reel/DXY3dUAiZek/" },
-          { type: "instagram", url: "https://www.instagram.com/reel/DQFrYImE7Lt/" },
-          { type: "instagram", url: "https://www.instagram.com/reel/DP8JU6-iY98/" },
-          { type: "instagram", url: "https://www.instagram.com/reel/DP0_X91iWNm/" },
-          { type: "instagram", url: "https://www.instagram.com/reel/DKMxUe9JriQ/" },
-          { type: "instagram", url: "https://www.instagram.com/reel/DIGLnx5JwU6/" }
-        ] },
-        { title: "Sponsor Videos", text: "", media: [
-          { type: "instagram", url: "https://www.instagram.com/reel/DcQPXCdJIAe/" },
-          { type: "instagram", url: "https://www.instagram.com/reel/Db2VteHpvpA/" },
-          { type: "instagram", url: "https://www.instagram.com/reel/DbumuT8JR3n/" },
-          { type: "instagram", url: "https://www.instagram.com/reel/DXqvghGidtw/" }
-        ] }
-      ],
-
-      sections: [],
       gallery: [],
       galleryLayout: "grid"
     },
@@ -502,33 +397,50 @@ const PORTFOLIO = {
     },
 
     {
-      slug: "permsin",
-      title: "Permsin",
-      category: "content",
-      type: "Design internship · Video & print",
-      tagline: "A video podcast and a catalogue cover for a Thai steel company.",
-      summary: "During my design internship at Permsin Steel Works PCL in Samut Sakhon, Thailand, I designed a product catalogue. I came back in December 2024, after starting university, to produce a video podcast called เหล็กTalk.",
+      slug: "haul",
+      title: "HAUL",
+      category: "immersive",
+      type: "Game · Procedural rhetoric",
+      tagline: "A shopping game where the only way to win is to walk away.",
+      summary: "A game about shopping where the player wins by walking away. It's a procedural rhetoric piece: the point about consumption is made through the rules, not through text.",
       status: "",
       size: "s",
       hidden: false,
-      cover: "assets/projects/permsin/cover.jpg",
-      coverFit: "fit",
-      coverBg: "#282828",
-      context: "Permsin Steel Works PCL · Design Internship",
-      year: "2024",
-      role: "Design intern: catalogue design and video podcast production",
+      cover: "assets/projects/haul/cover.jpg",
+      hero: { type: "youtube", url: "https://youtu.be/gFsbdSgHLlI" },
+      context: "RMIT University · Minimalism, Limits & Constraints",
+      year: "",
+      role: "",
       collaborators: [],
       tools: [],
       links: [],
-      sections: [
-        { title: "Video podcast: เหล็กTalk", text: "", media: [{ type: "youtube", url: "https://youtu.be/dp0DqXh2xhg" }] },
-        { title: "Catalogue cover",           text: "", media: [] }    // e.g. { type: "image", url: "assets/projects/permsin/catalogue.jpg", alt: "Catalogue cover" }
-      ],
+      sections: [],
       gallery: [],
       galleryLayout: "grid"
     },
 
-    /* ================================== VISUAL DESIGN ================================== */
+    {
+      slug: "liminal-lavatory",
+      title: "Liminal Lavatory",
+      category: "immersive",
+      type: "VR multisensory experience",
+      tagline: "The Keep It In! bathroom maze, reworked as a VR multisensory experience.",
+      summary: "A sub-project that reuses the bathroom maze from Keep It In! and turns it into a VR multisensory experience.",
+      status: "",
+      size: "s",
+      hidden: false,
+      cover: "assets/projects/liminal-lavatory/cover.jpg",
+      hero: { type: "youtube", url: "https://youtu.be/C0TI0wnjY78" },
+      context: "RMIT University · Heighten: Multi-Sensory Experience",
+      year: "",
+      role: "",
+      collaborators: [],
+      tools: ["Unity"],
+      links: [],
+      sections: [],
+      gallery: [],
+      galleryLayout: "grid"
+    },
 
     {
       slug: "given-watch",
@@ -620,6 +532,91 @@ const PORTFOLIO = {
         {
           title: "About these photos",
           text: "The original files were on my school cloud account, which was deleted after I left, so this project is shown from photos of the printed board.",
+          media: []
+        }
+      ],
+      gallery: [],
+      galleryLayout: "grid"
+    },
+
+    {
+      slug: "permsin",
+      title: "Permsin",
+      category: "content",
+      type: "Design internship · Video & print",
+      tagline: "A video podcast and a catalogue cover for a Thai steel company.",
+      summary: "During my design internship at Permsin Steel Works PCL in Samut Sakhon, Thailand, I designed a product catalogue. I came back in December 2024, after starting university, to produce a video podcast called เหล็กTalk.",
+      status: "",
+      size: "s",
+      hidden: false,
+      cover: "assets/projects/permsin/cover.jpg",
+      coverFit: "fit",
+      coverBg: "#282828",
+      context: "Permsin Steel Works PCL · Design Internship",
+      year: "2024",
+      role: "Design intern: catalogue design and video podcast production",
+      collaborators: [],
+      tools: [],
+      links: [],
+      sections: [
+        { title: "Video podcast: เหล็กTalk", text: "", media: [{ type: "youtube", url: "https://youtu.be/dp0DqXh2xhg" }] },
+        { title: "Catalogue cover",           text: "", media: [] }    // e.g. { type: "image", url: "assets/projects/permsin/catalogue.jpg", alt: "Catalogue cover" }
+      ],
+      gallery: [],
+      galleryLayout: "grid"
+    },
+
+    {
+      slug: "scroll-to-space",
+      title: "Scroll to Space",
+      category: "immersive",
+      type: "Interactive website",
+      tagline: "An educational website where scrolling up is climbing into space.",
+      summary: "A scroll-driven infographic that turns scrolling into a climb from the ground to space. It's built with vanilla JavaScript and CSS, using real atmospheric data. It only works properly on desktop.",
+      status: "Best on desktop",
+      size: "w",
+      hidden: false,
+      cover: "assets/projects/scroll-to-space/cover.jpg",
+      hero: { type: "embed", url: "https://maewnic.github.io/Assignment3_ScrollToSpace/", poster: "assets/projects/scroll-to-space/cover.jpg", label: "Try it here" },
+      context: "RMIT University",
+      year: "Oct 2025",
+      role: "",
+      collaborators: [],
+      tools: ["JavaScript", "CSS", "HTML"],
+      links: [{ label: "Open the website", url: "https://maewnic.github.io/Assignment3_ScrollToSpace/" }],
+      sections: [
+        {
+          title: "How it works",
+          text: "The page loads scrolled to the bottom, so scrolling up mirrors climbing. An altitude counter blends a linear scale for the first 80 km with an exponential one after that, reaching 10,000 km. The background darkens from sky blue to black along the way, and hovering reveals captions about each layer.",
+          media: []
+        }
+      ],
+      gallery: [],
+      galleryLayout: "grid"
+    },
+
+    {
+      slug: "study-music-player",
+      title: "Study Music Player",
+      category: "immersive",
+      type: "Interactive website",
+      tagline: "An ambient music player with a built-in Pomodoro timer.",
+      summary: "An ambient study music player with a Pomodoro timer built in: 25-minute study blocks and 5-minute breaks that cycle automatically and sync with playback. It only works properly on desktop.",
+      status: "Best on desktop",
+      size: "w",
+      hidden: false,
+      cover: "assets/projects/study-music-player/cover.jpg",
+      hero: { type: "embed", url: "https://maewnic.github.io/Assignment2/mediaPlayer/", poster: "assets/projects/study-music-player/cover.jpg", label: "Try it here" },
+      context: "RMIT University",
+      year: "Aug 2025",
+      role: "",
+      collaborators: [],
+      tools: ["JavaScript", "CSS", "HTML", "Illustrator"],
+      links: [{ label: "Open the player", url: "https://maewnic.github.io/Assignment2/mediaPlayer/" }],
+      sections: [
+        {
+          title: "Design",
+          text: "The play and pause button is oversized and centred, and the spacebar toggles playback. The headphones icon is a hand-drawn Illustrator design, and the background is a photo of the Twelve Apostles that I took myself.\n\nI moved the volume slider to a more accessible place and built custom range sliders to match the rest of the look.",
           media: []
         }
       ],

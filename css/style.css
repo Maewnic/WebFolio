@@ -1460,7 +1460,7 @@ body {
   }
 }
 
-/* phones: arrows in a row above the reel */
+/* phones: the reel first, the two arrows in a row underneath it */
 @media (max-width: 700px) {
   .reel-carousel {
     grid-template-columns: 1fr 1fr;
@@ -1469,8 +1469,8 @@ body {
   }
   .reel-frame {
     grid-column: 1 / -1;
-    grid-row: 2;
-    margin-top: 40px;
+    grid-row: 1;
+    margin-top: 0;
     width: 100%;
   }
   .reel-foot {
@@ -1502,12 +1502,12 @@ body {
     background: none;
   }
   .reel-prev {
-    grid-row: 1;
+    grid-row: 2;
     grid-column: 1;
     justify-self: stretch;
   }
   .reel-next {
-    grid-row: 1;
+    grid-row: 2;
     grid-column: 2;
     justify-self: stretch;
   }
