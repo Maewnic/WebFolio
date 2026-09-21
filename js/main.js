@@ -382,17 +382,16 @@
   }
 
   /* Selected work rotator. The top project fades to the next one, the row shifts left, the
-     left-most tile melts into the top and the old top slides in on the right as the last tile. */
-  var FEAT_MS = 7000, FEAT_SWAP_MS = 950;
+     left-most tile slides away and the old top slides in on the right as the last tile. */
+  var FEAT_MS = 8000, FEAT_SWAP_MS = 950;
   function setupFeatured(list) {
     var box = $("#featured"), len = list.length, cur = 0, busy = false, paused = { seen: false, tab: false };
     function at(i) { return list[((i % len) + len) % len]; }
     function el(html) { var d = document.createElement("div"); d.innerHTML = html; return d.firstChild; }
 
-    box.classList.add("reveal");
     box.innerHTML = (len > 1 ? '<div class="feat-timer" aria-hidden="true"><i></i></div>' : "") +
       '<div class="feat-top"></div>' +
-      (len > 1 ? '<div class="feat-row feat-track" style="--per:' + (len - 1) + '"></div>' : "");
+      (len > 1 ? '<div class="feat-rowwrap"><div class="feat-row feat-track" style="--per:' + (len - 1) + '"></div></div>' : "");
     var top = $(".feat-top", box), track = $(".feat-track", box), bar = $(".feat-timer i", box);
     top.appendChild(el(featMainHTML(at(0).p, at(0).n)));
     for (var k = 1; k < len; k++) track.appendChild(el(featTileHTML(at(k).p, at(k).n)));
@@ -473,7 +472,7 @@
       $("#skills-section").hidden = true;
     }
 
-    /* selected work: one big project on top, the rest in a row underneath; they rotate every 7 seconds */
+    /* selected work: one big project on top, the rest in a row underneath; they rotate every 8 seconds */
     var feat = arr(P.featured).map(findProject).filter(Boolean);
     if (feat.length) {
       setupFeatured(feat.map(function (p, i) { return { p: p, n: i + 1 }; }));

@@ -103,7 +103,7 @@ const PORTFOLIO = {
   ],
 
   /* ----------------------------- HOME: SELECTED WORK ----------------------------- */
-  // These rotate on the home page every 7 seconds (the big one at the top, the rest in a row). Use project slugs.
+  // These rotate on the home page every 8 seconds (the big one at the top, the rest in a row). Use project slugs.
   featured: ["lakes-echo", "hikari", "tsa-content", "given-watch"],
 
   /* ----------------------------- PROJECTS ----------------------------- */

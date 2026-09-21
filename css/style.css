@@ -2399,11 +2399,11 @@ body {
 
 
 /* ==========================================================================
-   SELECTED WORK ROTATOR (home): 7 second timer line, smooth swap
+   SELECTED WORK ROTATOR (home): 8 second timer line, smooth swap
    ========================================================================== */
 .feat {
   --gap: 24px;
-  --feat-ms: 7000ms;
+  --feat-ms: 8000ms;
   --feat-dur: 950ms;
   gap: 22px;
   grid-template-columns: minmax(0, 1fr);
@@ -2435,26 +2435,37 @@ body {
   animation-play-state: paused;
 }
 
-/* top project: old one fades out while the new one fades in on the same spot */
+/* top project: the new one is laid on top of the old one and fades in.
+   Only the picture and the glass card fade (not the whole block), so the card's
+   blur always sees the picture behind it and shows from the first frame. */
 .feat-top {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
 }
 .feat-top > .feat-main {
   grid-area: 1 / 1;
+}
+.feat-main .feat-media,
+.feat-main .feat-card {
   transition: opacity var(--feat-dur) var(--ease);
 }
-.feat-top > .feat-main.is-in {
+.feat-top > .feat-main.is-in .feat-media,
+.feat-top > .feat-main.is-in .feat-card {
   opacity: 0;
 }
 .feat-top > .feat-main.is-out {
   pointer-events: none;
 }
-.feat.is-swapping .feat-top > .feat-main.is-in {
+.feat-top > .feat-main.is-out .feat-card {
+  opacity: 0;
+  transition-duration: calc(var(--feat-dur) * 0.45);
+}
+.feat.is-swapping .feat-top > .feat-main.is-in .feat-media {
   opacity: 1;
 }
-.feat.is-swapping .feat-top > .feat-main.is-out {
-  opacity: 0;
+.feat.is-swapping .feat-top > .feat-main.is-in .feat-card {
+  opacity: 1;
+  transition-delay: calc(var(--feat-dur) * 0.3);
 }
 
 /* the row: a track that slides one tile to the left */
@@ -2468,17 +2479,22 @@ body {
   flex: 0 0 var(--tw);
   min-width: 0;
   transition:
-    opacity calc(var(--feat-dur) * 0.75) var(--ease),
-    transform var(--feat-dur) var(--ease),
+    opacity calc(var(--feat-dur) * 0.6) var(--ease),
+    transform 0.4s var(--ease),
     box-shadow 0.4s var(--ease);
+}
+/* clips the sliding tiles at the sides but leaves room for their soft shadows */
+.feat-rowwrap {
+  overflow: hidden;
+  padding: 16px 24px 84px;
+  margin: -16px -24px -84px;
 }
 .feat.is-swapping .feat-row.feat-track {
   transform: translateX(calc(-1 * (var(--tw) + var(--gap))));
 }
-/* the far-left tile melts up into the big project */
+/* the far-left tile just slides left with the row and fades away */
 .feat-track > .feat-tile.is-leaving {
   opacity: 0;
-  transform: translateY(-36px) scale(0.94);
   pointer-events: none;
 }
 /* the old top project slides in from the right as the newest tile */
