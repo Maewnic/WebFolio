@@ -85,7 +85,7 @@
         (m.poster ? '<img class="embed-poster" src="' + esc(m.poster) + '" alt="" loading="lazy" decoding="async">' : '<div class="tint tint-immersive embed-poster"></div>') +
         '<button type="button" class="embed-start"><span>' + esc(m.label || "Try it here") + "</span></button></div></div>";
     }
-    return '<figure class="media media-image"><img src="' + esc(url) + '" alt="' + esc(m.alt || "") + '" loading="lazy" decoding="async">' +
+    return '<figure class="media media-image' + (m.size === "small" ? " media-small" : "") + '"><img src="' + esc(url) + '" alt="' + esc(m.alt || "") + '" loading="lazy" decoding="async">' +
       (m.caption ? "<figcaption>" + esc(m.caption) + "</figcaption>" : "") + "</figure>";
   }
 
@@ -94,8 +94,9 @@
     list = arr(list).filter(function (m) { return m && m.url; });
     if (!list.length) return "";
     var vertical = list.every(isVertical) && list.length > 1;
+    var pair = !vertical && list.length > 1 && list.every(function (m) { return (m.type || "image") === "image" && m.size !== "small"; });
     var page = opts.page || 0;
-    var html = '<div class="media-group ' + (vertical ? "is-row" : "is-stack") + '"' + (page ? ' data-page="' + page + '"' : "") + ">" +
+    var html = '<div class="media-group ' + (vertical ? "is-row" : pair ? "is-pair" : "is-stack") + '"' + (page ? ' data-page="' + page + '"' : "") + ">" +
       list.map(function (m, i) {
         var h = mediaHTML(m, title, opts.lazy);
         return page && i >= page ? h.replace("<div ", "<div hidden ") : h;
@@ -586,7 +587,7 @@
     h += highlightsHTML(p.highlights, p.highlightsText);
     h += tabsHTML(p.tabs);
 
-    /* photo slideshow: crossfading pictures, arrows, dots, swipe. No auto-play. */
+    /* photo slideshow: crossfading pictures, 8s timer line, arrows, dots, swipe. */
     function slideshowHTML(list, title) {
       list = arr(list).filter(function (g) { return g && g.src; });
       if (!list.length) return "";
@@ -598,15 +599,27 @@
         }).join("") +
         (list.length > 1 ? '<button type="button" class="slides-btn slides-prev" aria-label="Previous photo">&larr;</button><button type="button" class="slides-btn slides-next" aria-label="Next photo">&rarr;</button>' : "") +
         "</div>" +
+        '<div class="slides-timer" aria-hidden="true"><i></i></div>' +
         '<div class="slides-foot"><p class="slides-cap" aria-live="polite"></p>' +
         (list.length > 1 ? '<div class="slides-nav"><span class="slides-count"></span><span class="slides-dots">' +
           list.map(function (g, i) { return '<button type="button" class="slides-dot" aria-label="Photo ' + (i + 1) + '"></button>'; }).join("") + "</span></div>" : "") +
         "</div></div>";
     }
     function setupSlides(root) {
+      var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       [].forEach.call((root || document).querySelectorAll(".slides"), function (el) {
         var slides = el.querySelectorAll(".slide"), dots = el.querySelectorAll(".slides-dot"), n = slides.length, idx = 0;
-        var cap = el.querySelector(".slides-cap"), count = el.querySelector(".slides-count");
+        var cap = el.querySelector(".slides-cap"), count = el.querySelector(".slides-count"), bar = el.querySelector(".slides-timer i");
+        var SLIDE_MS = 8000;
+        el.style.setProperty("--slide-ms", SLIDE_MS + "ms");
+        var auto = n > 1 && !reduce, paused = { hover: false, view: false, tab: false };
+        function syncPause() { el.classList.toggle("is-paused", paused.hover || paused.view || paused.tab); }
+        function restart() {
+          bar.classList.remove("is-run");
+          if (!auto) return;
+          void bar.offsetWidth;            // restart the CSS animation
+          bar.classList.add("is-run");
+        }
         function show(i) {
           idx = ((i % n) + n) % n;
           [].forEach.call(slides, function (sl, k) {
@@ -617,6 +630,7 @@
           [].forEach.call(dots, function (d, k) { if (k === idx) d.setAttribute("aria-current", "true"); else d.removeAttribute("aria-current"); });
           cap.textContent = slides[idx].querySelector("img").getAttribute("data-cap") || "";
           if (count) count.textContent = (idx + 1) + " / " + n;
+          restart();
         }
         var pv = el.querySelector(".slides-prev"), nx = el.querySelector(".slides-next");
         if (pv) pv.addEventListener("click", function () { show(idx - 1); });
@@ -633,13 +647,25 @@
           var dx = e.changedTouches[0].clientX - x0; x0 = null;
           if (Math.abs(dx) > 40) show(idx + (dx < 0 ? 1 : -1));
         }, { passive: true });
+        bar.addEventListener("animationend", function () { show(idx + 1); });
+        // pause while hovered / focused, off-screen or in a hidden tab
+        el.addEventListener("mouseenter", function () { paused.hover = true; syncPause(); });
+        el.addEventListener("mouseleave", function () { paused.hover = false; syncPause(); });
+        el.addEventListener("focusin", function () { paused.hover = true; syncPause(); });
+        el.addEventListener("focusout", function () { paused.hover = false; syncPause(); });
+        document.addEventListener("visibilitychange", function () { paused.tab = document.hidden; syncPause(); });
+        if ("IntersectionObserver" in window) {
+          paused.view = true; syncPause();
+          new IntersectionObserver(function (es) { paused.view = !es[0].isIntersecting; syncPause(); }, { threshold: 0.35 }).observe(el);
+        }
         show(0);
       });
     }
 
     /* story sections and video groups (empty ones are skipped) */
     function block(s) {
-      var text = paras(s.text), media = mediaGroup(s.media, s.title) + slideshowHTML(s.slideshow, s.title);
+      var text = paras(s.text), mg = mediaGroup(s.media, s.title), ss = slideshowHTML(s.slideshow, s.title);
+      var media = mg && ss ? '<div class="psec-split"><div class="psec-split-media">' + mg + "</div>" + ss + "</div>" : mg + ss;
       if (!text && !media) return "";
       return '<section class="container psec reveal">' +
         (s.title ? '<div class="psec-grid"><h2>' + esc(s.title) + '</h2><div class="psec-text">' + text + "</div></div>" : (text ? '<div class="psec-text psec-solo">' + text + "</div>" : "")) +

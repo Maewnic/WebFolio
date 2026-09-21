@@ -41,7 +41,8 @@
      tabs          groups of videos/reels shown as tabs (see the TSA project)
      sections      [{ title, text, media }]  story sections; text can have several paragraphs
                    separated by a blank line. Empty sections are skipped.
-     sections[].slideshow   optional photo slideshow inside a section (arrows, dots, swipe, no auto-play): [{ src, alt, caption }]
+     sections[].slideshow   optional photo slideshow inside a section (switches every 8 seconds with a timer line; arrows, dots and swipe also work; shown beside a video/reel if the section has one): [{ src, alt, caption }]
+     media[].size = "small"   on an image: keeps a tall picture (like a poster) from being huge
      mediaRows     groups of videos/reels shown together, [{ title, text, media: [ ... ] }]
      gallery       [{ src, alt }] for a picture gallery; galleryLayout: "grid" or "masonry"
 
@@ -192,21 +193,25 @@ const PORTFOLIO = {
             { src: "assets/projects/hikari/bar.jpg", alt: "Inside the bar: paper lanterns, wooden counter and noren curtains", caption: "The bar" },
             { src: "assets/projects/hikari/vip-zone.jpg", alt: "The VIP zone with floor cushions, low tables, posters and the 光 sign", caption: "The VIP zone" },
             { src: "assets/projects/hikari/sauna-1.jpg", alt: "A wooden sauna room with tiered benches and rolled towels", caption: "Sauna" },
-            { src: "assets/projects/hikari/sauna-2.jpg", alt: "A second sauna room with warm lighting and a dark marble floor", caption: "Sauna, second room" },
+            { src: "assets/projects/hikari/sauna-2.jpg", alt: "The sauna from a second angle, with warm lighting and a dark marble floor", caption: "Sauna, second angle" },
             { src: "assets/projects/hikari/sink-room.jpg", alt: "A wooden washroom with a basin beside the sauna entrance", caption: "Washroom" },
             { src: "assets/projects/hikari/restroom-1.jpg", alt: "A restroom with a paper screen window, basin and a bamboo plant", caption: "Restroom" },
-            { src: "assets/projects/hikari/restroom-2.jpg", alt: "A second restroom with a shoji window, bamboo and a wooden bench", caption: "Restroom, second room" }
+            { src: "assets/projects/hikari/restroom-2.jpg", alt: "The restroom from a second angle, with a shoji window, bamboo and a wooden bench", caption: "Restroom, second angle" }
           ]
         },
         {
           title: "Brand",
           text: "I designed Hikari's identity: the 光 (hikari, \"light\") logo with koi pond and torii motifs, promotional posters, social thumbnails, and physical keychains tied to the VIP membership tiers.",
-          media: []
+          media: [{ type: "image", url: "assets/projects/hikari/keychain-poster.jpg", size: "small", alt: "Promo poster for the Hikari keychains: three designs (a gold torii plate, a koi and wave torii, and a night-bridge torii), 99 baht each, with VIP add-on bundles", caption: "Keychain promo poster" }]
         },
         {
           title: "Community & operations",
           text: "The community grew to 800+ members across platforms, with 10,000+ visitors to the world. I moderated engagement, resolved community issues, and coordinated a small team of volunteer creators, tracking milestones and delegating tasks.\n\nI managed the VIP membership system and staff operations, with a flexible internal accounting structure that tracked monthly and one-off daily VIP purchases against volunteer staff attendance, so revenue could be shared with the staff every month.",
-          media: [{ type: "image", url: "assets/projects/hikari/staff-group.jpg", alt: "The Hikari staff and community together on the wooden deck in VRChat", caption: "The Hikari staff and community" }]
+          media: [
+            { type: "image", url: "assets/projects/hikari/staff-group.jpg", alt: "The Hikari staff and community together on the wooden deck in VRChat", caption: "The Hikari staff and community" },
+            { type: "image", url: "assets/projects/hikari/christmas-hori07.jpg", alt: "A group of avatars posing in front of a Christmas tree inside the Hikari bar, including one with a Santa hat on a red throne", caption: "Christmas at Hikari, with the Thai VTuber Hori07" },
+            { type: "image", url: "assets/projects/hikari/cny-community.jpg", alt: "A large group of avatars in red and gold outfits, with lion-dance heads and red lanterns, on the wooden steps of the Hikari world", caption: "Chinese New Year event" }
+          ]
         }
       ],
       gallery: [],
