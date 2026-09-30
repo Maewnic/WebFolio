@@ -385,6 +385,7 @@ const PORTFOLIO = {
       mediaRows: [
         { title: "Posts", text: "", media: [
           // newest first. Add a new post at the top, one line each, separated by commas
+          { type: "instagram", url: "https://www.instagram.com/p/DdyASNlEizI/" },
           { type: "instagram", url: "https://www.instagram.com/p/Ddfiu3PqOK9/" },
           { type: "instagram", url: "https://www.instagram.com/p/DdWDDsxK8bZ/" },
           { type: "instagram", url: "https://www.instagram.com/p/Dck4HE2EqaU/" },
