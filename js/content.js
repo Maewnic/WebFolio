@@ -116,6 +116,66 @@ const PORTFOLIO = {
     /* The order below is the order on the Work page ("All" tab), and the "Next project" order. */
 
     {
+      slug: "hikari",
+      title: "Hikari",
+      category: "immersive",
+      type: "Social VR venue · VRChat",
+      tagline: "A Japanese-themed restaurant, bar and onsen in VRChat, and the community around it.",
+      summary: "A Japanese-themed restaurant, bar and onsen in VRChat, with live singers, games and a community of 800+ members. I'm part of the founding team: I built much of the world, designed the brand, and looked after VIP memberships and staff operations. I no longer run it day to day.",
+      status: "",
+      size: "l",
+      hidden: false,
+      cover: "assets/projects/hikari/cover.jpg",
+      homeCover: "assets/projects/hikari/home.jpg",   // picture shown when it is the big top project on the home page
+      homePos: "50% 42%",                             // which part stays in view when it is cropped
+      homeAlt: "Inside the Hikari world in VRChat at night: a torii gate, lanterns and a glowing stage over the water",
+      context: "",
+      year: "Dec 2024 – Jun 2026",
+      role: "Founding team: world building, brand design, VIP and staff operations",
+      collaborators: [],
+      tools: ["Unity", "ProBuilder", "VRChat"],
+      links: [{ label: "Hikari on Instagram", url: "https://www.instagram.com/hikarizo.vrc/" }],
+      sections: [
+        {
+          title: "The world",
+          text: "Guests arrive through a torii gate entrance into an interconnected VIP lounge, with a full sauna and onsen area linked by bridges and walkways. They can order from an in-world chef, listen to live singers, and play chess, Othello and pool, while staff dressed as maiko and geisha host the evening.\n\nHikari ran as a weekly event on Wednesdays at 8pm (GMT+7), mainly for Thai players.\n\nEarly builds used free and marketplace assets. Over time I moved toward original geometry made with ProBuilder in Unity, especially for the indoor spaces.",
+          media: [{ type: "instagram", url: "https://www.instagram.com/reel/DWu4b81Ado0/" }],
+          slideshow: [
+            { src: "assets/projects/hikari/torii-night.jpg", alt: "The glowing 光 torii gate over the water in the Hikari world at night, with a small boat and lily pads", caption: "The torii gate at the entrance" },
+            { src: "assets/projects/hikari/entrance-night.jpg", alt: "Looking toward the torii gate from a lantern-lit deck at night", caption: "Arriving at the venue" },
+            { src: "assets/projects/hikari/boardwalk-stage.jpg", alt: "A curved wooden walkway leading to the stage area over dark water", caption: "Walkway to the stage" },
+            { src: "assets/projects/hikari/bridge-lanterns.jpg", alt: "A red arched bridge with glowing lanterns and bamboo, leading to a pavilion", caption: "Bridges and lanterns" },
+            { src: "assets/projects/hikari/aerial-north.jpg", alt: "Aerial view of the whole Hikari world at night: pavilions, bridges and lanterns", caption: "The world from above" },
+            { src: "assets/projects/hikari/aerial-lounge.jpg", alt: "Aerial view of the roofs, lounge and event spaces at night", caption: "The lounge and event spaces from above" },
+            { src: "assets/projects/hikari/bar.jpg", alt: "Inside the bar: paper lanterns, wooden counter and noren curtains", caption: "The bar" },
+            { src: "assets/projects/hikari/vip-zone.jpg", alt: "The VIP zone with floor cushions, low tables, posters and the 光 sign", caption: "The VIP zone" },
+            { src: "assets/projects/hikari/sauna-1.jpg", alt: "A wooden sauna room with tiered benches and rolled towels", caption: "Sauna" },
+            { src: "assets/projects/hikari/sauna-2.jpg", alt: "The sauna from a second angle, with warm lighting and a dark marble floor", caption: "Sauna, second angle" },
+            { src: "assets/projects/hikari/sink-room.jpg", alt: "A wooden washroom with a basin beside the sauna entrance", caption: "Washroom" },
+            { src: "assets/projects/hikari/restroom-1.jpg", alt: "A restroom with a paper screen window, basin and a bamboo plant", caption: "Restroom" },
+            { src: "assets/projects/hikari/restroom-2.jpg", alt: "The restroom from a second angle, with a shoji window, bamboo and a wooden bench", caption: "Restroom, second angle" }
+          ]
+        },
+        {
+          title: "Brand",
+          text: "I designed Hikari's identity: the 光 (hikari, \"light\") logo with koi pond and torii motifs, promotional posters, social thumbnails, and physical keychains tied to the VIP membership tiers.",
+          media: [{ type: "image", url: "assets/projects/hikari/keychain-poster.jpg", size: "small", alt: "Promo poster for the Hikari keychains: three designs (a gold torii plate, a koi and wave torii, and a night-bridge torii), 99 baht each, with VIP add-on bundles", caption: "Keychain promo poster" }]
+        },
+        {
+          title: "Community & operations",
+          text: "The community grew to 800+ members across platforms, with 10,000+ visitors to the world. I moderated engagement, resolved community issues, and coordinated a small team of volunteer creators, tracking milestones and delegating tasks.\n\nI managed the VIP membership system and staff operations, with a flexible internal accounting structure that tracked monthly and one-off daily VIP purchases against volunteer staff attendance, so revenue could be shared with the staff every month.",
+          media: [
+            { type: "image", url: "assets/projects/hikari/staff-group.jpg", alt: "The Hikari staff and community together on the wooden deck in VRChat", caption: "The Hikari staff and community" },
+            { type: "image", url: "assets/projects/hikari/christmas-hori07.jpg", alt: "A group of avatars posing in front of a Christmas tree inside the Hikari bar, including one with a Santa hat on a red throne", caption: "Christmas at Hikari, with the Thai VTuber Hori07" },
+            { type: "image", url: "assets/projects/hikari/cny-community.jpg", alt: "A large group of avatars in red and gold outfits, with lion-dance heads and red lanterns, on the wooden steps of the Hikari world", caption: "Chinese New Year event" }
+          ]
+        }
+      ],
+      gallery: [],
+      galleryLayout: "grid"
+    },
+
+    {
       slug: "lakes-echo",
       title: "Lake's Echo",
       category: "immersive",
@@ -123,7 +183,7 @@ const PORTFOLIO = {
       tagline: "A misty lakeside in VR, designed around one goal: the most serene place possible.",
       summary: "A VR experience built around a single goal: creating the most serene environment possible. Psychology research on spatial and sensory design shaped a misty lakeside in Unity, centred on a lone pavilion.",
       status: "",
-      size: "l",
+      size: "m",
       hidden: false,
       cover: "assets/projects/lakes-echo/cover.jpg",
       hero: { type: "youtube", url: "https://youtu.be/8VPb5HJ2Dcs" },
@@ -152,6 +212,68 @@ const PORTFOLIO = {
         {
           title: "Collaboration",
           text: "The sound was developed together with a sound design student, so the audio and the environment were shaped around each other.",
+          media: []
+        }
+      ],
+      gallery: [],
+      galleryLayout: "grid"
+    },
+
+    {
+      slug: "keep-it-in",
+      title: "Keep It In!",
+      category: "immersive",
+      type: "Interactive · Unity",
+      tagline: "A surreal chase toward a toilet, built around story, sound and level design.",
+      summary: "A short Unity experience that explores emotional state through environment and sound alone, with no dialogue and no UI. It's the piece where I focused most on storytelling and level design.",
+      status: "",
+      size: "l",
+      hidden: false,
+      cover: "assets/projects/keep-it-in/cover.jpg",
+      hero: { type: "youtube", url: "https://youtu.be/7GCy969uqHU" },
+      context: "RMIT University · Virtual Environment",
+      year: "Aug – Oct 2025",
+      role: "",
+      collaborators: [],
+      tools: ["Unity", "Reaper"],
+      links: [],
+      sections: [
+        {
+          title: "The experience",
+          text: "It starts at a food truck, where you're handed a questionable hot dog. A plaza leads into a maze, and from somewhere far away you hear toilet flushes, both a hint and a taunt. As you get closer the vignette tightens. Then comes an anticlimactic flush, and the screen fades to white.",
+          media: []
+        },
+        {
+          title: "Sound",
+          text: "The sound design is custom recorded and edited in Reaper, layered over ambient effects. With no dialogue or on-screen UI, the environment and the audio carry the player's emotional state.",
+          media: []
+        }
+      ],
+      gallery: [],
+      galleryLayout: "grid"
+    },
+
+    {
+      slug: "drift",
+      title: "DRIFT",
+      category: "immersive",
+      type: "VR experience · Unity",
+      tagline: "An astronaut drifts from their ship as panic turns to calm.",
+      summary: "A VR experience about an astronaut drifting away from their ship. Panic slowly turns into calm acceptance as they take in the beauty of space. The black hole, planets, sun, nebula and skybox are shaders that react to the music.",
+      status: "In progress",
+      size: "m",
+      hidden: false,
+      cover: "assets/projects/drift/cover.jpg",
+      context: "RMIT University · AI Studio",
+      year: "2026",
+      role: "",
+      collaborators: [],
+      tools: ["Unity", "Claude Code", "Suno"],
+      links: [],
+      sections: [
+        {
+          title: "How it's made",
+          text: "The shaders are driven by one shared audio script that feeds the music's amplitude and frequency into the shader settings. I used Claude Code to help write and tune the shaders, and the music was generated with Suno. I'm also working on getting everything to run well in VR.",
           media: []
         }
       ],
@@ -239,128 +361,6 @@ const PORTFOLIO = {
     },
 
     {
-      slug: "hikari",
-      title: "Hikari",
-      category: "immersive",
-      type: "Social VR venue · VRChat",
-      tagline: "A Japanese-themed restaurant, bar and onsen in VRChat, and the community around it.",
-      summary: "A Japanese-themed restaurant, bar and onsen in VRChat, with live singers, games and a community of 800+ members. I'm part of the founding team: I built much of the world, designed the brand, and looked after VIP memberships and staff operations. I no longer run it day to day.",
-      status: "",
-      size: "l",
-      hidden: false,
-      cover: "assets/projects/hikari/cover.jpg",
-      homeCover: "assets/projects/hikari/home.jpg",   // picture shown when it is the big top project on the home page
-      homePos: "50% 42%",                             // which part stays in view when it is cropped
-      homeAlt: "Inside the Hikari world in VRChat at night: a torii gate, lanterns and a glowing stage over the water",
-      context: "",
-      year: "Dec 2024 – Jun 2026",
-      role: "Founding team: world building, brand design, VIP and staff operations",
-      collaborators: [],
-      tools: ["Unity", "ProBuilder", "VRChat"],
-      links: [{ label: "Hikari on Instagram", url: "https://www.instagram.com/hikarizo.vrc/" }],
-      sections: [
-        {
-          title: "The world",
-          text: "Guests arrive through a torii gate entrance into an interconnected VIP lounge, with a full sauna and onsen area linked by bridges and walkways. They can order from an in-world chef, listen to live singers, and play chess, Othello and pool, while staff dressed as maiko and geisha host the evening.\n\nHikari ran as a weekly event on Wednesdays at 8pm (GMT+7), mainly for Thai players.\n\nEarly builds used free and marketplace assets. Over time I moved toward original geometry made with ProBuilder in Unity, especially for the indoor spaces.",
-          media: [{ type: "instagram", url: "https://www.instagram.com/reel/DWu4b81Ado0/" }],
-          slideshow: [
-            { src: "assets/projects/hikari/torii-night.jpg", alt: "The glowing 光 torii gate over the water in the Hikari world at night, with a small boat and lily pads", caption: "The torii gate at the entrance" },
-            { src: "assets/projects/hikari/entrance-night.jpg", alt: "Looking toward the torii gate from a lantern-lit deck at night", caption: "Arriving at the venue" },
-            { src: "assets/projects/hikari/boardwalk-stage.jpg", alt: "A curved wooden walkway leading to the stage area over dark water", caption: "Walkway to the stage" },
-            { src: "assets/projects/hikari/bridge-lanterns.jpg", alt: "A red arched bridge with glowing lanterns and bamboo, leading to a pavilion", caption: "Bridges and lanterns" },
-            { src: "assets/projects/hikari/aerial-north.jpg", alt: "Aerial view of the whole Hikari world at night: pavilions, bridges and lanterns", caption: "The world from above" },
-            { src: "assets/projects/hikari/aerial-lounge.jpg", alt: "Aerial view of the roofs, lounge and event spaces at night", caption: "The lounge and event spaces from above" },
-            { src: "assets/projects/hikari/bar.jpg", alt: "Inside the bar: paper lanterns, wooden counter and noren curtains", caption: "The bar" },
-            { src: "assets/projects/hikari/vip-zone.jpg", alt: "The VIP zone with floor cushions, low tables, posters and the 光 sign", caption: "The VIP zone" },
-            { src: "assets/projects/hikari/sauna-1.jpg", alt: "A wooden sauna room with tiered benches and rolled towels", caption: "Sauna" },
-            { src: "assets/projects/hikari/sauna-2.jpg", alt: "The sauna from a second angle, with warm lighting and a dark marble floor", caption: "Sauna, second angle" },
-            { src: "assets/projects/hikari/sink-room.jpg", alt: "A wooden washroom with a basin beside the sauna entrance", caption: "Washroom" },
-            { src: "assets/projects/hikari/restroom-1.jpg", alt: "A restroom with a paper screen window, basin and a bamboo plant", caption: "Restroom" },
-            { src: "assets/projects/hikari/restroom-2.jpg", alt: "The restroom from a second angle, with a shoji window, bamboo and a wooden bench", caption: "Restroom, second angle" }
-          ]
-        },
-        {
-          title: "Brand",
-          text: "I designed Hikari's identity: the 光 (hikari, \"light\") logo with koi pond and torii motifs, promotional posters, social thumbnails, and physical keychains tied to the VIP membership tiers.",
-          media: [{ type: "image", url: "assets/projects/hikari/keychain-poster.jpg", size: "small", alt: "Promo poster for the Hikari keychains: three designs (a gold torii plate, a koi and wave torii, and a night-bridge torii), 99 baht each, with VIP add-on bundles", caption: "Keychain promo poster" }]
-        },
-        {
-          title: "Community & operations",
-          text: "The community grew to 800+ members across platforms, with 10,000+ visitors to the world. I moderated engagement, resolved community issues, and coordinated a small team of volunteer creators, tracking milestones and delegating tasks.\n\nI managed the VIP membership system and staff operations, with a flexible internal accounting structure that tracked monthly and one-off daily VIP purchases against volunteer staff attendance, so revenue could be shared with the staff every month.",
-          media: [
-            { type: "image", url: "assets/projects/hikari/staff-group.jpg", alt: "The Hikari staff and community together on the wooden deck in VRChat", caption: "The Hikari staff and community" },
-            { type: "image", url: "assets/projects/hikari/christmas-hori07.jpg", alt: "A group of avatars posing in front of a Christmas tree inside the Hikari bar, including one with a Santa hat on a red throne", caption: "Christmas at Hikari, with the Thai VTuber Hori07" },
-            { type: "image", url: "assets/projects/hikari/cny-community.jpg", alt: "A large group of avatars in red and gold outfits, with lion-dance heads and red lanterns, on the wooden steps of the Hikari world", caption: "Chinese New Year event" }
-          ]
-        }
-      ],
-      gallery: [],
-      galleryLayout: "grid"
-    },
-
-    {
-      slug: "keep-it-in",
-      title: "Keep It In!",
-      category: "immersive",
-      type: "Interactive · Unity",
-      tagline: "A surreal chase toward a toilet, built around story, sound and level design.",
-      summary: "A short Unity experience that explores emotional state through environment and sound alone, with no dialogue and no UI. It's the piece where I focused most on storytelling and level design.",
-      status: "",
-      size: "l",
-      hidden: false,
-      cover: "assets/projects/keep-it-in/cover.jpg",
-      hero: { type: "youtube", url: "https://youtu.be/7GCy969uqHU" },
-      context: "RMIT University · Virtual Environment",
-      year: "Aug – Oct 2025",
-      role: "",
-      collaborators: [],
-      tools: ["Unity", "Reaper"],
-      links: [],
-      sections: [
-        {
-          title: "The experience",
-          text: "It starts at a food truck, where you're handed a questionable hot dog. A plaza leads into a maze, and from somewhere far away you hear toilet flushes, both a hint and a taunt. As you get closer the vignette tightens. Then comes an anticlimactic flush, and the screen fades to white.",
-          media: []
-        },
-        {
-          title: "Sound",
-          text: "The sound design is custom recorded and edited in Reaper, layered over ambient effects. With no dialogue or on-screen UI, the environment and the audio carry the player's emotional state.",
-          media: []
-        }
-      ],
-      gallery: [],
-      galleryLayout: "grid"
-    },
-
-    {
-      slug: "drift",
-      title: "DRIFT",
-      category: "immersive",
-      type: "VR experience · Unity",
-      tagline: "An astronaut drifts from their ship as panic turns to calm.",
-      summary: "A VR experience about an astronaut drifting away from their ship. Panic slowly turns into calm acceptance as they take in the beauty of space. The black hole, planets, sun, nebula and skybox are shaders that react to the music.",
-      status: "In progress",
-      size: "m",
-      hidden: false,
-      cover: "assets/projects/drift/cover.jpg",
-      context: "RMIT University · AI Studio",
-      year: "2026",
-      role: "",
-      collaborators: [],
-      tools: ["Unity", "Claude Code", "Suno"],
-      links: [],
-      sections: [
-        {
-          title: "How it's made",
-          text: "The shaders are driven by one shared audio script that feeds the music's amplitude and frequency into the shader settings. I used Claude Code to help write and tune the shaders, and the music was generated with Suno. I'm also working on getting everything to run well in VR.",
-          media: []
-        }
-      ],
-      gallery: [],
-      galleryLayout: "grid"
-    },
-
-    {
       slug: "dms-facilitator",
       title: "DMS Facilitator",
       category: "content",
@@ -392,52 +392,6 @@ const PORTFOLIO = {
           { type: "instagram", url: "https://www.instagram.com/p/DcYGSSjEvs-/" }
         ] }
       ],
-      sections: [],
-      gallery: [],
-      galleryLayout: "grid"
-    },
-
-    {
-      slug: "haul",
-      title: "HAUL",
-      category: "immersive",
-      type: "Game · Procedural rhetoric",
-      tagline: "A shopping game where the only way to win is to walk away.",
-      summary: "A game about shopping where the player wins by walking away. It's a procedural rhetoric piece: the point about consumption is made through the rules, not through text.",
-      status: "",
-      size: "s",
-      hidden: false,
-      cover: "assets/projects/haul/cover.jpg",
-      hero: { type: "youtube", url: "https://youtu.be/gFsbdSgHLlI" },
-      context: "RMIT University · Minimalism, Limits & Constraints",
-      year: "",
-      role: "",
-      collaborators: [],
-      tools: [],
-      links: [],
-      sections: [],
-      gallery: [],
-      galleryLayout: "grid"
-    },
-
-    {
-      slug: "liminal-lavatory",
-      title: "Liminal Lavatory",
-      category: "immersive",
-      type: "VR multisensory experience",
-      tagline: "The Keep It In! bathroom maze, reworked as a VR multisensory experience.",
-      summary: "A sub-project that reuses the bathroom maze from Keep It In! and turns it into a VR multisensory experience.",
-      status: "",
-      size: "s",
-      hidden: false,
-      cover: "assets/projects/liminal-lavatory/cover.jpg",
-      hero: { type: "youtube", url: "https://youtu.be/C0TI0wnjY78" },
-      context: "RMIT University · Heighten: Multi-Sensory Experience",
-      year: "",
-      role: "",
-      collaborators: [],
-      tools: ["Unity"],
-      links: [],
       sections: [],
       gallery: [],
       galleryLayout: "grid"
@@ -566,64 +520,6 @@ const PORTFOLIO = {
       gallery: [],
       galleryLayout: "grid"
     },
-
-    {
-      slug: "scroll-to-space",
-      title: "Scroll to Space",
-      category: "immersive",
-      type: "Interactive website",
-      tagline: "An educational website where scrolling up is climbing into space.",
-      summary: "A scroll-driven infographic that turns scrolling into a climb from the ground to space. It's built with vanilla JavaScript and CSS, using real atmospheric data. It only works properly on desktop.",
-      status: "Best on desktop",
-      size: "w",
-      hidden: false,
-      cover: "assets/projects/scroll-to-space/cover.jpg",
-      hero: { type: "embed", url: "https://maewnic.github.io/Assignment3_ScrollToSpace/", poster: "assets/projects/scroll-to-space/cover.jpg", label: "Try it here" },
-      context: "RMIT University",
-      year: "Oct 2025",
-      role: "",
-      collaborators: [],
-      tools: ["JavaScript", "CSS", "HTML"],
-      links: [{ label: "Open the website", url: "https://maewnic.github.io/Assignment3_ScrollToSpace/" }],
-      sections: [
-        {
-          title: "How it works",
-          text: "The page loads scrolled to the bottom, so scrolling up mirrors climbing. An altitude counter blends a linear scale for the first 80 km with an exponential one after that, reaching 10,000 km. The background darkens from sky blue to black along the way, and hovering reveals captions about each layer.",
-          media: []
-        }
-      ],
-      gallery: [],
-      galleryLayout: "grid"
-    },
-
-    {
-      slug: "study-music-player",
-      title: "Study Music Player",
-      category: "immersive",
-      type: "Interactive website",
-      tagline: "An ambient music player with a built-in Pomodoro timer.",
-      summary: "An ambient study music player with a Pomodoro timer built in: 25-minute study blocks and 5-minute breaks that cycle automatically and sync with playback. It only works properly on desktop.",
-      status: "Best on desktop",
-      size: "w",
-      hidden: false,
-      cover: "assets/projects/study-music-player/cover.jpg",
-      hero: { type: "embed", url: "https://maewnic.github.io/Assignment2/mediaPlayer/", poster: "assets/projects/study-music-player/cover.jpg", label: "Try it here" },
-      context: "RMIT University",
-      year: "Aug 2025",
-      role: "",
-      collaborators: [],
-      tools: ["JavaScript", "CSS", "HTML", "Illustrator"],
-      links: [{ label: "Open the player", url: "https://maewnic.github.io/Assignment2/mediaPlayer/" }],
-      sections: [
-        {
-          title: "Design",
-          text: "The play and pause button is oversized and centred, and the spacebar toggles playback. The headphones icon is a hand-drawn Illustrator design, and the background is a photo of the Twelve Apostles that I took myself.\n\nI moved the volume slider to a more accessible place and built custom range sliders to match the rest of the look.",
-          media: []
-        }
-      ],
-      gallery: [],
-      galleryLayout: "grid"
-    }
 
     /* ----- READY-MADE TEMPLATE (copy it out of this comment to use it) -----
 

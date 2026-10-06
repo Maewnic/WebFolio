@@ -683,11 +683,6 @@
     $("#about-facts").innerHTML = [S.fullName, S.education, S.from, S.languages, S.location]
       .filter(Boolean).map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("");
 
-    $("#experience").innerHTML = arr(P.experience).map(function (e) {
-      return '<article class="exp reveal"><div class="exp-when">' + esc(e.period || "") + "</div><div><h3>" + esc(e.title) + '</h3><p class="exp-org">' +
-        esc(e.org) + "</p>" + (e.text ? "<p>" + esc(e.text) + "</p>" : "") + "</div></article>";
-    }).join("");
-
     $("#skills").innerHTML = arr(P.skills).map(function (g) {
       return '<div class="skill-group reveal"><h3>' + esc(g.group) + "</h3><ul>" + arr(g.items).map(function (i) { return "<li>" + esc(i) + "</li>"; }).join("") + "</ul></div>";
     }).join("");
