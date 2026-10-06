@@ -477,11 +477,6 @@
         ? '<img src="' + esc(S.heroImage) + '" alt="' + esc(S.heroAlt || "") + '" decoding="async">'
         : '<div class="dream" aria-hidden="true"></div>') + '</div>' +
       (tags.length ? '<p class="hero-tag" aria-hidden="true">' + tags.map(function (t) { return "<span>" + esc(t) + "</span>"; }).join("") + "</p>" : "");
-
-    var ph = S.homeAboutImage || S.aboutPhoto;
-    if (ph) { $("#home-about-photo").innerHTML = '<img src="' + esc(ph) + '" alt="' + esc(S.aboutAlt || "Portrait of " + S.name) + '" loading="lazy" decoding="async">'; }
-    else { $("#home-about-photo").hidden = true; }
-    $("#teaser-text").innerHTML = emph(S.aboutTeaser || "");
   }
 
   /* -------------------------------------------------------------------- work */
