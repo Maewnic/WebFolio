@@ -478,36 +478,6 @@
         : '<div class="dream" aria-hidden="true"></div>') + '</div>' +
       (tags.length ? '<p class="hero-tag" aria-hidden="true">' + tags.map(function (t) { return "<span>" + esc(t) + "</span>"; }).join("") + "</p>" : "");
 
-    /* short skills block */
-    var hs = arr(P.homeSkills);
-    if (hs.length) {
-      $("#home-skills").innerHTML = hs.map(function (g, i) {
-        return '<article class="hs-card reveal"><span class="hs-num">' + pad2(i + 1) + "</span><h3>" + esc(g.title) + "</h3><ul>" +
-          arr(g.items).map(function (t) { return "<li>" + esc(t) + "</li>"; }).join("") + "</ul></article>";
-      }).join("");
-    } else {
-      $("#skills-section").hidden = true;
-    }
-
-    /* selected work: one big project on top, the rest in a row underneath; they rotate every 8 seconds */
-    var feat = arr(P.featured).map(findProject).filter(Boolean);
-    if (feat.length) {
-      setupFeatured(feat.map(function (p, i) { return { p: p, n: i + 1 }; }));
-    } else {
-      $("#featured-section").hidden = true;
-    }
-
-    var cats = catsInUse();
-    $("#cats").innerHTML = cats.map(function (c, i) {
-      var n = projects.filter(function (p) { return p.category === c.key; }).length;
-      return '<a class="cat-row reveal" href="work.html#' + esc(c.key) + '">' +
-        '<span class="cat-num">0' + (i + 1) + "</span>" +
-        '<span class="cat-name">' + esc(c.label) + "</span>" +
-        '<span class="cat-blurb">' + esc(c.blurb) + "</span>" +
-        '<span class="cat-count">' + n + (n === 1 ? " project" : " projects") + "</span>" +
-        '<span class="cat-arrow" aria-hidden="true">&rarr;</span></a>';
-    }).join("");
-
     var ph = S.homeAboutImage || S.aboutPhoto;
     if (ph) { $("#home-about-photo").innerHTML = '<img src="' + esc(ph) + '" alt="' + esc(S.aboutAlt || "Portrait of " + S.name) + '" loading="lazy" decoding="async">'; }
     else { $("#home-about-photo").hidden = true; }
@@ -516,6 +486,14 @@
 
   /* -------------------------------------------------------------------- work */
   function renderWork() {
+    /* selected work: one big project on top, the rest in a row underneath; they rotate every 8 seconds */
+    var feat = arr(P.featured).map(findProject).filter(Boolean);
+    if (feat.length) {
+      setupFeatured(feat.map(function (p, i) { return { p: p, n: i + 1 }; }));
+    } else {
+      $("#featured-section").hidden = true;
+    }
+
     var cats = catsInUse();
     var chips = $("#chips");
     chips.innerHTML =
