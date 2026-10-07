@@ -952,8 +952,9 @@ h2 em,
 }
 .skills {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 40px 32px;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 40px 24px;
+  align-items: start;
 }
 .skill-group h3 {
   font-size: 1.5rem;
@@ -964,13 +965,6 @@ h2 em,
   border-top: 1px solid var(--line);
   color: var(--muted);
   font-size: 0.95rem;
-}
-.tools {
-  margin-top: 56px;
-}
-.tools h3 {
-  font-size: 1.5rem;
-  margin-bottom: 14px;
 }
 .chips-static {
   display: flex;
@@ -1062,6 +1056,12 @@ h2 em,
 .footer-note {
   font-size: 0.85rem;
   color: var(--muted);
+}
+.site-footer--minimal {
+  padding: 28px 0;
+}
+.site-footer--minimal .footer-note {
+  text-align: center;
 }
 
 /* ---------- lightbox ---------- */
@@ -1537,8 +1537,6 @@ body {
   z-index: -1;
   pointer-events: none;
   overflow: hidden;
-  -webkit-mask-image: linear-gradient(#000000 55%, transparent);
-  mask-image: linear-gradient(#000000 55%, transparent);
 }
 /* silky pastel water ripples (assets/bg-waves.jpg), drifting very slowly */
 .sky::before {
@@ -1549,12 +1547,24 @@ body {
   animation: skyDrift 60s ease-in-out infinite alternate;
   will-change: transform;
 }
+/* fade the wave image out toward the page background — a plain gradient overlay
+   instead of mask-image, which dithers visibly on these very smooth pastel tones */
+.sky::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(transparent 55%, var(--bg) 100%);
+}
 @keyframes skyDrift {
+  /* translate only (no scale): an animated scale forces the browser into a lower-
+     quality continuous rescale of this image, which shows up as visible blockiness
+     on these very smooth pastel tones */
   from {
-    transform: translate3d(0, 0, 0) scale(1);
+    transform: translate3d(0, 0, 0);
   }
   to {
-    transform: translate3d(-2%, 1.5%, 0) scale(1.06);
+    transform: translate3d(-2%, 1.5%, 0);
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -2333,6 +2343,9 @@ body {
   .meta {
     padding: 24px 24px;
   }
+  .skills {
+    grid-template-columns: repeat(3, 1fr);
+  }
 }
 @media (max-width: 640px) {
   .page-head,
@@ -2356,6 +2369,10 @@ body {
   }
   .meta {
     padding: 20px 18px;
+  }
+  .skills {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
   }
 }
 
@@ -2390,11 +2407,12 @@ body {
   inset: 0;
   z-index: -1;
   pointer-events: none;
+  /* the top fade is a plain gradient layer instead of mask-image, which dithers
+     visibly on these very smooth pastel tones */
   background:
+    linear-gradient(180deg, var(--bg) 0%, transparent 55%),
     linear-gradient(180deg, rgba(241, 247, 254, 0.5) 0%, rgba(241, 247, 254, 0.25) 40%, rgba(241, 247, 254, 0.05) 100%),
     #ddeafc url("../assets/bg-waves.jpg") 70% 70% / cover no-repeat;
-  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000000 55%);
-  mask-image: linear-gradient(180deg, transparent 0%, #000000 55%);
 }
 
 

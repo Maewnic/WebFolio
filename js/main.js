@@ -336,7 +336,7 @@
     if (S.email) out.push({ label: "Email", text: S.email, href: "mailto:" + S.email });
     if (S.linkedin) out.push({ label: "LinkedIn", text: "LinkedIn", href: S.linkedin, ext: true });
     if (S.github) out.push({ label: "GitHub", text: "GitHub" + (S.alias ? " (" + S.alias + ")" : ""), href: S.github, ext: true });
-    if (S.instagram) out.push({ label: "Instagram", text: "Instagram" + (S.alias ? " (" + S.alias + ")" : ""), href: S.instagram, ext: true });
+    if (S.instagram) out.push({ label: "Instagram", text: "Instagram" + (S.alias ? " (@" + S.alias + ")" : ""), href: S.instagram, ext: true });
     if (S.youtube) out.push({ label: "YouTube", text: "YouTube", href: S.youtube, ext: true });
     return out;
   }
@@ -344,6 +344,17 @@
   function buildFooter() {
     var el = $("#site-footer");
     if (!el) return;
+    var footerLoc = (S.location || "").split(" · ")[0];
+    var note = esc(S.name) + (S.alias ? " (@" + esc(S.alias) + ")" : "") + " · " + esc(footerLoc) + " · &copy; " + new Date().getFullYear();
+
+    if (page === "contact") {
+      el.innerHTML =
+        '<footer class="site-footer site-footer--minimal"><div class="container">' +
+        '<p class="footer-note">' + note + "</p>" +
+        "</div></footer>";
+      return;
+    }
+
     var links = contactLinks().map(function (l) {
       return '<li><a href="' + esc(l.href) + '"' + (l.ext ? ' target="_blank" rel="noopener"' : "") + ">" + esc(l.text) + "</a></li>";
     }).join("");
@@ -352,7 +363,7 @@
       '<div><p class="footer-title">Let’s make something <em>interesting</em>.</p>' +
       '<a class="btn" href="contact.html">Get in touch <span aria-hidden="true">&rarr;</span></a></div>' +
       '<div class="footer-side">' + (links ? '<ul class="footer-links">' + links + "</ul>" : "") +
-      '<p class="footer-note">' + esc(S.name) + (S.alias ? " (" + esc(S.alias) + ")" : "") + " · " + esc(S.location) + " · &copy; " + new Date().getFullYear() + "</p></div>" +
+      '<p class="footer-note">' + note + "</p></div>" +
       "</div></footer>";
   }
 
@@ -683,17 +694,16 @@
     $("#about-facts").innerHTML = [S.fullName, S.education, S.from, S.languages, S.location]
       .filter(Boolean).map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("");
 
-    $("#skills").innerHTML = arr(P.skills).map(function (g) {
+    var skillsHTML = arr(P.skills).map(function (g) {
       return '<div class="skill-group reveal"><h3>' + esc(g.group) + "</h3><ul>" + arr(g.items).map(function (i) { return "<li>" + esc(i) + "</li>"; }).join("") + "</ul></div>";
     }).join("");
 
     var tools = [];
     projects.forEach(function (p) { arr(p.tools).forEach(function (x) { if (tools.indexOf(x) < 0) tools.push(x); }); });
     if (tools.length) {
-      $("#tools").innerHTML = '<h3>Tools I’ve used in these projects</h3><ul class="chips-static">' + tools.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul>";
-    } else {
-      $("#tools").hidden = true;
+      skillsHTML += '<div class="skill-group skill-group--tools reveal"><h3>Tools I’ve used</h3><ul class="chips-static">' + tools.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul></div>";
     }
+    $("#skills").innerHTML = skillsHTML;
   }
 
   /* ----------------------------------------------------------------- contact */
