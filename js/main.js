@@ -701,7 +701,7 @@
     var tools = [];
     projects.forEach(function (p) { arr(p.tools).forEach(function (x) { if (tools.indexOf(x) < 0) tools.push(x); }); });
     if (tools.length) {
-      skillsHTML += '<div class="skill-group skill-group--tools reveal"><h3>Tools I’ve used</h3><ul class="chips-static">' + tools.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul></div>";
+      skillsHTML += '<div class="skill-group reveal"><h3>Tools I’ve used</h3><ul>' + tools.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul></div>";
     }
     $("#skills").innerHTML = skillsHTML;
   }
