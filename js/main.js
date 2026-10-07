@@ -700,10 +700,26 @@
 
     var tools = [];
     projects.forEach(function (p) { arr(p.tools).forEach(function (x) { if (tools.indexOf(x) < 0) tools.push(x); }); });
+    // these show up in so many projects that they're more useful bumped to the end of the list
+    var toolsToEnd = ["VRChat", "Claude Code", "Suno"];
+    tools = tools.filter(function (x) { return toolsToEnd.indexOf(x) < 0; })
+      .concat(toolsToEnd.filter(function (x) { return tools.indexOf(x) >= 0; }));
     if (tools.length) {
-      skillsHTML += '<div class="skill-group reveal"><h3>Tools I’ve used</h3><ul>' + tools.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul></div>";
+      skillsHTML += '<div class="skill-group skill-group--tools reveal"><h3>Tools I’ve used</h3>' +
+        '<div class="skill-tools-wrap"><ul>' + tools.map(function (x) { return "<li>" + esc(x) + "</li>"; }).join("") + "</ul>" +
+        '<div class="skill-fade" aria-hidden="true"></div></div>' +
+        '<button class="skill-more" type="button">Show more</button></div>';
     }
     $("#skills").innerHTML = skillsHTML;
+
+    var moreBtn = $(".skill-more");
+    if (moreBtn) {
+      moreBtn.addEventListener("click", function () {
+        var card = moreBtn.closest(".skill-group--tools");
+        var expanded = card.classList.toggle("is-expanded");
+        moreBtn.textContent = expanded ? "Show less" : "Show more";
+      });
+    }
   }
 
   /* ----------------------------------------------------------------- contact */

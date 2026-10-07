@@ -581,7 +581,7 @@ const PORTFOLIO = {
   ],
 
   skills: [
-    { group: "Immersive & Interactive", items: ["Virtual environments", "VR / immersive experience", "3D environment design", "Interactive media", "Level design", "Sound design"] },
+    { group: "Immersive & Interactive", items: ["3D virtual environment design", "Virtual Reality", "Interactive media", "Level design", "Sound design"] },
     { group: "Visual & Design",         items: ["3D design", "Graphic design", "Visual composition", "Photography", "Illustration"] },
     { group: "Content & Media",         items: ["Video editing", "Short-form video", "Social media content", "Content creation", "Digital storytelling"] },
     { group: "Creative Practice",       items: ["Concept development", "Experience design", "Visual storytelling", "Collaboration", "Creative direction / ideation"] },

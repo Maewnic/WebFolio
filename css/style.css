@@ -2289,6 +2289,47 @@ body {
     0 14px 40px rgba(43, 87, 166, 0.06),
     inset 0 1px 0 rgba(255, 255, 255, 0.7);
 }
+.skill-tools-wrap {
+  position: relative;
+  overflow: hidden;
+  max-height: 168px;
+}
+.skill-tools-wrap ul {
+  margin: 0;
+}
+.skill-fade {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 46px;
+  background: linear-gradient(rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.85));
+  pointer-events: none;
+}
+.skill-more {
+  display: block;
+  margin: 10px 0 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--muted);
+  font-size: 0.85rem;
+  font-family: inherit;
+  cursor: pointer;
+  text-decoration: underline;
+  text-decoration-color: var(--line);
+  text-underline-offset: 3px;
+  transition: color 0.2s ease;
+}
+.skill-more:hover {
+  color: var(--accent);
+}
+.skill-group--tools.is-expanded .skill-tools-wrap {
+  max-height: none;
+}
+.skill-group--tools.is-expanded .skill-fade {
+  display: none;
+}
 
 /* contact */
 .contact-list {
