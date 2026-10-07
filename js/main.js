@@ -494,10 +494,9 @@
   function renderWork() {
     /* selected work: one big project on top, the rest in a row underneath; they rotate every 8 seconds */
     var feat = arr(P.featured).map(findProject).filter(Boolean);
-    if (feat.length) {
+    var hasFeatured = feat.length > 0;
+    if (hasFeatured) {
       setupFeatured(feat.map(function (p, i) { return { p: p, n: i + 1 }; }));
-    } else {
-      $("#featured-section").hidden = true;
     }
 
     var cats = catsInUse();
@@ -518,6 +517,8 @@
       [].forEach.call(chips.querySelectorAll(".chip"), function (b) {
         b.setAttribute("aria-pressed", b.getAttribute("data-f") === f ? "true" : "false");
       });
+      var feed = $("#featured-feed");
+      if (feed) feed.hidden = !(f === "all" && hasFeatured);
       return f;
     }
     chips.addEventListener("click", function (e) {
