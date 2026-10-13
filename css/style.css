@@ -160,33 +160,6 @@ h2 em,
   flex-wrap: wrap;
   gap: 12px;
 }
-/* the "Create / Explore / Connect" button: taller than the usual pill, the
-   three words stacked like the old photo label, with an arrow where its
-   underline used to be */
-.btn--stack {
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 3px;
-  padding: 19px 26px 16px;
-  border-radius: 18px;
-  font-size: 0.66rem;
-  font-weight: 500;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-}
-.btn--stack .btn-arrow {
-  align-self: flex-end;
-  margin-top: 8px;
-  font-size: 1rem;
-  text-transform: none;
-  letter-spacing: normal;
-}
-.btn--stack:hover span {
-  transform: none;
-}
-.btn--stack:hover .btn-arrow {
-  transform: translateX(4px);
-}
 
 /* ---------- header ---------- */
 #site-header {
@@ -1700,6 +1673,41 @@ body {
   object-fit: cover;
   object-position: 50% 40%;
 }
+.hero-tag {
+  position: absolute;
+  right: -76px;
+  bottom: 14%;
+  display: grid;
+  gap: 4px;
+  padding: 22px 22px 20px;
+  border-radius: 10px;
+  background: var(--glass);
+  border: 1px solid var(--glass-line);
+  -webkit-backdrop-filter: blur(16px);
+  backdrop-filter: blur(16px);
+  font-size: 0.66rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  box-shadow: 0 10px 30px rgba(43, 87, 166, 0.1);
+  text-decoration: none;
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+}
+.hero-tag:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 36px rgba(43, 87, 166, 0.16);
+}
+.hero-tag-arrow {
+  margin-top: 10px;
+  font-size: 0.95rem;
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--ink);
+  transition: transform 0.3s var(--ease);
+}
+.hero-tag:hover .hero-tag-arrow {
+  transform: translateX(4px);
+}
 /* ---------- skills (home) ---------- */
 .hs-grid {
   display: grid;
@@ -1927,6 +1935,9 @@ body {
     margin-left: 6px;
     width: min(78%, 380px);
   }
+  .hero-tag {
+    right: -24px;
+  }
   .hs-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -1948,6 +1959,11 @@ body {
   }
   .hero-visual {
     width: 82%;
+  }
+  .hero-tag {
+    right: -14px;
+    bottom: 8%;
+    padding: 14px 16px 12px;
   }
   .hs-grid {
     grid-template-columns: 1fr 1fr;
@@ -2015,6 +2031,9 @@ body {
 }
 .hero-photo img {
   object-position: 50% 38%;
+}
+.hero-tag {
+  right: -44px;
 }
 
 /* selected work: glass cards with small tags */
@@ -2110,6 +2129,9 @@ body {
     width: min(78%, 340px);
     margin-left: 0;
   }
+  .hero-tag {
+    right: -20px;
+  }
   .home-about.glass {
     gap: 28px;
   }
@@ -2121,6 +2143,9 @@ body {
   }
   .hero-visual {
     width: 82%;
+  }
+  .hero-tag {
+    right: -12px;
   }
   .home #cats {
     padding: 2px 18px;

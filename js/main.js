@@ -485,10 +485,16 @@
     $("#hero-title").innerHTML = "Hi, I’m <em>" + esc(S.name) + ".</em>";
     $("#hero-intro").textContent = S.intro;
     $("#hero-loc").textContent = S.location;
+    var tags = arr(S.heroTags);
     $("#hero-visual").innerHTML =
       '<div class="hero-photo">' + (S.heroImage
         ? '<img src="' + esc(S.heroImage) + '" alt="' + esc(S.heroAlt || "") + '" decoding="async">'
-        : '<div class="dream" aria-hidden="true"></div>') + '</div>';
+        : '<div class="dream" aria-hidden="true"></div>') + '</div>' +
+      (tags.length
+        ? '<a class="hero-tag" href="work.html">' +
+          tags.map(function (t) { return "<span>" + esc(t) + "</span>"; }).join("") +
+          '<span class="hero-tag-arrow" aria-hidden="true">&rarr;</span></a>'
+        : "");
   }
 
   /* -------------------------------------------------------------------- work */
@@ -551,10 +557,12 @@
     /* does this project have any videos to show in its tab groups at all? */
     var hasTabMedia = arr(p.tabs).some(function (t) { return arr(t.media).filter(function (m) { return m && m.url; }).length; });
 
-    /* the write-up + outbound links: normally sit right under the title, but a
-       project can push them to the bottom of the page instead (descriptionAtEnd).
+    /* the write-up + outbound links sit at the bottom of the page, after the
+       visuals, by default — set descriptionAtEnd: false on a project to put
+       them back under the title instead.
        when archiveLabel is set, the full tab videos live on their own archive
        page instead of inline here, linked with a button next to the others. */
+    var atEnd = p.descriptionAtEnd !== false;
     function linksHTML() {
       var ls = arr(p.links).filter(function (l) { return l && l.url; });
       var btns = ls.map(function (l) {
@@ -571,8 +579,8 @@
       '<a class="crumb" href="work.html#' + esc(p.category) + '">&larr; Work / ' + esc(cat.label) + "</a>" +
       '<p class="eyebrow">' + esc(p.type || cat.label) + (p.status ? ' <span class="badge badge--inline">' + esc(p.status) + "</span>" : "") + "</p>" +
       "<h1>" + esc(p.title) + "</h1>" +
-      (!p.descriptionAtEnd && p.summary ? '<p class="lead">' + esc(p.summary) + "</p>" : "") +
-      (!p.descriptionAtEnd ? linksHTML() : "") + "</header>";
+      (!atEnd && p.summary ? '<p class="lead">' + esc(p.summary) + "</p>" : "") +
+      (!atEnd ? linksHTML() : "") + "</header>";
 
     /* meta row */
     var meta = [];
@@ -693,7 +701,7 @@
     }
 
     /* write-up + links, when pushed to the end instead of living under the title */
-    if (p.descriptionAtEnd) {
+    if (atEnd) {
       var outroText = p.summary ? paras(p.summary) : "", outroLinks = linksHTML();
       if (outroText || outroLinks) {
         h += '<section class="container psec reveal"><div class="psec-grid"><h2>About this project</h2><div class="psec-text">' + outroText + outroLinks + "</div></div></section>";
