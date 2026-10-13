@@ -472,6 +472,23 @@ h2 em,
   gap: 56px 28px;
   padding-bottom: var(--section);
 }
+
+/* filtering to a single category drops the featured carousel, which leaves a
+   big empty gap above and below the chips; pull everything up to close it */
+body.is-filtered #featured-section {
+  padding-top: 48px;
+}
+body.is-filtered #featured-section + .section {
+  padding-top: 40px;
+}
+@media (max-width: 640px) {
+  body.is-filtered #featured-section {
+    padding-top: 32px;
+  }
+  body.is-filtered #featured-section + .section {
+    padding-top: 28px;
+  }
+}
 .tile--l {
   grid-column: span 8;
 }

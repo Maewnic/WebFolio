@@ -102,7 +102,7 @@
         return page && i >= page ? h.replace("<div ", "<div hidden ") : h;
       }).join("") + "</div>";
     if (page && list.length > page) {
-      html += '<p class="more-wrap"><button type="button" class="btn btn--ghost more-btn">Show more <span>(' + (list.length - page) + " more)</span></button></p>";
+      html += '<p class="more-wrap"><button type="button" class="btn btn--ghost more-btn">' + esc(opts.moreLabel || "Show more") + ' <span>(' + (list.length - page) + " more)</span></button></p>";
     }
     return html;
   }
@@ -152,7 +152,7 @@
   function reelCarouselHTML(list, text) {
     return '<section class="container hl hl--reels reveal" id="hl">' +
       '<div class="psec-grid"><h2>Highlight reels</h2><div class="psec-text">' +
-      (text ? paras(text) : "<p>A few favourites. Use the arrows to move through them.</p>") + "</div></div>" +
+      (text === "" ? "" : (text ? paras(text) : "<p>A few favourites. Use the arrows to move through them.</p>")) + "</div></div>" +
       '<div class="reel-carousel" role="group" aria-roledescription="carousel" aria-label="Highlight reels">' +
       '<button type="button" class="reel-side reel-prev" aria-label="Previous reel"><span class="reel-side-arrow">&larr;</span><span class="reel-side-kind"></span></button>' +
       '<div class="reel-frame"><span class="reel-label" hidden></span><div class="reel-slot" aria-live="polite"></div></div>' +
@@ -196,7 +196,7 @@
     if (!list.length) return "";
     if (isReelList(list)) return reelCarouselHTML(list, text);
     return '<section class="container hl reveal" id="hl">' +
-      '<div class="psec-grid"><h2>Highlight reels</h2><div class="psec-text">' + (text ? paras(text) : "<p>Clips from the recap videos. Press play and the next one follows when each one ends.</p>") + "</div></div>" +
+      '<div class="psec-grid"><h2>Highlight reels</h2><div class="psec-text">' + (text === "" ? "" : (text ? paras(text) : "<p>Clips from the recap videos. Press play and the next one follows when each one ends.</p>")) + "</div></div>" +
       '<div class="hl-stage"><div class="hl-player" aria-live="polite"></div><ol class="hl-list">' +
       list.map(function (m, i) {
         return '<li><button type="button" class="hl-item" aria-current="' + (i === 0 ? "true" : "false") + '"><span class="hl-num">' + (i + 1) + "</span><span>" + esc(m.title || "Highlight " + (i + 1)) + "</span></button></li>";
@@ -246,7 +246,9 @@
   }
 
   /* ------------------------------------------------ tabs of videos/reels */
-  function tabsHTML(tabs) {
+  function tabsHTML(tabs, opts) {
+    opts = opts || {};
+    var page = opts.page || 6;
     tabs = arr(tabs).map(function (t) { return { title: t.title, text: t.text, media: arr(t.media).filter(function (m) { return m && m.url; }) }; })
       .filter(function (t) { return t.media.length; });
     if (!tabs.length) return "";
@@ -256,7 +258,7 @@
       }).join("") + "</div>" +
       tabs.map(function (t, i) {
         return '<div role="tabpanel" class="tabpanel" data-i="' + i + '"' + (i ? " hidden" : "") + ">" +
-          (t.text ? '<div class="psec-text tab-text">' + paras(t.text) + "</div>" : "") + mediaGroup(t.media, t.title, { lazy: true, page: 6 }) + "</div>";
+          (t.text ? '<div class="psec-text tab-text">' + paras(t.text) + "</div>" : "") + mediaGroup(t.media, t.title, { lazy: true, page: page, moreLabel: opts.moreLabel }) + "</div>";
       }).join("") + "</section>";
   }
 
@@ -519,6 +521,7 @@
       });
       var feed = $("#featured-feed");
       if (feed) feed.hidden = !(f === "all" && hasFeatured);
+      document.body.classList.toggle("is-filtered", f !== "all");
       return f;
     }
     chips.addEventListener("click", function (e) {
@@ -546,18 +549,22 @@
     var cat = catOf(p.category);
     var h = "";
 
+    /* the write-up + outbound links: normally sit right under the title, but a
+       project can push them to the bottom of the page instead (descriptionAtEnd) */
+    function linksHTML() {
+      var ls = arr(p.links).filter(function (l) { return l && l.url; });
+      return ls.length ? '<div class="btn-row head-links">' + ls.map(function (l) {
+        return '<a class="btn btn--ghost" href="' + esc(l.url) + '" target="_blank" rel="noopener">' + esc(l.label || "View") + " &nearr;</a>";
+      }).join("") + "</div>" : "";
+    }
+
     /* header */
     h += '<header class="container project-head">' +
       '<a class="crumb" href="work.html#' + esc(p.category) + '">&larr; Work / ' + esc(cat.label) + "</a>" +
       '<p class="eyebrow">' + esc(p.type || cat.label) + (p.status ? ' <span class="badge badge--inline">' + esc(p.status) + "</span>" : "") + "</p>" +
       "<h1>" + esc(p.title) + "</h1>" +
-      (p.summary ? '<p class="lead">' + esc(p.summary) + "</p>" : "") +
-      (function () {
-        var ls = arr(p.links).filter(function (l) { return l && l.url; });
-        return ls.length ? '<div class="btn-row head-links">' + ls.map(function (l) {
-          return '<a class="btn btn--ghost" href="' + esc(l.url) + '" target="_blank" rel="noopener">' + esc(l.label || "View") + " &nearr;</a>";
-        }).join("") + "</div>" : "";
-      })() + "</header>";
+      (!p.descriptionAtEnd && p.summary ? '<p class="lead">' + esc(p.summary) + "</p>" : "") +
+      (!p.descriptionAtEnd ? linksHTML() : "") + "</header>";
 
     /* meta row */
     var meta = [];
@@ -577,7 +584,7 @@
 
     /* highlight reels, then tabs of videos/reels (skipped when empty) */
     h += highlightsHTML(p.highlights, p.highlightsText);
-    h += tabsHTML(p.tabs);
+    h += tabsHTML(p.tabs, { page: p.tabsPage, moreLabel: p.tabsMoreLabel });
 
     /* photo slideshow: crossfading pictures, 8s timer line, arrows, dots, swipe. */
     function slideshowHTML(list, title) {
@@ -674,6 +681,14 @@
           return '<figure><img src="' + esc(g.src) + '" alt="' + esc(g.alt || "") + '" loading="lazy" decoding="async">' +
             (g.caption ? "<figcaption>" + esc(g.caption) + "</figcaption>" : "") + "</figure>";
         }).join("") + "</div></section>";
+    }
+
+    /* write-up + links, when pushed to the end instead of living under the title */
+    if (p.descriptionAtEnd) {
+      var outroText = p.summary ? paras(p.summary) : "", outroLinks = linksHTML();
+      if (outroText || outroLinks) {
+        h += '<section class="container psec reveal"><div class="psec-grid"><h2>About this project</h2><div class="psec-text">' + outroText + outroLinks + "</div></div></section>";
+      }
     }
 
     /* next / back */

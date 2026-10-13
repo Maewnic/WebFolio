@@ -305,11 +305,14 @@ const PORTFOLIO = {
       links: [
         { label: "TSA on Instagram", url: "https://www.instagram.com/tsa_unimelb/" }
       ],
+      descriptionAtEnd: true,   // layout trial: the write-up + Instagram link moves to the bottom of the page instead of the top
+      tabsPage: 3,              // show only 3 videos per tab up front, instead of the site default (6)
+      tabsMoreLabel: "View Archive",
 
       // HIGHLIGHT REELS: one big reel at a time with left/right arrows (loops around).
       // Each one can have a label shown in the top-right corner: "Recap", "Promo" or "Sponsor".
       // Instagram reels can't auto-play the next one, so the arrows do the switching.
-      highlightsText: "A few of my favourites across the three kinds of content. Use the arrows to move through them.",
+      highlightsText: "",      // intentionally blank: no intro line above the reel carousel, just the heading
       highlights: [
         { type: "instagram", url: "https://www.instagram.com/reel/DXBQEq8iafh/", label: "Recap" },
         { type: "instagram", url: "https://www.instagram.com/reel/DHXv7YfSWy7/", label: "Recap" },
