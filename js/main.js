@@ -868,6 +868,133 @@
     });
   }
 
+  /* ------------------------------------------------------------- home intro */
+  // Typewriter that keeps the not-yet-typed letters in place (just invisible),
+  // so the layout never shifts while it types. Works through nested tags (<em>).
+  function typewriter(el) {
+    var original = el.innerHTML, parts = [], nodes = [], n;
+    var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT);
+    while ((n = walker.nextNode())) if (n.nodeValue.length) nodes.push(n);
+    nodes.forEach(function (tn) {
+      var shown = document.createElement("span"), hidden = document.createElement("span");
+      hidden.className = "tw-hidden";
+      hidden.textContent = tn.nodeValue;
+      tn.parentNode.insertBefore(shown, tn);
+      tn.parentNode.replaceChild(hidden, tn);
+      parts.push({ shown: shown, hidden: hidden, text: tn.nodeValue });
+    });
+    return {
+      el: el,
+      restore: function () { el.innerHTML = original; },
+      place: function (caret) { if (parts[0]) parts[0].hidden.parentNode.insertBefore(caret, parts[0].hidden); },
+      type: function (ms, caret, isStopped) {
+        return new Promise(function (done) {
+          var p = 0, i = 0;
+          (function step() {
+            if (isStopped()) return done();
+            while (p < parts.length && i >= parts[p].text.length) { p++; i = 0; }
+            if (p >= parts.length) return done();
+            var part = parts[p], ch = part.text.charAt(i);
+            i++;
+            part.shown.textContent = part.text.slice(0, i);
+            part.hidden.textContent = part.text.slice(i);
+            if (caret) part.hidden.parentNode.insertBefore(caret, part.hidden);
+            // a little human rhythm: pause on punctuation, slight jitter
+            setTimeout(step, ms * (/[.,!?]/.test(ch) ? 4 : ch === " " ? 1.5 : 1) * (0.75 + Math.random() * 0.5));
+          })();
+        });
+      }
+    };
+  }
+
+  // Plays once per visit (index.html's <head> sets html.intro). Any click, key,
+  // scroll or touch skips straight to the finished page.
+  function runIntro() {
+    var root = document.documentElement;
+    if (!root.classList.contains("intro")) return;
+    var hero = $(".hero.glass"), h1 = $("#hero-title");
+    if (!hero || !h1) { root.classList.remove("intro"); return; }
+    window.__introRunning = true;
+    try { sessionStorage.setItem("munich-intro", "1"); } catch (e) {}
+    if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+    window.scrollTo(0, 0);
+
+    // the hero is animated here, not by the scroll reveal
+    [].forEach.call(hero.querySelectorAll(".reveal"), function (el) { el.classList.remove("reveal"); el.style.transitionDelay = ""; });
+
+    var stopped = false, skipEvents = ["pointerdown", "keydown", "wheel", "touchstart"];
+    function isStopped() { return stopped; }
+    function wait(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
+    var caret = document.createElement("span");
+    caret.className = "tw-caret";
+    caret.setAttribute("aria-hidden", "true");
+
+    var title = typewriter(h1);
+    var rest = [".eyebrow", "#hero-intro", "#hero-loc"].map(function (s) { var el = $(s, hero); return el && typewriter(el); }).filter(Boolean);
+    var tagEl = $(".hero-tag", hero), tag = tagEl ? typewriter(tagEl) : null;
+
+    // put the (invisible) full title in the middle of the screen
+    function centre() {
+      h1.style.transform = "";            // measure from its real spot, not an earlier offset
+      var r = document.createRange();
+      r.selectNodeContents(h1);
+      var b = r.getBoundingClientRect();
+      h1.style.transform = "translate(" + Math.round(innerWidth / 2 - (b.left + b.width / 2)) + "px," + Math.round(innerHeight / 2 - (b.top + b.height / 2)) + "px)";
+    }
+    centre();
+
+    function finish() {
+      if (stopped && !window.__introRunning) return;
+      stopped = true;
+      window.__introRunning = false;
+      skipEvents.forEach(function (ev) { window.removeEventListener(ev, finish, true); });
+      title.restore();
+      rest.forEach(function (t) { t.restore(); t.el.classList.remove("is-typing"); });
+      if (tag) tag.restore();
+      h1.style.transition = "";
+      h1.style.transform = "";
+      root.classList.remove("intro", "intro-bg", "intro-glass", "intro-rim", "intro-done");
+      if ("scrollRestoration" in history) history.scrollRestoration = "auto";
+    }
+    skipEvents.forEach(function (ev) { window.addEventListener(ev, finish, { capture: true, passive: true }); });
+
+    var fonts = document.fonts && document.fonts.ready ? Promise.race([document.fonts.ready, wait(1500)]) : wait(300);
+    fonts
+      // 1. type the title in the middle of a blank page
+      .then(function () { if (stopped) return; centre(); title.place(caret); return wait(450); })
+      .then(function () { if (stopped) return; caret.classList.add("is-busy"); return title.type(85, caret, isStopped); })
+      .then(function () { if (stopped) return; caret.classList.remove("is-busy"); return wait(500); })
+      // 2. background fades in
+      .then(function () { if (stopped) return; root.classList.add("intro-bg"); return wait(850); })
+      // 3. title flies home; glass panel + photo fade in with the rim light
+      .then(function () {
+        if (stopped) return;
+        caret.remove();
+        h1.style.transition = "transform 1.15s cubic-bezier(0.65, 0, 0.25, 1)";
+        h1.style.transform = "translate(0px, 0px)";
+        root.classList.add("intro-glass", "intro-rim");
+        return wait(1250);
+      })
+      // 4. the rest of the text types out (the photo tag alongside it)
+      .then(function () {
+        if (stopped) return;
+        if (tag) tag.type(45, null, isStopped);
+        var speeds = [32, 13, 26];
+        return rest.reduce(function (chain, t, i) {
+          return chain.then(function () {
+            if (stopped) return;
+            t.el.classList.add("is-typing");
+            t.place(caret);
+            caret.classList.add("is-busy");
+            return t.type(speeds[i] || 20, caret, isStopped);
+          });
+        }, Promise.resolve());
+      })
+      // 5. buttons fade in, then tidy up
+      .then(function () { if (stopped) return; caret.remove(); root.classList.add("intro-done"); return wait(900); })
+      .then(finish);
+  }
+
   function loadInstagram() {
     if (!document.querySelector(".instagram-media")) return;
     processInstagram();
@@ -895,5 +1022,6 @@
   setupLightbox();
   setupEmbeds();
   setupReveal();
+  if (page === "home") runIntro();
   loadInstagram();
 })();

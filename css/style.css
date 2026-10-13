@@ -2901,3 +2901,199 @@ body {
     transform: translateY(calc(-1 * var(--shift-y, 0px)));
   }
 }
+
+
+/* ==========================================================================
+   HOME INTRO (plays once per visit; see runIntro() in main.js)
+   1. blank page, "Hi, I'm Munich." types out in the middle of the screen
+   2. the background fades in
+   3. the title flies to its place while the glass panel + photo fade in,
+      with a reflection of light running round their rims
+   4. the rest of the hero text types out, then the buttons fade in
+   `html.intro` is set by a tiny script in index.html's <head>, so nothing
+   flashes before main.js runs.
+   ========================================================================== */
+@property --rim-a {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+html.intro body {
+  overflow: hidden;
+}
+html.intro #site-header,
+html.intro #site-footer {
+  opacity: 0;
+  transition: opacity 1s var(--ease);
+}
+html.intro.intro-glass #site-header,
+html.intro.intro-glass #site-footer {
+  opacity: 1;
+}
+
+/* 1 → 2: a plain cover over the page background and the waves, then fades out */
+html.intro .home::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: var(--bg);
+  pointer-events: none;
+  transition: opacity 1.1s ease;
+}
+html.intro.intro-bg .home::after {
+  opacity: 0;
+}
+
+/* 3: glass panel + photo fade in */
+.hero.glass {
+  position: relative;
+}
+html.intro .hero.glass {
+  transition:
+    background-color 1s var(--ease),
+    border-color 1s var(--ease),
+    box-shadow 1s var(--ease),
+    -webkit-backdrop-filter 1s var(--ease),
+    backdrop-filter 1s var(--ease);
+}
+html.intro:not(.intro-glass) .hero.glass {
+  background-color: transparent;
+  border-color: transparent;
+  box-shadow: none;
+  -webkit-backdrop-filter: blur(0px) saturate(1);
+  backdrop-filter: blur(0px) saturate(1);
+}
+html.intro .hero-visual {
+  opacity: 0;
+  transform: translateY(16px) scale(0.98);
+  transition:
+    opacity 1s var(--ease),
+    transform 1.2s var(--ease);
+}
+html.intro.intro-glass .hero-visual {
+  opacity: 1;
+  transform: none;
+}
+
+/* moving reflection on the rims of the panel and the photo */
+html.intro-rim .hero.glass::after,
+html.intro-rim .hero-photo::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  padding: 2px;
+  pointer-events: none;
+  /* a long bright streak with a soft tail, running round the edge */
+  background: conic-gradient(
+    from var(--rim-a),
+    transparent 0deg,
+    transparent 140deg,
+    rgba(255, 255, 255, 0.25) 190deg,
+    rgba(255, 255, 255, 0.85) 230deg,
+    #ffffff 248deg,
+    rgba(186, 214, 255, 1) 258deg,
+    transparent 285deg
+  );
+  -webkit-mask:
+    linear-gradient(#000000 0 0) content-box,
+    linear-gradient(#000000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000000 0 0) content-box exclude,
+    linear-gradient(#000000 0 0);
+  animation: rimSweep 2.1s cubic-bezier(0.45, 0, 0.2, 1) both;
+}
+html.intro-rim .hero-photo::after {
+  padding: 3px;
+  animation-delay: 0.15s;
+}
+/* and a soft sheen gliding across the photo */
+html.intro-rim .hero-photo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(110deg, transparent 34%, rgba(255, 255, 255, 0.18) 42%, rgba(255, 255, 255, 0.6) 48%, rgba(255, 255, 255, 0.18) 54%, transparent 62%);
+  background-size: 260% 100%;
+  animation: sheenSweep 1.7s cubic-bezier(0.45, 0, 0.2, 1) 0.2s both;
+}
+@keyframes rimSweep {
+  0% {
+    --rim-a: 0deg;
+    opacity: 0;
+  }
+  15% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    --rim-a: 360deg;
+    opacity: 0;
+  }
+}
+@keyframes sheenSweep {
+  0% {
+    background-position: 110% 0;
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    background-position: -10% 0;
+    opacity: 0;
+  }
+}
+
+/* 4: the rest of the text stays hidden until it's typed; buttons fade in last */
+html.intro .hero-text > :not(h1) {
+  opacity: 0;
+}
+html.intro .hero-text > .is-typing {
+  opacity: 1;
+}
+html.intro .hero-text > .btn-row {
+  transform: translateY(10px);
+  transition:
+    opacity 0.8s var(--ease),
+    transform 0.8s var(--ease);
+}
+html.intro.intro-done .hero-text > .btn-row {
+  opacity: 1;
+  transform: none;
+}
+
+/* typewriter: untyped letters keep their space so nothing jumps around */
+.tw-hidden {
+  visibility: hidden;
+}
+.tw-caret {
+  position: relative;
+  display: inline-block;
+  width: 0;
+  height: 1em;
+  vertical-align: -0.12em;
+}
+.tw-caret::after {
+  content: "";
+  position: absolute;
+  left: 0.04em;
+  top: 0.04em;
+  bottom: -0.04em;
+  border-left: max(2px, 0.045em) solid currentColor;
+  animation: twBlink 1s steps(1) infinite;
+}
+.tw-caret.is-busy::after {
+  animation: none;
+}
+@keyframes twBlink {
+  50% {
+    opacity: 0;
+  }
+}

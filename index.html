@@ -10,6 +10,19 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  <script>
+    /* intro animation: once per visit, skipped for reduced motion. Set here so
+       nothing flashes before main.js runs; if main.js never starts it, the
+       page is shown normally after 3 seconds. */
+    (function () {
+      try {
+        if (sessionStorage.getItem("munich-intro") || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        var d = document.documentElement;
+        d.classList.add("intro");
+        setTimeout(function () { if (!window.__introRunning) d.classList.remove("intro"); }, 3000);
+      } catch (e) {}
+    })();
+  </script>
 </head>
 <body data-page="home">
   <div id="site-header"></div>
