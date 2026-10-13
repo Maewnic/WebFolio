@@ -930,11 +930,8 @@
     var caret = document.createElement("span");
     caret.className = "tw-caret";
     caret.setAttribute("aria-hidden", "true");
-    var caret2 = caret.cloneNode(true);   // second cursor for the line that types alongside
 
     var title = typewriter(h1);
-    var rest = [".eyebrow", "#hero-intro", "#hero-loc"].map(function (s) { var el = $(s, hero); return el && typewriter(el); }).filter(Boolean);
-    var tagEl = $(".hero-tag", hero), tag = tagEl ? typewriter(tagEl) : null;
 
     // put the (invisible) full title in the middle of the screen
     function centre() {
@@ -942,7 +939,9 @@
       var r = document.createRange();
       r.selectNodeContents(h1);
       var b = r.getBoundingClientRect();
-      h1.style.transform = "translate(" + Math.round(innerWidth / 2 - (b.left + b.width / 2)) + "px," + Math.round(innerHeight / 2 - (b.top + b.height / 2)) + "px)";
+      // page width without the reserved scrollbar space (body has no margin)
+      var vw = document.body.clientWidth || document.documentElement.clientWidth, vh = document.documentElement.clientHeight;
+      h1.style.transform = "translate(" + Math.round(vw / 2 - (b.left + b.width / 2)) + "px," + Math.round(vh / 2 - (b.top + b.height / 2)) + "px)";
     }
     centre();
 
@@ -951,11 +950,9 @@
       stopped = true;
       window.__introRunning = false;
       title.restore();
-      rest.forEach(function (t) { t.restore(); t.el.classList.remove("is-typing"); });
-      if (tag) tag.restore();
       h1.style.transition = "";
       h1.style.transform = "";
-      root.classList.remove("intro", "intro-bg", "intro-glass", "intro-rim", "intro-done");
+      root.classList.remove("intro", "intro-bg", "intro-glass", "intro-rim", "intro-text");
       if ("scrollRestoration" in history) history.scrollRestoration = "auto";
     }
 
@@ -981,26 +978,8 @@
         root.classList.add("intro-glass", "intro-rim");
         return wait(1200);
       })
-      // 4. the rest of the text types out (the photo tag alongside it):
-      //    the eyebrow first, then the intro and the location line together
-      .then(function () {
-        if (stopped) return;
-        if (tag) tag.type(45, null, isStopped);
-        function typeOne(t, ms, c) {
-          if (!t || stopped) return Promise.resolve();
-          t.el.classList.add("is-typing");
-          t.place(c);
-          c.classList.add("is-busy");
-          return t.type(ms, c, isStopped);
-        }
-        var eyebrow = rest[0], intro = rest[1], loc = rest[2];
-        return typeOne(eyebrow, 32, caret).then(function () {
-          if (stopped) return;
-          return Promise.all([typeOne(intro, 8, caret), typeOne(loc, 26, caret2)]);
-        });
-      })
-      // 5. buttons fade in, then tidy up
-      .then(function () { if (stopped) return; caret.remove(); caret2.remove(); root.classList.add("intro-done"); return wait(900); })
+      // 4. the rest of the hero text fades in, one line after another
+      .then(function () { if (stopped) return; root.classList.add("intro-text"); return wait(1400); })
       .then(finish);
   }
 

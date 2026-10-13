@@ -42,6 +42,9 @@
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
+  /* always keep room for the scrollbar, so the page doesn't jump sideways when
+     it appears (e.g. at the end of the home intro, which hides it) */
+  scrollbar-gutter: stable;
 }
 body {
   margin: 0;
@@ -2185,9 +2188,6 @@ body {
     width: min(78%, 340px);
     margin-left: 0;
   }
-  .hero-photo {
-    aspect-ratio: 4 / 5;
-  }
   .hero-tag {
     right: -20px;
     padding: 24px 26px 22px;
@@ -2931,8 +2931,12 @@ body {
   inherits: false;
   initial-value: 0deg;
 }
-html.intro body {
+/* no scrolling while it plays — set on <html> (not <body>) so the reserved
+   scrollbar space stays put and nothing shifts when the intro ends */
+html.intro {
   overflow: hidden;
+}
+html.intro body {
   pointer-events: none; /* plays through without being skipped */
 }
 html.intro #site-header,
@@ -3065,22 +3069,23 @@ html.intro-rim .hero-photo::before {
   }
 }
 
-/* 4: the rest of the text stays hidden until it's typed; buttons fade in last */
+/* 4: the rest of the hero text fades in (only the title is typed), one line after another */
 html.intro .hero-text > :not(h1) {
   opacity: 0;
-}
-html.intro .hero-text > .is-typing {
-  opacity: 1;
-}
-html.intro .hero-text > .btn-row {
   transform: translateY(10px);
   transition:
     opacity 0.8s var(--ease),
     transform 0.8s var(--ease);
 }
-html.intro.intro-done .hero-text > .btn-row {
+html.intro.intro-text .hero-text > :not(h1) {
   opacity: 1;
   transform: none;
+}
+html.intro .hero-text > .hero-loc {
+  transition-delay: 0.15s;
+}
+html.intro .hero-text > .btn-row {
+  transition-delay: 0.3s;
 }
 
 /* typewriter: untyped letters keep their space so nothing jumps around */
