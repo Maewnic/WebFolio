@@ -600,8 +600,20 @@
 
     /* highlight reels, then tabs of videos/reels (skipped when empty, or when
        archiveLabel moves the full set to its own page instead) */
-    h += highlightsHTML(p.highlights, p.highlightsText);
-    if (!p.archiveLabel) h += tabsHTML(p.tabs, { page: p.tabsPage, moreLabel: p.tabsMoreLabel });
+    var highlightsBlock = highlightsHTML(p.highlights, p.highlightsText);
+    var tabsBlock = !p.archiveLabel ? tabsHTML(p.tabs, { page: p.tabsPage, moreLabel: p.tabsMoreLabel }) : "";
+    h += highlightsBlock + tabsBlock;
+
+    /* write-up + links: by default sit right under the first visual thing on
+       the page (the hero image, or, when there isn't one, the highlight
+       reels / tabs), not all the way at the bottom — set descriptionAtEnd:
+       false to put them back under the title instead. */
+    if (atEnd) {
+      var outroText = p.summary ? paras(p.summary) : "", outroLinks = linksHTML();
+      if (outroText || outroLinks) {
+        h += '<section class="container psec reveal"><div class="psec-grid"><h2>About this project</h2><div class="psec-text">' + outroText + outroLinks + "</div></div></section>";
+      }
+    }
 
     /* photo slideshow: crossfading pictures, 8s timer line, arrows, dots, swipe. */
     function slideshowHTML(list, title) {
@@ -698,14 +710,6 @@
           return '<figure><img src="' + esc(g.src) + '" alt="' + esc(g.alt || "") + '" loading="lazy" decoding="async">' +
             (g.caption ? "<figcaption>" + esc(g.caption) + "</figcaption>" : "") + "</figure>";
         }).join("") + "</div></section>";
-    }
-
-    /* write-up + links, when pushed to the end instead of living under the title */
-    if (atEnd) {
-      var outroText = p.summary ? paras(p.summary) : "", outroLinks = linksHTML();
-      if (outroText || outroLinks) {
-        h += '<section class="container psec reveal"><div class="psec-grid"><h2>About this project</h2><div class="psec-text">' + outroText + outroLinks + "</div></div></section>";
-      }
     }
 
     /* next / back */
