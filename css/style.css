@@ -608,6 +608,12 @@ body.is-filtered #featured-section + .section {
   border-radius: var(--radius);
   background: var(--bg-soft);
 }
+/* forces a tall cover photo down to a set ratio instead of showing it at
+   full height (see heroCrop on a project) */
+.media-crop-16-9 img {
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
 .media-image figcaption,
 .gallery figcaption {
   margin-top: 8px;

@@ -126,6 +126,7 @@ const PORTFOLIO = {
       size: "l",
       hidden: false,
       cover: "assets/projects/hikari/cover.jpg",
+      heroCrop: "16:9",   // the cover photo is tall; crop the project-page hero down to a 16:9 strip
       homeCover: "assets/projects/hikari/home.jpg",   // picture shown when it is the big top project on the home page
       homePos: "50% 42%",                             // which part stays in view when it is cropped
       homeAlt: "Inside the Hikari world in VRChat at night: a torii gate, lanterns and a glowing stage over the water",

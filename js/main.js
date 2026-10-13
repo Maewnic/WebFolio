@@ -295,7 +295,7 @@
   function tileHTML(p, cls) {
     var contain = p.coverFit === "contain" || p.coverFit === "fit";
     var chips = String(p.type || "").split(" · ").filter(Boolean).slice(0, 2);
-    return '<a class="tile glass ' + cls + ' reveal" href="' + projectUrl(p) + '" data-cat="' + esc(p.category) + '">' +
+    return '<a class="tile glass ' + cls + ' reveal" href="' + projectUrl(p) + '" data-cat="' + esc(p.category) + '" data-slug="' + esc(p.slug) + '">' +
       '<div class="tile-media' + (p.coverFit === "fit" ? " is-fit" : contain ? " is-contain" : "") + '"' + (contain && p.coverBg ? ' style="background:' + esc(p.coverBg) + '"' : "") + ">" + coverHTML(p) + (p.status ? '<span class="badge">' + esc(p.status) + "</span>" : "") + "</div>" +
       '<div class="tile-body"><p class="tile-cat">' + esc(catOf(p.category).label) + "</p>" +
       "<h3>" + esc(p.title) + "</h3>" +
@@ -507,6 +507,7 @@
     }
 
     var cats = catsInUse();
+    var featSlugs = feat.map(function (p) { return p.slug; });
     var chips = $("#chips");
     chips.innerHTML =
       '<button class="chip" type="button" data-f="all" aria-pressed="true">All <span>' + projects.length + "</span></button>" +
@@ -519,7 +520,11 @@
     function apply(f) {
       if (f !== "all" && !cats.some(function (c) { return c.key === f; })) f = "all";
       [].forEach.call(document.querySelectorAll("#work-grid .tile"), function (t) {
-        t.hidden = !(f === "all" || t.getAttribute("data-cat") === f);
+        /* on "All", the projects already shown in the featured carousel above
+           are left out of the grid below instead of repeating; picking a
+           specific category still shows them there. */
+        var isDupe = f === "all" && hasFeatured && featSlugs.indexOf(t.getAttribute("data-slug")) !== -1;
+        t.hidden = isDupe || !(f === "all" || t.getAttribute("data-cat") === f);
       });
       [].forEach.call(chips.querySelectorAll(".chip"), function (b) {
         b.setAttribute("aria-pressed", b.getAttribute("data-f") === f ? "true" : "false");
@@ -594,8 +599,11 @@
       h += '<section class="container"><dl class="meta">' + meta.map(function (m) { return "<div><dt>" + m[0] + "</dt><dd>" + m[1] + "</dd></div>"; }).join("") + "</dl></section>";
     }
 
-    /* hero media: video/embed if given, else the cover image. Nothing if neither. */
-    var heroHTML = p.hero && p.hero.url ? mediaHTML(p.hero, p.title) : (p.cover && p.coverFit !== "contain" && p.coverFit !== "fit" ? '<figure class="media media-image"><img src="' + esc(p.cover) + '" alt="' + esc(p.coverAlt || p.title) + '" decoding="async"></figure>' : "");
+    /* hero media: video/embed if given, else the cover image. Nothing if neither.
+       heroCrop (e.g. "16:9") forces a tall cover photo into that aspect ratio
+       instead of showing it at full height. */
+    var heroCropClass = p.heroCrop ? " media-crop-" + p.heroCrop.replace(":", "-") : "";
+    var heroHTML = p.hero && p.hero.url ? mediaHTML(p.hero, p.title) : (p.cover && p.coverFit !== "contain" && p.coverFit !== "fit" ? '<figure class="media media-image' + heroCropClass + '"><img src="' + esc(p.cover) + '" alt="' + esc(p.coverAlt || p.title) + '" decoding="async"></figure>' : "");
 
     /* highlight reels, then tabs of videos/reels (skipped when empty, or when
        archiveLabel moves the full set to its own page instead) */
