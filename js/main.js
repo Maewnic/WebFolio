@@ -596,23 +596,31 @@
 
     /* hero media: video/embed if given, else the cover image. Nothing if neither. */
     var heroHTML = p.hero && p.hero.url ? mediaHTML(p.hero, p.title) : (p.cover && p.coverFit !== "contain" && p.coverFit !== "fit" ? '<figure class="media media-image"><img src="' + esc(p.cover) + '" alt="' + esc(p.coverAlt || p.title) + '" decoding="async"></figure>' : "");
-    if (heroHTML) h += '<section class="container project-hero reveal">' + heroHTML + "</section>";
 
     /* highlight reels, then tabs of videos/reels (skipped when empty, or when
        archiveLabel moves the full set to its own page instead) */
     var highlightsBlock = highlightsHTML(p.highlights, p.highlightsText);
     var tabsBlock = !p.archiveLabel ? tabsHTML(p.tabs, { page: p.tabsPage, moreLabel: p.tabsMoreLabel }) : "";
-    h += highlightsBlock + tabsBlock;
 
     /* write-up + links: by default sit right under the first visual thing on
-       the page (the hero image, or, when there isn't one, the highlight
-       reels / tabs), not all the way at the bottom — set descriptionAtEnd:
-       false to put them back under the title instead. */
+       the page, not all the way at the bottom — set descriptionAtEnd: false
+       to put them back under the title instead. When there's a hero image
+       or video, it and this write-up share one glass card (same width and
+       style as the facts strip above); otherwise it follows the highlight
+       reels / tabs in the plain flow, same as before. */
+    var outroInner = "";
     if (atEnd) {
       var outroText = p.summary ? paras(p.summary) : "", outroLinks = linksHTML();
       if (outroText || outroLinks) {
-        h += '<section class="container psec reveal"><div class="psec-grid"><h2>About this project</h2><div class="psec-text">' + outroText + outroLinks + "</div></div></section>";
+        outroInner = "<h2>About this project</h2><div class=\"psec-text\">" + outroText + outroLinks + "</div>";
       }
+    }
+    if (heroHTML) {
+      h += '<section class="container hero-card-wrap reveal"><div class="hero-card"><div class="hero-card-media">' + heroHTML + "</div>" +
+        (outroInner ? '<div class="hero-card-about psec-grid">' + outroInner + "</div>" : "") + "</div></section>";
+    } else {
+      h += highlightsBlock + tabsBlock;
+      if (outroInner) h += '<section class="container psec reveal"><div class="psec-grid">' + outroInner + "</div></section>";
     }
 
     /* photo slideshow: crossfading pictures, 8s timer line, arrows, dots, swipe. */

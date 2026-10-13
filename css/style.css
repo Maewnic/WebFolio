@@ -572,14 +572,37 @@ body.is-filtered #featured-section + .section {
   margin: 6px 0 0;
 }
 
-.project-hero {
+/* hero image/video + the write-up share one glass card, matching the
+   facts strip (.meta) above it in width and style. The outer .container
+   just gives it the page gutter; the card itself carries the glass look,
+   same as .meta's <dl> sitting inside its own plain .container section. */
+.hero-card-wrap {
   margin-top: 48px;
+}
+.hero-card {
+  padding: 28px;
+  border-radius: 26px;
+  background: rgba(255, 255, 255, 0.46);
+  border: 1px solid rgba(255, 255, 255, 0.78);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+  backdrop-filter: blur(16px) saturate(1.2);
+  box-shadow:
+    0 20px 60px rgba(43, 87, 166, 0.09),
+    inset 0 1px 0 rgba(255, 255, 255, 0.85);
+}
+.hero-card-media {
+  margin-bottom: 28px;
+}
+.hero-card-about.psec-grid {
+  margin-bottom: 0;
+}
+.hero-card-about h2 {
+  font-size: clamp(1.9rem, 3.5vw, 2.6rem);
 }
 .media {
   width: 100%;
 }
-.media-image img,
-.project-hero img {
+.media-image img {
   width: 100%;
   height: auto;
   border-radius: var(--radius);
