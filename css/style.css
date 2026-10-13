@@ -2060,12 +2060,15 @@ body {
   aspect-ratio: 1 / 1;
 }
 .hero-photo img {
-  object-position: 50% 38%;
+  object-position: 50% 60%;
 }
-/* bigger "Create / Explore / Connect" button, sitting a little higher */
+/* bigger "Create / Explore / Connect" button, centred on the photo's height.
+   Uses `translate` (not `transform`) so the hover lift still works. */
 .hero-tag {
   right: -40px;
-  bottom: 16%;
+  top: 50%;
+  bottom: auto;
+  translate: 0 -50%;
   gap: 6px;
   padding: 30px 32px 28px;
   border-radius: 14px;
@@ -2195,7 +2198,6 @@ body {
   }
   .hero-tag {
     right: -12px;
-    bottom: 8%;
     padding: 16px 18px 14px;
     font-size: 0.66rem;
   }
