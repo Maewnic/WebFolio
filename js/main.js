@@ -487,9 +487,11 @@
     $("#hero-loc").textContent = S.location;
     var tags = arr(S.heroTags);
     $("#hero-visual").innerHTML =
-      '<div class="hero-photo">' + (S.heroImage
+      // the photo is part of the "Create / Explore / Connect" button too (same link);
+      // it's skipped by Tab so keyboard users land on the button just once
+      '<a class="hero-photo" href="work.html" aria-label="Explore my work" tabindex="-1">' + (S.heroImage
         ? '<img src="' + esc(S.heroImage) + '" alt="' + esc(S.heroAlt || "") + '" decoding="async">'
-        : '<div class="dream" aria-hidden="true"></div>') + '</div>' +
+        : '<div class="dream" aria-hidden="true"></div>') + '</a>' +
       (tags.length
         ? '<a class="hero-tag" href="work.html">' +
           tags.map(function (t) { return "<span>" + esc(t) + "</span>"; }).join("") +
@@ -928,6 +930,7 @@
     var caret = document.createElement("span");
     caret.className = "tw-caret";
     caret.setAttribute("aria-hidden", "true");
+    var caret2 = caret.cloneNode(true);   // second cursor for the line that types alongside
 
     var title = typewriter(h1);
     var rest = [".eyebrow", "#hero-intro", "#hero-loc"].map(function (s) { var el = $(s, hero); return el && typewriter(el); }).filter(Boolean);
@@ -978,23 +981,26 @@
         root.classList.add("intro-glass", "intro-rim");
         return wait(1200);
       })
-      // 4. the rest of the text types out (the photo tag alongside it)
+      // 4. the rest of the text types out (the photo tag alongside it):
+      //    the eyebrow first, then the intro and the location line together
       .then(function () {
         if (stopped) return;
         if (tag) tag.type(45, null, isStopped);
-        var speeds = [32, 13, 26];
-        return rest.reduce(function (chain, t, i) {
-          return chain.then(function () {
-            if (stopped) return;
-            t.el.classList.add("is-typing");
-            t.place(caret);
-            caret.classList.add("is-busy");
-            return t.type(speeds[i] || 20, caret, isStopped);
-          });
-        }, Promise.resolve());
+        function typeOne(t, ms, c) {
+          if (!t || stopped) return Promise.resolve();
+          t.el.classList.add("is-typing");
+          t.place(c);
+          c.classList.add("is-busy");
+          return t.type(ms, c, isStopped);
+        }
+        var eyebrow = rest[0], intro = rest[1], loc = rest[2];
+        return typeOne(eyebrow, 32, caret).then(function () {
+          if (stopped) return;
+          return Promise.all([typeOne(intro, 8, caret), typeOne(loc, 26, caret2)]);
+        });
       })
       // 5. buttons fade in, then tidy up
-      .then(function () { if (stopped) return; caret.remove(); root.classList.add("intro-done"); return wait(900); })
+      .then(function () { if (stopped) return; caret.remove(); caret2.remove(); root.classList.add("intro-done"); return wait(900); })
       .then(finish);
   }
 

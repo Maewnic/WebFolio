@@ -1145,7 +1145,7 @@ body.is-filtered #featured-section + .section {
   transform: none;
 }
 body {
-  animation: pageIn 0.6s var(--ease) backwards;
+  animation: pageIn 0.8s var(--ease) backwards;
 } /* not "both": a lingering animation on body stops the header blur from working */
 @keyframes pageIn {
   from {
@@ -1722,7 +1722,9 @@ body {
   text-decoration: none;
   transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
 }
-.hero-tag:hover {
+/* hovering the photo or the tag lights up the whole button */
+.hero-tag:hover,
+.hero-visual:hover .hero-tag {
   transform: translateY(-2px);
   box-shadow: 0 14px 36px rgba(43, 87, 166, 0.16);
 }
@@ -1734,8 +1736,19 @@ body {
   color: var(--ink);
   transition: transform 0.3s var(--ease);
 }
-.hero-tag:hover .hero-tag-arrow {
+.hero-tag:hover .hero-tag-arrow,
+.hero-visual:hover .hero-tag-arrow {
   transform: translateX(4px);
+}
+a.hero-photo {
+  display: block;
+  cursor: pointer;
+}
+.hero-photo img {
+  transition: transform 0.6s var(--ease);
+}
+.hero-visual:hover .hero-photo img {
+  transform: scale(1.03);
 }
 /* ---------- skills (home) ---------- */
 .hs-grid {
