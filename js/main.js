@@ -907,8 +907,8 @@
     };
   }
 
-  // Plays once per visit (index.html's <head> sets html.intro). Any click, key,
-  // scroll or touch skips straight to the finished page.
+  // Plays once per visit (index.html's <head> sets html.intro). It always plays
+  // through to the end; the page can't be scrolled or clicked until it's done.
   function runIntro() {
     var root = document.documentElement;
     if (!root.classList.contains("intro")) return;
@@ -922,7 +922,7 @@
     // the hero is animated here, not by the scroll reveal
     [].forEach.call(hero.querySelectorAll(".reveal"), function (el) { el.classList.remove("reveal"); el.style.transitionDelay = ""; });
 
-    var stopped = false, skipEvents = ["pointerdown", "keydown", "wheel", "touchstart"];
+    var stopped = false;
     function isStopped() { return stopped; }
     function wait(ms) { return new Promise(function (r) { setTimeout(r, ms); }); }
     var caret = document.createElement("span");
@@ -947,7 +947,6 @@
       if (stopped && !window.__introRunning) return;
       stopped = true;
       window.__introRunning = false;
-      skipEvents.forEach(function (ev) { window.removeEventListener(ev, finish, true); });
       title.restore();
       rest.forEach(function (t) { t.restore(); t.el.classList.remove("is-typing"); });
       if (tag) tag.restore();
@@ -956,7 +955,6 @@
       root.classList.remove("intro", "intro-bg", "intro-glass", "intro-rim", "intro-done");
       if ("scrollRestoration" in history) history.scrollRestoration = "auto";
     }
-    skipEvents.forEach(function (ev) { window.addEventListener(ev, finish, { capture: true, passive: true }); });
 
     var fonts = document.fonts && document.fonts.ready ? Promise.race([document.fonts.ready, wait(1500)]) : wait(300);
     fonts
@@ -966,14 +964,19 @@
       .then(function () { if (stopped) return; caret.classList.remove("is-busy"); return wait(500); })
       // 2. background fades in
       .then(function () { if (stopped) return; root.classList.add("intro-bg"); return wait(850); })
-      // 3. title flies home; glass panel + photo fade in with the rim light
+      // 3. title flies home...
       .then(function () {
         if (stopped) return;
         caret.remove();
         h1.style.transition = "transform 1.15s cubic-bezier(0.65, 0, 0.25, 1)";
         h1.style.transform = "translate(0px, 0px)";
-        root.classList.add("intro-glass", "intro-rim");
         return wait(1250);
+      })
+      // ...and only once it has landed, the glass panel + photo fade in with the rim light
+      .then(function () {
+        if (stopped) return;
+        root.classList.add("intro-glass", "intro-rim");
+        return wait(1200);
       })
       // 4. the rest of the text types out (the photo tag alongside it)
       .then(function () {

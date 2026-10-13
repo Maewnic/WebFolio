@@ -2920,6 +2920,7 @@ body {
 }
 html.intro body {
   overflow: hidden;
+  pointer-events: none; /* plays through without being skipped */
 }
 html.intro #site-header,
 html.intro #site-footer {
