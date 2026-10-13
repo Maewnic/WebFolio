@@ -79,8 +79,6 @@ const PORTFOLIO = {
     // Words between *stars* are shown in italics.
     aboutTeaser: "I like *turning ideas* into experiences people can *see, explore* and engage with, whether that's a virtual environment, a video or a piece of content.",
 
-    heroTags: ["Create", "Explore", "Connect"],   // the small glass label next to your photo on the home page
-
     about: [
       "I'm Munich (I go by @Maewnic online).",
       "I enjoy creating digital experiences that combine visual design, technology and storytelling. My work currently focuses on immersive environments and interactive experiences, while I also explore video, social content, photography and visual design.",
@@ -306,8 +304,7 @@ const PORTFOLIO = {
         { label: "TSA on Instagram", url: "https://www.instagram.com/tsa_unimelb/" }
       ],
       descriptionAtEnd: true,   // layout trial: the write-up + Instagram link moves to the bottom of the page instead of the top
-      tabsPage: 3,              // show only 3 videos per tab up front, instead of the site default (6)
-      tabsMoreLabel: "View Archive",
+      archiveLabel: "All TSA reels by Munich",   // moves the full Recap/Promo/Sponsor tabs off this page onto their own archive page, linked with this button
 
       // HIGHLIGHT REELS: one big reel at a time with left/right arrows (loops around).
       // Each one can have a label shown in the top-right corner: "Recap", "Promo" or "Sponsor".

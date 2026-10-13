@@ -31,6 +31,7 @@
     });
   }
   function projectUrl(p) { return "project.html?p=" + encodeURIComponent(p.slug); }
+  function archiveUrl(p) { return "archive.html?p=" + encodeURIComponent(p.slug); }
 
   /* ------------------------------------------------------------------ media */
   function youtubeInfo(url) {
@@ -248,7 +249,7 @@
   /* ------------------------------------------------ tabs of videos/reels */
   function tabsHTML(tabs, opts) {
     opts = opts || {};
-    var page = opts.page || 6;
+    var page = opts.page === undefined ? 6 : opts.page;
     tabs = arr(tabs).map(function (t) { return { title: t.title, text: t.text, media: arr(t.media).filter(function (m) { return m && m.url; }) }; })
       .filter(function (t) { return t.media.length; });
     if (!tabs.length) return "";
@@ -313,7 +314,7 @@
       { key: "about", label: "About", href: "about.html" },
       { key: "contact", label: "Contact", href: "contact.html" }
     ];
-    var current = page === "project" ? "work" : page;
+    var current = (page === "project" || page === "archive") ? "work" : page;
     el.innerHTML =
       '<header class="site-header"><div class="container header-row">' +
       '<a class="brand" href="index.html">' + esc(S.name) + ".</a>" +
@@ -484,12 +485,10 @@
     $("#hero-title").innerHTML = "Hi, I’m <em>" + esc(S.name) + ".</em>";
     $("#hero-intro").textContent = S.intro;
     $("#hero-loc").textContent = S.location;
-    var tags = arr(S.heroTags);
     $("#hero-visual").innerHTML =
       '<div class="hero-photo">' + (S.heroImage
         ? '<img src="' + esc(S.heroImage) + '" alt="' + esc(S.heroAlt || "") + '" decoding="async">'
-        : '<div class="dream" aria-hidden="true"></div>') + '</div>' +
-      (tags.length ? '<p class="hero-tag" aria-hidden="true">' + tags.map(function (t) { return "<span>" + esc(t) + "</span>"; }).join("") + "</p>" : "");
+        : '<div class="dream" aria-hidden="true"></div>') + '</div>';
   }
 
   /* -------------------------------------------------------------------- work */
@@ -549,13 +548,22 @@
     var cat = catOf(p.category);
     var h = "";
 
+    /* does this project have any videos to show in its tab groups at all? */
+    var hasTabMedia = arr(p.tabs).some(function (t) { return arr(t.media).filter(function (m) { return m && m.url; }).length; });
+
     /* the write-up + outbound links: normally sit right under the title, but a
-       project can push them to the bottom of the page instead (descriptionAtEnd) */
+       project can push them to the bottom of the page instead (descriptionAtEnd).
+       when archiveLabel is set, the full tab videos live on their own archive
+       page instead of inline here, linked with a button next to the others. */
     function linksHTML() {
       var ls = arr(p.links).filter(function (l) { return l && l.url; });
-      return ls.length ? '<div class="btn-row head-links">' + ls.map(function (l) {
+      var btns = ls.map(function (l) {
         return '<a class="btn btn--ghost" href="' + esc(l.url) + '" target="_blank" rel="noopener">' + esc(l.label || "View") + " &nearr;</a>";
-      }).join("") + "</div>" : "";
+      }).join("");
+      if (p.archiveLabel && hasTabMedia) {
+        btns += '<a class="btn btn--ghost" href="' + archiveUrl(p) + '">' + esc(p.archiveLabel) + " &rarr;</a>";
+      }
+      return btns ? '<div class="btn-row head-links">' + btns + "</div>" : "";
     }
 
     /* header */
@@ -582,9 +590,10 @@
     var heroHTML = p.hero && p.hero.url ? mediaHTML(p.hero, p.title) : (p.cover && p.coverFit !== "contain" && p.coverFit !== "fit" ? '<figure class="media media-image"><img src="' + esc(p.cover) + '" alt="' + esc(p.coverAlt || p.title) + '" decoding="async"></figure>' : "");
     if (heroHTML) h += '<section class="container project-hero reveal">' + heroHTML + "</section>";
 
-    /* highlight reels, then tabs of videos/reels (skipped when empty) */
+    /* highlight reels, then tabs of videos/reels (skipped when empty, or when
+       archiveLabel moves the full set to its own page instead) */
     h += highlightsHTML(p.highlights, p.highlightsText);
-    h += tabsHTML(p.tabs, { page: p.tabsPage, moreLabel: p.tabsMoreLabel });
+    if (!p.archiveLabel) h += tabsHTML(p.tabs, { page: p.tabsPage, moreLabel: p.tabsMoreLabel });
 
     /* photo slideshow: crossfading pictures, 8s timer line, arrows, dots, swipe. */
     function slideshowHTML(list, title) {
@@ -700,6 +709,31 @@
     setupHighlights(p.highlights);
     setupTabs();
     setupSlides(box);
+  }
+
+  /* ----------------------------------------------------------- video archive */
+  // The full set of tab videos for a project, pulled out of the main project
+  // page and onto their own page (see archiveLabel on the project).
+  function renderArchive() {
+    var slug = new URLSearchParams(location.search).get("p");
+    var p = findProject(slug);
+    var box = $("#archive");
+    if (!p || !arr(p.tabs).length) {
+      document.title = "Not found | " + S.name;
+      box.innerHTML = '<section class="container page-head"><h1>That archive <em>isn’t here</em>.</h1>' +
+        '<p class="lead">It may have moved or been renamed.</p><p><a class="btn" href="work.html">Back to work</a></p></section>';
+      return;
+    }
+    document.title = (p.archiveLabel || "All " + p.title + " videos") + " | " + S.name;
+    var h = '<header class="container project-head">' +
+      '<a class="crumb" href="' + projectUrl(p) + '">&larr; ' + esc(p.title) + "</a>" +
+      '<p class="eyebrow">' + esc(p.type || catOf(p.category).label) + "</p>" +
+      "<h1>" + esc(p.archiveLabel || "All " + p.title + " videos") + "</h1>" +
+      '<p class="lead">Every recap, promo and sponsor video, in one place.</p>' + "</header>";
+    h += tabsHTML(p.tabs, { page: 0 });
+    h += '<nav class="container pnav" aria-label="Project navigation"><a class="btn btn--ghost" href="' + projectUrl(p) + '">&larr; Back to ' + esc(p.title) + "</a></nav>";
+    box.innerHTML = h;
+    setupTabs();
   }
 
   /* ------------------------------------------------------------------- about */
@@ -820,6 +854,7 @@
   if (page === "home") renderHome();
   if (page === "work") renderWork();
   if (page === "project") renderProject();
+  if (page === "archive") renderArchive();
   if (page === "about") renderAbout();
   if (page === "contact") renderContact();
   buildFooter();
