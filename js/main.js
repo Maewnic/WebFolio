@@ -709,7 +709,13 @@
     /* story sections and video groups (empty ones are skipped) */
     function block(s) {
       var text = paras(s.text), mg = mediaGroup(s.media, s.title), ss = slideshowHTML(s.slideshow, s.title);
-      var media = mg && ss ? '<div class="psec-split"><div class="psec-split-media">' + mg + "</div>" + ss + "</div>" : mg + ss;
+      /* side-by-side with the slideshow squeezes an Instagram embed into a
+         narrow, height-stretched column, which can keep it from rendering
+         as a real player (just a "View on Instagram" link) — so an
+         Instagram embed always stacks full-width instead, same as when
+         there's no slideshow at all. */
+      var hasInstagram = arr(s.media).some(function (m) { return m && m.type === "instagram"; });
+      var media = mg && ss && !hasInstagram ? '<div class="psec-split"><div class="psec-split-media">' + mg + "</div>" + ss + "</div>" : mg + ss;
       if (!text && !media) return "";
       return '<section class="container psec reveal">' +
         (s.title ? '<div class="psec-grid"><h2>' + esc(s.title) + '</h2><div class="psec-text">' + text + "</div></div>" : (text ? '<div class="psec-text psec-solo">' + text + "</div>" : "")) +

@@ -2052,17 +2052,28 @@ body {
   -webkit-backdrop-filter: blur(6px) saturate(1.2);
   backdrop-filter: blur(6px) saturate(1.2);
 }
+/* wider photo, same height as before (was 360px at 4:5) */
 .hero-visual {
-  width: min(100%, 360px);
+  width: min(100%, 450px);
 }
 .hero-photo {
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 1 / 1;
 }
 .hero-photo img {
   object-position: 50% 38%;
 }
+/* bigger "Create / Explore / Connect" button, sitting a little higher */
 .hero-tag {
-  right: -44px;
+  right: -40px;
+  bottom: 16%;
+  gap: 6px;
+  padding: 30px 32px 28px;
+  border-radius: 14px;
+  font-size: 0.78rem;
+}
+.hero-tag .hero-tag-arrow {
+  margin-top: 16px;
+  font-size: 1.2rem;
 }
 
 /* selected work: glass cards with small tags */
@@ -2158,8 +2169,17 @@ body {
     width: min(78%, 340px);
     margin-left: 0;
   }
+  .hero-photo {
+    aspect-ratio: 4 / 5;
+  }
   .hero-tag {
     right: -20px;
+    padding: 24px 26px 22px;
+    font-size: 0.7rem;
+  }
+  .hero-tag .hero-tag-arrow {
+    margin-top: 12px;
+    font-size: 1rem;
   }
   .home-about.glass {
     gap: 28px;
@@ -2175,6 +2195,12 @@ body {
   }
   .hero-tag {
     right: -12px;
+    bottom: 8%;
+    padding: 16px 18px 14px;
+    font-size: 0.66rem;
+  }
+  .hero-tag .hero-tag-arrow {
+    margin-top: 8px;
   }
   .home #cats {
     padding: 2px 18px;
