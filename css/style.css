@@ -621,6 +621,10 @@ body.is-filtered #featured-section + .section {
   aspect-ratio: 21 / 9;
   object-fit: cover;
 }
+.media-crop-30-9 img {
+  aspect-ratio: 30 / 9;
+  object-fit: cover;
+}
 .media-image figcaption,
 .gallery figcaption {
   margin-top: 8px;

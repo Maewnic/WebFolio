@@ -127,9 +127,9 @@ const PORTFOLIO = {
       hidden: false,
       cover: "assets/projects/hikari/cover.jpg",
       // project-page hero: the wide 光 Hikari logo over the koi pond (the cover picture above stays as the
-      // Work page tile), cropped to a shorter cinematic 21:9 strip so it doesn't fill the whole screen
+      // Work page tile), cropped to a short, wide 30:9 strip so it doesn't fill the whole screen
       hero: { type: "image", url: "assets/projects/hikari/hero.jpg", alt: "The 光 Hikari logo over a night koi pond, with a koi and dark pebbles" },
-      heroCrop: "21:9",
+      heroCrop: "30:9",
       homeCover: "assets/projects/hikari/home.jpg",   // picture shown when it is the big top project on the home page
       homePos: "50% 42%",                             // which part stays in view when it is cropped
       homeAlt: "Inside the Hikari world in VRChat at night: a torii gate, lanterns and a glowing stage over the water",
@@ -146,7 +146,7 @@ const PORTFOLIO = {
         {
           title: "The world",
           text: "Guests arrive through a torii gate entrance into an interconnected VIP lounge, with a full sauna and onsen area linked by bridges and walkways. They can order from an in-world chef, listen to live singers, and play chess, Othello and pool, while staff dressed as maiko and geisha host the evening.\n\nHikari ran as a weekly event on Wednesdays at 8pm (GMT+7), mainly for Thai players.\n\nEarly builds used free and marketplace assets. Over time I moved toward original geometry made with ProBuilder in Unity, especially for the indoor spaces.",
-          media: [{ type: "instagram", url: "https://www.instagram.com/reel/DWu4b81Ado0/" }],
+          media: [{ type: "instagram", url: "https://www.instagram.com/reel/DWu4b81Ado0/?utm_source=ig_web_copy_link&xtok=NTc4MTIwNjQ2YQ==" }],
           slideshow: [
             { src: "assets/projects/hikari/torii-night.jpg", alt: "The glowing 光 torii gate over the water in the Hikari world at night, with a small boat and lily pads", caption: "The torii gate at the entrance" },
             { src: "assets/projects/hikari/entrance-night.jpg", alt: "Looking toward the torii gate from a lantern-lit deck at night", caption: "Arriving at the venue" },
@@ -320,11 +320,8 @@ const PORTFOLIO = {
       highlightsText: "",      // intentionally blank: no intro line above the reel carousel, just the heading
       highlights: [
         { type: "instagram", url: "https://www.instagram.com/reel/DXBQEq8iafh/", label: "Recap" },
-        { type: "instagram", url: "https://www.instagram.com/reel/DHXv7YfSWy7/", label: "Recap" },
         { type: "instagram", url: "https://www.instagram.com/reel/DP0_X91iWNm/", label: "Promo" },
-        { type: "instagram", url: "https://www.instagram.com/reel/Db2VteHpvpA/", label: "Sponsor" },
-        { type: "instagram", url: "https://www.instagram.com/reel/DIoE2tPJSIv/", label: "Recap" },
-        { type: "instagram", url: "https://www.instagram.com/reel/DXqvghGidtw/", label: "Sponsor" }
+        { type: "instagram", url: "https://www.instagram.com/reel/Db2VteHpvpA/", label: "Sponsor" }
       ],
 
       // THREE CATEGORIES shown as tabs, newest first. Only the first few load at once,
