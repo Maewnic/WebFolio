@@ -987,7 +987,7 @@
 
   /* --------------------------------------------- home hero: glass under the mouse */
   // A light spot follows the cursor across the glass panel (and a softer one on the
-  // photo), the rim brightens near it, and the card tilts a touch toward the pointer
+  // photo), the rim brightens near it, and the card tilts very slightly toward the pointer
   // with the photo drifting slightly for depth. Mouse/trackpad only; skipped for
   // reduced motion; waits until the intro has finished.
   function setupHeroGlass() {
@@ -1006,10 +1006,10 @@
       var y = Math.min(1, Math.max(0, (ev.clientY - r.top) / r.height));
       card.style.setProperty("--mx", (x * 100).toFixed(2) + "%");
       card.style.setProperty("--my", (y * 100).toFixed(2) + "%");
-      card.style.setProperty("--rx", ((0.5 - y) * 4).toFixed(2) + "deg");   // tilt up to ~2 degrees
-      card.style.setProperty("--ry", ((x - 0.5) * 5).toFixed(2) + "deg");
-      card.style.setProperty("--dx", ((x - 0.5) * -12).toFixed(1) + "px");  // photo drifts the other way
-      card.style.setProperty("--dy", ((y - 0.5) * -10).toFixed(1) + "px");
+      card.style.setProperty("--rx", ((0.5 - y) * 2).toFixed(2) + "deg");   // tilt up to ~1 degree
+      card.style.setProperty("--ry", ((x - 0.5) * 2.5).toFixed(2) + "deg");
+      card.style.setProperty("--dx", ((x - 0.5) * -6).toFixed(1) + "px");   // photo drifts the other way
+      card.style.setProperty("--dy", ((y - 0.5) * -5).toFixed(1) + "px");
       if (photo) {
         var pr = photo.getBoundingClientRect();
         card.style.setProperty("--pmx", ((ev.clientX - pr.left) / pr.width * 100).toFixed(2) + "%");
