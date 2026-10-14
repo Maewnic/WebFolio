@@ -67,6 +67,14 @@
       if (lazy) return '<div class="media media-instagram is-lazy" data-ig="' + esc(clean) + '"><div class="ig-skeleton" aria-hidden="true"></div></div>';
       return '<div class="media media-instagram">' + igBlockquote(clean) + "</div>";
     }
+    if (t === "video") {
+      // a video file hosted on this site (e.g. assets/projects/hikari/reel.mp4): always plays
+      // right here, unlike Instagram reels whose owners can block off-Instagram playback.
+      // Shown tall like a reel; add vertical: false for a landscape video.
+      return '<div class="media media-video media-file' + (m.vertical === false ? "" : " vertical") + '">' +
+        '<video controls playsinline preload="metadata"' + (m.poster ? ' poster="' + esc(m.poster) + '"' : "") +
+        ' src="' + esc(url) + '" title="' + esc(m.title || title || "Video") + '"></video></div>';
+    }
     if (t === "soundcloud") {
       return '<div class="media media-audio"><iframe title="' + esc(m.title || title || "Audio") + '" loading="lazy" src="https://w.soundcloud.com/player/?url=' +
         encodeURIComponent(url) + '&color=%231c2233&hide_related=true&show_comments=false&visual=false"></iframe></div>';
@@ -602,10 +610,10 @@
     }
 
     /* hero media: video/embed if given, else the cover image. Nothing if neither.
-       heroCrop (e.g. "16:9") forces a tall cover photo into that aspect ratio
+       heroCrop (e.g. "16:9" or "21:9") forces a hero picture into that aspect ratio
        instead of showing it at full height. */
     var heroCropClass = p.heroCrop ? " media-crop-" + p.heroCrop.replace(":", "-") : "";
-    var heroHTML = p.hero && p.hero.url ? mediaHTML(p.hero, p.title) : (p.cover && p.coverFit !== "contain" && p.coverFit !== "fit" ? '<figure class="media media-image' + heroCropClass + '"><img src="' + esc(p.cover) + '" alt="' + esc(p.coverAlt || p.title) + '" decoding="async"></figure>' : "");
+    var heroHTML = p.hero && p.hero.url ? mediaHTML(p.hero, p.title).replace('class="media media-image', 'class="media media-image' + heroCropClass) : (p.cover && p.coverFit !== "contain" && p.coverFit !== "fit" ? '<figure class="media media-image' + heroCropClass + '"><img src="' + esc(p.cover) + '" alt="' + esc(p.coverAlt || p.title) + '" decoding="async"></figure>' : "");
 
     /* highlight reels, then tabs of videos/reels (skipped when empty, or when
        archiveLabel moves the full set to its own page instead) */
@@ -711,13 +719,7 @@
     /* story sections and video groups (empty ones are skipped) */
     function block(s) {
       var text = paras(s.text), mg = mediaGroup(s.media, s.title), ss = slideshowHTML(s.slideshow, s.title);
-      /* side-by-side with the slideshow squeezes an Instagram embed into a
-         narrow, height-stretched column, which can keep it from rendering
-         as a real player (just a "View on Instagram" link) — so an
-         Instagram embed always stacks full-width instead, same as when
-         there's no slideshow at all. */
-      var hasInstagram = arr(s.media).some(function (m) { return m && m.type === "instagram"; });
-      var media = mg && ss && !hasInstagram ? '<div class="psec-split"><div class="psec-split-media">' + mg + "</div>" + ss + "</div>" : mg + ss;
+      var media = mg && ss ? '<div class="psec-split"><div class="psec-split-media">' + mg + "</div>" + ss + "</div>" : mg + ss;
       if (!text && !media) return "";
       return '<section class="container psec reveal">' +
         (s.title ? '<div class="psec-grid"><h2>' + esc(s.title) + '</h2><div class="psec-text">' + text + "</div></div>" : (text ? '<div class="psec-text psec-solo">' + text + "</div>" : "")) +

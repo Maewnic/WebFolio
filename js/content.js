@@ -126,7 +126,10 @@ const PORTFOLIO = {
       size: "l",
       hidden: false,
       cover: "assets/projects/hikari/cover.jpg",
-      heroCrop: "16:9",   // the cover photo is tall; crop the project-page hero down to a 16:9 strip
+      // project-page hero: the wide 光 Hikari logo over the koi pond (the cover picture above stays as the
+      // Work page tile), cropped to a shorter cinematic 21:9 strip so it doesn't fill the whole screen
+      hero: { type: "image", url: "assets/projects/hikari/hero.jpg", alt: "The 光 Hikari logo over a night koi pond, with a koi and dark pebbles" },
+      heroCrop: "21:9",
       homeCover: "assets/projects/hikari/home.jpg",   // picture shown when it is the big top project on the home page
       homePos: "50% 42%",                             // which part stays in view when it is cropped
       homeAlt: "Inside the Hikari world in VRChat at night: a torii gate, lanterns and a glowing stage over the water",
@@ -135,7 +138,10 @@ const PORTFOLIO = {
       role: "Founding team: world building, brand design, VIP and staff operations",
       collaborators: [],
       tools: ["Unity", "ProBuilder", "VRChat"],
-      links: [{ label: "Hikari on Instagram", url: "https://www.instagram.com/hikarizo.vrc/" }],
+      links: [
+        { label: "Hikari on Instagram", url: "https://www.instagram.com/hikarizo.vrc/" },
+        { label: "Hikari on Discord", url: "https://discord.gg/2FXRRbYejs" }
+      ],
       sections: [
         {
           title: "The world",
