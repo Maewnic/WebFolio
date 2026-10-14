@@ -907,7 +907,8 @@ body.is-filtered #featured-section + .section {
 .gallery figure {
   margin: 0;
 }
-.media-image img {
+.media-image img,
+.slide img {
   cursor: zoom-in;
 }
 
@@ -3131,4 +3132,77 @@ html.intro .hero-text > .btn-row {
   50% {
     opacity: 0;
   }
+}
+
+
+/* ==========================================================================
+   HOME HERO: GLASS UNDER THE MOUSE (see setupHeroGlass() in main.js)
+   ========================================================================== */
+.hero.glass.has-tilt {
+  transform: perspective(1400px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+  transition: transform 0.9s var(--ease);
+}
+.hero.glass.has-tilt.is-lit {
+  transition: transform 0.25s ease-out;
+}
+/* light layer inside the panel, under the text and photo */
+.hero-shine {
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  border-radius: inherit;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.5s var(--ease);
+}
+.hero.glass.is-lit .hero-shine {
+  opacity: 1;
+}
+/* light spot on the glass, plus a diagonal glint that slides with the mouse */
+.hero-shine::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    radial-gradient(90px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, 0.9), transparent 100%),
+    radial-gradient(420px circle at var(--mx, 50%) var(--my, 50%), rgba(150, 190, 255, 0.34), rgba(196, 168, 255, 0.2) 38%, rgba(255, 190, 228, 0.1) 55%, transparent 72%),
+    linear-gradient(115deg, transparent calc(var(--mx, 50%) - 22%), rgba(255, 255, 255, 0.5) calc(var(--mx, 50%) - 6%), rgba(255, 255, 255, 0.12) var(--mx, 50%), transparent calc(var(--mx, 50%) + 10%));
+}
+/* the rim catching the light near the cursor */
+.hero-shine::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2px;
+  background: radial-gradient(380px circle at var(--mx, 50%) var(--my, 50%), #ffffff, rgba(186, 212, 255, 0.95) 30%, transparent 68%);
+  -webkit-mask:
+    linear-gradient(#000000 0 0) content-box,
+    linear-gradient(#000000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000000 0 0) content-box exclude,
+    linear-gradient(#000000 0 0);
+}
+/* the photo floats a little in front, and catches a softer reflection */
+.hero.glass.has-tilt .hero-visual {
+  translate: var(--dx, 0px) var(--dy, 0px);
+  transition: translate 0.9s var(--ease);
+}
+.hero.glass.has-tilt.is-lit .hero-visual {
+  transition: translate 0.25s ease-out;
+}
+.hero.glass.has-tilt .hero-photo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: radial-gradient(360px circle at var(--pmx, 50%) var(--pmy, 50%), rgba(255, 255, 255, 0.32), transparent 55%);
+  opacity: 0;
+  transition: opacity 0.5s var(--ease);
+}
+.hero.glass.is-lit .hero-photo::before {
+  opacity: 1;
 }

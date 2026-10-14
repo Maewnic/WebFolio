@@ -831,7 +831,7 @@
     var img = $("img", box);
     function close() { box.hidden = true; document.body.classList.remove("no-scroll"); }
     document.addEventListener("click", function (e) {
-      var t = e.target.closest(".gallery img, .media-image img");
+      var t = e.target.closest(".gallery img, .media-image img, .slide img");   // slideshow photos open full screen too
       if (t) { img.src = t.currentSrc || t.src; img.alt = t.alt || ""; box.hidden = false; document.body.classList.add("no-scroll"); $("button", box).focus(); return; }
       if (!box.hidden && (e.target === box || e.target.closest(".lightbox button"))) close();
     });
@@ -985,6 +985,50 @@
       .then(finish);
   }
 
+  /* --------------------------------------------- home hero: glass under the mouse */
+  // A light spot follows the cursor across the glass panel (and a softer one on the
+  // photo), the rim brightens near it, and the card tilts a touch toward the pointer
+  // with the photo drifting slightly for depth. Mouse/trackpad only; skipped for
+  // reduced motion; waits until the intro has finished.
+  function setupHeroGlass() {
+    var card = $(".hero.glass");
+    if (!card || reduce || !window.matchMedia("(hover: hover) and (pointer: fine)").matches) return;
+    var shine = document.createElement("div");
+    shine.className = "hero-shine";
+    shine.setAttribute("aria-hidden", "true");
+    card.insertBefore(shine, card.firstChild);
+    var photo = $(".hero-photo", card), root = document.documentElement, raf = 0, ev = null;
+    function update() {
+      raf = 0;
+      if (!ev) return;
+      var r = card.getBoundingClientRect();
+      var x = Math.min(1, Math.max(0, (ev.clientX - r.left) / r.width));
+      var y = Math.min(1, Math.max(0, (ev.clientY - r.top) / r.height));
+      card.style.setProperty("--mx", (x * 100).toFixed(2) + "%");
+      card.style.setProperty("--my", (y * 100).toFixed(2) + "%");
+      card.style.setProperty("--rx", ((0.5 - y) * 4).toFixed(2) + "deg");   // tilt up to ~2 degrees
+      card.style.setProperty("--ry", ((x - 0.5) * 5).toFixed(2) + "deg");
+      card.style.setProperty("--dx", ((x - 0.5) * -12).toFixed(1) + "px");  // photo drifts the other way
+      card.style.setProperty("--dy", ((y - 0.5) * -10).toFixed(1) + "px");
+      if (photo) {
+        var pr = photo.getBoundingClientRect();
+        card.style.setProperty("--pmx", ((ev.clientX - pr.left) / pr.width * 100).toFixed(2) + "%");
+        card.style.setProperty("--pmy", ((ev.clientY - pr.top) / pr.height * 100).toFixed(2) + "%");
+      }
+    }
+    card.addEventListener("pointermove", function (e) {
+      if (root.classList.contains("intro")) return;
+      card.classList.add("has-tilt", "is-lit");
+      ev = e;
+      if (!raf) raf = requestAnimationFrame(update);
+    });
+    card.addEventListener("pointerleave", function () {
+      ev = null;
+      card.classList.remove("is-lit");
+      ["--rx", "--ry", "--dx", "--dy"].forEach(function (k) { card.style.removeProperty(k); });   // settle back flat
+    });
+  }
+
   function loadInstagram() {
     if (!document.querySelector(".instagram-media")) return;
     processInstagram();
@@ -1013,5 +1057,6 @@
   setupEmbeds();
   setupReveal();
   if (page === "home") runIntro();
+  if (page === "home") setupHeroGlass();
   loadInstagram();
 })();
