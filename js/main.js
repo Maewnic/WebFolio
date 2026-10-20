@@ -495,15 +495,16 @@
     $("#hero-loc").textContent = S.location;
     var tags = arr(S.heroTags);
     $("#hero-visual").innerHTML =
-      // the photo links to the About page (same place as the "About Me" button, so it's
-      // skipped by Tab); the glass card on it is the button to the Work page
+      // the photo and the glass card on it both go to the About page (the photo is
+      // skipped by Tab so keyboard users land on the card just once); the filled
+      // "See my work" button in the text column goes to the Work page
       '<a class="hero-photo" href="about.html" aria-label="About me" tabindex="-1">' + (S.heroImage
         ? '<img src="' + esc(S.heroImage) + '" alt="' + esc(S.heroAlt || "") + '" decoding="async">'
         : '<div class="dream" aria-hidden="true"></div>') + '</a>' +
       (tags.length
-        ? '<a class="hero-tag" href="work.html" aria-label="See my work">' +
+        ? '<a class="hero-tag" href="about.html" aria-label="About me">' +
           tags.map(function (t) { return "<span>" + esc(t) + "</span>"; }).join("") +
-          '<span class="hero-tag-cta">See my work <span class="hero-tag-arrow" aria-hidden="true">&rarr;</span></span></a>'
+          '<span class="hero-tag-cta">About me <span class="hero-tag-arrow" aria-hidden="true">&rarr;</span></span></a>'
         : "");
   }
 

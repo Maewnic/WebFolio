@@ -1747,16 +1747,18 @@ body {
     background-color 0.3s var(--ease),
     border-color 0.3s var(--ease);
 }
-/* the card is the button to the Work page: on hover (or keyboard focus) it lifts,
-   the glass brightens, and the arrow nudges right */
+/* the card is the button to the About page: on hover (or keyboard focus) it lifts,
+   the glass brightens, and the arrow nudges right. The photo goes to About too, so
+   hovering the photo lights the card up as well. */
 .hero-tag:hover,
-.hero-tag:focus-visible {
+.hero-tag:focus-visible,
+.hero-visual:hover .hero-tag {
   transform: translateY(-3px);
   background: rgba(255, 255, 255, 0.74);
   border-color: rgba(255, 255, 255, 0.95);
   box-shadow: 0 16px 40px rgba(43, 87, 166, 0.2);
 }
-/* "See my work ->" label under the three words, so it reads as a button */
+/* "About me ->" label under the three words, so it reads as a button */
 .hero-tag-cta {
   display: flex;
   align-items: center;
@@ -1776,7 +1778,8 @@ body {
   transition: transform 0.3s var(--ease);
 }
 .hero-tag:hover .hero-tag-arrow,
-.hero-tag:focus-visible .hero-tag-arrow {
+.hero-tag:focus-visible .hero-tag-arrow,
+.hero-visual:hover .hero-tag-arrow {
   transform: translateX(4px);
 }
 a.hero-photo {
