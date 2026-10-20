@@ -1602,39 +1602,40 @@ body {
    Translate only (no scale): an animated scale forces the browser into a lower-
    quality continuous rescale of this image, which shows up as visible blockiness on
    these very smooth pastel tones. The layers are oversized (negative inset) so their
-   edges never come into view while they move. */
+   edges never come into view while they move: each moves at most ~9% of the page
+   width, and has 16% spare on each side. */
 .sky::before,
 .sky::after {
   content: "";
   position: absolute;
-  inset: -8% -8% 0;
+  inset: -16% -16% -6%;
   background: #ddeafc url("../assets/bg-waves-top.jpg") center top / cover no-repeat;
   will-change: transform;
 }
 .sky::before {
-  animation: skyDrift 26s ease-in-out infinite alternate;
+  animation: skyDrift 13s ease-in-out infinite alternate;
 }
 .sky::after {
   background-color: transparent;
-  opacity: 0.32;
-  animation: skyDriftBack 34s ease-in-out infinite alternate;
+  opacity: 0.4;
+  animation: skyDriftBack 17s ease-in-out infinite alternate;
 }
 @keyframes skyDrift {
   from {
-    transform: translate3d(3%, -1.5%, 0);
+    transform: translate3d(7%, -3%, 0);
   }
   to {
-    transform: translate3d(-3%, 2%, 0);
+    transform: translate3d(-7%, 3%, 0);
   }
 }
 /* the mirrored layer: scaleX(-1) is a constant flip (it never animates), so it
    doesn't cause the blockiness an animated scale does */
 @keyframes skyDriftBack {
   from {
-    transform: translate3d(-3%, 2%, 0) scaleX(-1);
+    transform: translate3d(-7%, 3%, 0) scaleX(-1);
   }
   to {
-    transform: translate3d(3%, -1%, 0) scaleX(-1);
+    transform: translate3d(7%, -3%, 0) scaleX(-1);
   }
 }
 /* phones: just the main layer */
