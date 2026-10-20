@@ -323,13 +323,23 @@
       { key: "contact", label: "Contact", href: "contact.html" }
     ];
     var current = (page === "project" || page === "archive") ? "work" : page;
+    // "Work" gets a small dropdown of the Work page's filters (All + each category in
+    // use, with the same counts as the filter chips); each one opens Work with it set
+    var cats = catsInUse();
+    var workSub = '<ul class="sub-nav" aria-label="Work categories">' +
+      '<li><a href="work.html">All <span>' + projects.length + "</span></a></li>" +
+      cats.map(function (c) {
+        var n = projects.filter(function (p) { return p.category === c.key; }).length;
+        return '<li><a href="work.html#' + esc(c.key) + '">' + esc(c.label) + " <span>" + n + "</span></a></li>";
+      }).join("") + "</ul>";
     el.innerHTML =
       '<header class="site-header"><div class="container header-row">' +
       '<a class="brand" href="index.html">' + esc(S.name) + ".</a>" +
       '<button class="nav-toggle" aria-expanded="false" aria-controls="main-nav" aria-label="Menu"><span></span><span></span></button>' +
       '<nav id="main-nav" class="main-nav" aria-label="Main"><ul>' +
       nav.map(function (n) {
-        return '<li><a href="' + n.href + '"' + (n.key === current ? ' aria-current="page"' : "") + ">" + n.label + "</a></li>";
+        var sub = n.key === "work" && cats.length ? workSub : "";
+        return "<li" + (sub ? ' class="has-sub"' : "") + '><a href="' + n.href + '"' + (n.key === current ? ' aria-current="page"' : "") + ">" + n.label + "</a>" + sub + "</li>";
       }).join("") + "</ul></nav></div></header>";
 
     var btn = $(".nav-toggle", el), menu = $(".main-nav", el);
@@ -338,7 +348,10 @@
       btn.setAttribute("aria-expanded", open ? "true" : "false");
     });
     menu.addEventListener("click", function (e) {
-      if (e.target.tagName === "A") { menu.classList.remove("open"); btn.setAttribute("aria-expanded", "false"); }
+      if (e.target.closest("a")) {
+        menu.classList.remove("open"); btn.setAttribute("aria-expanded", "false");
+        if (document.activeElement) document.activeElement.blur();   // so the dropdown closes after a click
+      }
     });
   }
 
