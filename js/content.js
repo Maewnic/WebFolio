@@ -65,7 +65,7 @@ const PORTFOLIO = {
     name: "Munich",
     fullName: "Witthawin Batsomboon",
     alias: "Maewnic",   // your online username; shown in About, Contact, the footer and search text
-    intro: "A Digital Media creative exploring immersive experiences, visual storytelling and digital environments.",
+    intro: "A Digital Media creative designing virtual environments, plus the video and storytelling around them.",
     location: "Melbourne · RMIT Digital Media",
     education: "Bachelor of Design (Digital Media), RMIT University (2024–2027), specialising in virtual environment design",
     from: "From Thailand, studying in Melbourne",
@@ -107,7 +107,7 @@ const PORTFOLIO = {
 
   /* ----------------------------- HOME: SELECTED WORK ----------------------------- */
   // These rotate on the home page every 8 seconds (the big one at the top, the rest in a row). Use project slugs.
-  featured: ["tsa-content", "hikari", "lakes-echo", "given-watch"],
+  featured: ["hikari", "lakes-echo", "tsa-content", "given-watch"],
 
   /* ----------------------------- PROJECTS ----------------------------- */
   projects: [

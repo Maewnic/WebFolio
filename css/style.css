@@ -1740,24 +1740,43 @@ body {
   color: var(--muted);
   box-shadow: 0 10px 30px rgba(43, 87, 166, 0.1);
   text-decoration: none;
-  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease);
+  cursor: pointer;
+  transition:
+    transform 0.3s var(--ease),
+    box-shadow 0.3s var(--ease),
+    background-color 0.3s var(--ease),
+    border-color 0.3s var(--ease);
 }
-/* hovering the photo or the tag lights up the whole button */
+/* the card is the button to the Work page: on hover (or keyboard focus) it lifts,
+   the glass brightens, and the arrow nudges right */
 .hero-tag:hover,
-.hero-visual:hover .hero-tag {
-  transform: translateY(-2px);
-  box-shadow: 0 14px 36px rgba(43, 87, 166, 0.16);
+.hero-tag:focus-visible {
+  transform: translateY(-3px);
+  background: rgba(255, 255, 255, 0.74);
+  border-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 16px 40px rgba(43, 87, 166, 0.2);
 }
-.hero-tag-arrow {
+/* "See my work ->" label under the three words, so it reads as a button */
+.hero-tag-cta {
+  display: flex;
+  align-items: center;
+  gap: 0.4em;
   margin-top: 10px;
-  font-size: 0.95rem;
+  padding-top: 12px;
+  border-top: 1px solid rgba(28, 34, 51, 0.14);
+  font-size: 1.2em;
+  font-weight: 500;
   letter-spacing: normal;
   text-transform: none;
+  white-space: nowrap;
   color: var(--ink);
+}
+.hero-tag-arrow {
+  display: inline-block;
   transition: transform 0.3s var(--ease);
 }
 .hero-tag:hover .hero-tag-arrow,
-.hero-visual:hover .hero-tag-arrow {
+.hero-tag:focus-visible .hero-tag-arrow {
   transform: translateX(4px);
 }
 a.hero-photo {
@@ -2107,9 +2126,8 @@ body {
   border-radius: 14px;
   font-size: 0.78rem;
 }
-.hero-tag .hero-tag-arrow {
-  margin-top: 16px;
-  font-size: 1.2rem;
+.hero-tag .hero-tag-cta {
+  margin-top: 14px;
 }
 
 /* selected work: glass cards with small tags */
@@ -2210,9 +2228,8 @@ body {
     padding: 24px 26px 22px;
     font-size: 0.7rem;
   }
-  .hero-tag .hero-tag-arrow {
-    margin-top: 12px;
-    font-size: 1rem;
+  .hero-tag .hero-tag-cta {
+    margin-top: 10px;
   }
   .home-about.glass {
     gap: 28px;
@@ -2231,8 +2248,9 @@ body {
     padding: 16px 18px 14px;
     font-size: 0.66rem;
   }
-  .hero-tag .hero-tag-arrow {
+  .hero-tag .hero-tag-cta {
     margin-top: 8px;
+    padding-top: 10px;
   }
   .home #cats {
     padding: 2px 18px;
