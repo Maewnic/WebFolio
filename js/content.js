@@ -65,8 +65,8 @@ const PORTFOLIO = {
     name: "Munich",
     fullName: "Witthawin Batsomboon",
     alias: "Maewnic",   // your online username; shown in About, Contact, the footer and search text
-    intro: "A Digital Media creative designing virtual environments, plus the video and storytelling around them.",
-    location: "Melbourne · RMIT Digital Media",
+    intro: "A Digital Media creative designing virtual environments, plus the video and storytelling.",
+    location: "Melbourne · RMIT University",
     education: "Bachelor of Design (Digital Media), RMIT University (2024–2027), specialising in virtual environment design",
     from: "From Thailand, studying in Melbourne",
     languages: "English (fluent), Thai (native)",
