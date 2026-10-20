@@ -2577,10 +2577,11 @@ body {
 }
 
 /* footer waves fade in from the page instead of starting with a hard edge.
-   ::before is the water, oversized and drifting like the top of the page (same
-   skyDrift motion, a few seconds out of step); ::after is the soft light wash,
-   which stays still on top. overflow: clip keeps the oversized water from spilling
-   outside the footer (which would also add extra scroll space under the page). */
+   ::before is the water, wider than the footer and drifting side to side (sideways
+   only: moving it up/down would need extra height, which pushes the top fade-in out
+   of place and leaves a visible line where the footer starts); ::after is the soft
+   light wash, which stays still on top. overflow: clip keeps the wider water from
+   spilling outside the footer (and adding sideways scrolling). */
 .site-footer {
   position: relative;
   isolation: isolate;
@@ -2597,14 +2598,22 @@ body {
   mask-image: linear-gradient(180deg, transparent 0%, #000000 55%);
 }
 .site-footer::before {
-  inset: -14% -16%;
+  inset: 0 -16%;
   background: #ddeafc url("../assets/bg-waves.jpg") 70% 70% / cover no-repeat;
   will-change: transform;
-  animation: skyDrift 13s ease-in-out -5s infinite alternate;
+  animation: footerDrift 13s ease-in-out -5s infinite alternate;
 }
 .site-footer::after {
   inset: 0;
   background: linear-gradient(180deg, rgba(241, 247, 254, 0.5) 0%, rgba(241, 247, 254, 0.25) 40%, rgba(241, 247, 254, 0.05) 100%);
+}
+@keyframes footerDrift {
+  from {
+    transform: translate3d(7.7%, 0, 0);
+  }
+  to {
+    transform: translate3d(-7.7%, 0, 0);
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   .site-footer::before {
