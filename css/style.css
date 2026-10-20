@@ -1602,7 +1602,7 @@ body {
    Translate only (no scale): an animated scale forces the browser into a lower-
    quality continuous rescale of this image, which shows up as visible blockiness on
    these very smooth pastel tones. The layers are oversized (negative inset) so their
-   edges never come into view while they move: each moves at most ~9% of the page
+   edges never come into view while they move: each moves at most ~10% of the page
    width, and has 16% spare on each side. */
 .sky::before,
 .sky::after {
@@ -1622,20 +1622,20 @@ body {
 }
 @keyframes skyDrift {
   from {
-    transform: translate3d(7%, -3%, 0);
+    transform: translate3d(7.7%, -3.3%, 0);
   }
   to {
-    transform: translate3d(-7%, 3%, 0);
+    transform: translate3d(-7.7%, 3.3%, 0);
   }
 }
 /* the mirrored layer: scaleX(-1) is a constant flip (it never animates), so it
    doesn't cause the blockiness an animated scale does */
 @keyframes skyDriftBack {
   from {
-    transform: translate3d(-7%, 3%, 0) scaleX(-1);
+    transform: translate3d(-7.7%, 3.3%, 0) scaleX(-1);
   }
   to {
-    transform: translate3d(7%, -3%, 0) scaleX(-1);
+    transform: translate3d(7.7%, -3.3%, 0) scaleX(-1);
   }
 }
 /* phones: just the main layer */
@@ -2576,23 +2576,40 @@ body {
   }
 }
 
-/* footer waves fade in from the page instead of starting with a hard edge */
+/* footer waves fade in from the page instead of starting with a hard edge.
+   ::before is the water, oversized and drifting like the top of the page (same
+   skyDrift motion, a few seconds out of step); ::after is the soft light wash,
+   which stays still on top. overflow: clip keeps the oversized water from spilling
+   outside the footer (which would also add extra scroll space under the page). */
 .site-footer {
   position: relative;
   isolation: isolate;
   background: none;
+  overflow: clip;
 }
-.site-footer::before {
+.site-footer::before,
+.site-footer::after {
   content: "";
   position: absolute;
-  inset: 0;
   z-index: -1;
   pointer-events: none;
-  background:
-    linear-gradient(180deg, rgba(241, 247, 254, 0.5) 0%, rgba(241, 247, 254, 0.25) 40%, rgba(241, 247, 254, 0.05) 100%),
-    #ddeafc url("../assets/bg-waves.jpg") 70% 70% / cover no-repeat;
   -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000000 55%);
   mask-image: linear-gradient(180deg, transparent 0%, #000000 55%);
+}
+.site-footer::before {
+  inset: -14% -16%;
+  background: #ddeafc url("../assets/bg-waves.jpg") 70% 70% / cover no-repeat;
+  will-change: transform;
+  animation: skyDrift 13s ease-in-out -5s infinite alternate;
+}
+.site-footer::after {
+  inset: 0;
+  background: linear-gradient(180deg, rgba(241, 247, 254, 0.5) 0%, rgba(241, 247, 254, 0.25) 40%, rgba(241, 247, 254, 0.05) 100%);
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-footer::before {
+    animation: none;
+  }
 }
 
 
