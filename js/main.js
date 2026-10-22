@@ -324,13 +324,12 @@
     ];
     var current = (page === "project" || page === "archive") ? "work" : page;
     // "Work" gets a small dropdown of the Work page's filters (All + each category in
-    // use, with the same counts as the filter chips); each one opens Work with it set
+    // use); each one opens Work with that filter set
     var cats = catsInUse();
     var workSub = '<ul class="sub-nav" aria-label="Work categories">' +
-      '<li><a href="work.html">All <span>' + projects.length + "</span></a></li>" +
+      '<li><a href="work.html">All</a></li>' +
       cats.map(function (c) {
-        var n = projects.filter(function (p) { return p.category === c.key; }).length;
-        return '<li><a href="work.html#' + esc(c.key) + '">' + esc(c.label) + " <span>" + n + "</span></a></li>";
+        return '<li><a href="work.html#' + esc(c.key) + '">' + esc(c.label) + "</a></li>";
       }).join("") + "</ul>";
     el.innerHTML =
       '<header class="site-header"><div class="container header-row">' +
@@ -534,10 +533,9 @@
     var featSlugs = feat.map(function (p) { return p.slug; });
     var chips = $("#chips");
     chips.innerHTML =
-      '<button class="chip" type="button" data-f="all" aria-pressed="true">All <span>' + projects.length + "</span></button>" +
+      '<button class="chip" type="button" data-f="all" aria-pressed="true">All</button>' +
       cats.map(function (c) {
-        var n = projects.filter(function (p) { return p.category === c.key; }).length;
-        return '<button class="chip" type="button" data-f="' + esc(c.key) + '" aria-pressed="false">' + esc(c.label) + " <span>" + n + "</span></button>";
+        return '<button class="chip" type="button" data-f="' + esc(c.key) + '" aria-pressed="false">' + esc(c.label) + "</button>";
       }).join("");
     $("#work-grid").innerHTML = projects.map(function (p) { return tileHTML(p, "tile--" + (p.size || "m")); }).join("");
 

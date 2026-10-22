@@ -188,7 +188,7 @@ const PORTFOLIO = {
       category: "immersive",
       type: "Serene VR experience",
       tagline: "A misty lakeside in VR, designed around one goal: the most serene place possible.",
-      summary: "A VR experience built around a single goal: creating the most serene environment possible. Psychology research on spatial and sensory design shaped a misty lakeside in Unity, centred on a lone pavilion.",
+      summary: "A VR experience built around one word: serene. I researched what actually makes a place feel calming, then built a misty lakeside in Unity around a lone pavilion. The music plays from the pavilion and echoes across the lake, which is where the name comes from. It was shown in VR, and projected for the room, in RMIT's Black Box.",
       status: "",
       size: "m",
       hidden: false,
@@ -196,29 +196,51 @@ const PORTFOLIO = {
       hero: { type: "youtube", url: "https://youtu.be/8VPb5HJ2Dcs" },
       context: "RMIT University · Heighten: Multi-Sensory Experience",
       year: "Aug – Oct 2025",
-      role: "",
-      collaborators: [{ name: "Yu Sen Ng", role: "Sound Design" }],
+      role: "Concept, research, environment design and Unity development",
+      collaborators: [{ name: "Yu Sen Ng", role: "Music & sound design" }],
       tools: ["Unity", "ProBuilder"],
       links: [],
       sections: [
         {
-          title: "Concept",
-          text: "Serene started with research. I looked into psychology research on spatial and sensory design to understand what makes a place feel calm, then used it to shape the environment: a misty lakeside with a lone pavilion as a visual anchor.",
+          title: "Serene, not just calm",
+          text: "The studio asked each of us to pick one adjective and build an experience around it. I chose serene. Research describes serenity as more than calm: a lasting sense of inner peace that lowers stress. Other studies show that nature lowers stress too, even when it's experienced in VR.\n\nSo the goal wasn't a pretty view. It was a place that actually makes you slow down and breathe out.",
           media: []
         },
         {
-          title: "Experience",
-          text: "Visitors drift through the scene at their own pace. There's no goal to reach and nothing to solve, only the space, the mist and the sound.",
-          media: []
+          title: "Inspiration",
+          text: "I looked at what serene places have in common: Bob Ross's landscapes, with open skies, calm reflective water and soft colours; Makoto Shinkai and Studio Ghibli scenes, where a quiet landscape holds one clear subject and a small touch of magic; and Nature Treks VR.\n\nThe pavilion came from a photo of a temple standing in a river in Ninh Binh, Vietnam. A sheltered building in open nature felt calmer than nature on its own, and research on familiarity and feeling safe backed that up. When my flatmate tried it in VR, the lake felt noticeably more serene with the pavilion than without it.",
+          media: [
+            { type: "image", url: "assets/projects/lakes-echo/pavilion-blockout.jpg", alt: "Unity scene view of a plain white temple block-out at the end of a walkway over the lake", caption: "The first block-out, testing whether a building made the lake calmer" },
+            { type: "image", url: "assets/projects/lakes-echo/pavilion.jpg", alt: "The finished dark wooden pavilion standing in the lake beside a small rocky island with a tree", caption: "The finished pavilion" }
+          ]
         },
         {
-          title: "Development",
-          text: "The fog does two jobs. It reduces the render distance, which keeps the scene light enough for VR, and it softens the mountains into layered, painterly silhouettes.",
-          media: []
+          title: "Building the world",
+          text: "It was made for VR, so smoothness came first. I used Unity's Universal Render Pipeline for performance, and the Profiler showed the grass and trees were the heaviest parts. Moving 3D grass was far too slow, so I switched to flat textured grass, kept the trees few and varied so they don't repeat, and made distant trees drop their detail.\n\nWater mattered most, so it has reflections like Bob Ross's lakes. When the live reflections slid around in VR, I replaced them with a baked reflection. Classmates said the world felt small, so I surrounded it with mountains for depth. The fog hides how far the world really goes and keeps the render distance short.\n\nThere's no goal, just gentle cues: a wooden dock leading your eye to the pavilion, a small island beside it, and a path up a hill to a lookout over the whole lake.",
+          media: [
+            { type: "image", url: "assets/projects/lakes-echo/dock-view.jpg", alt: "Looking down a wooden dock across still water to the pavilion, with misty mountains behind", caption: "The dock leads your eye to the pavilion" },
+            { type: "image", url: "assets/projects/lakes-echo/first-test-land.jpg", alt: "Unity editor showing an early, simple test landscape with flat green hills and a river", caption: "Week 3: the first test land, tried in VR" },
+            { type: "image", url: "assets/projects/lakes-echo/hill-lookout.jpg", alt: "View from the rocky hilltop lookout over the whole misty lake and the pavilion", caption: "The view from the hill lookout" }
+          ]
         },
         {
-          title: "Collaboration",
-          text: "The sound was developed together with a sound design student, so the audio and the environment were shaped around each other.",
+          title: "Sound",
+          text: "The music and sound effects are by Yu Sen Ng, an audio-visual student. Our first track was a beautiful piano piece, but a guest lecturer pointed out it was too emotional: it pulled attention away from the quiet scene. Serene music should sit in the background, closer to Brian Eno's Thursday Afternoon, with a slow tempo and soft, predictable tones.\n\nIn the final version the music is 3D. It plays from the pavilion and echoes across the lake, getting louder as you walk closer and fading away completely in some spots. Insects, and stronger wind up on the hill, fill in the rest.",
+          media: [
+            { type: "image", url: "assets/projects/lakes-echo/sound-source.jpg", alt: "Unity editor with a 3D audio source selected among trees near the lake", caption: "Placing 3D sound sources in Unity" },
+            { type: "image", url: "assets/projects/lakes-echo/sound-zones.jpg", alt: "Unity scene view from above the lake showing the circular range of a sound source", caption: "The range of a sound source over the lake" }
+          ]
+        },
+        {
+          title: "What I left out",
+          text: "I prototyped calming rain, but it needed its own sounds for every surface and cost performance for very little gain, so I cut it. I also dropped haptic feedback when touching the water: a buzzing controller doesn't make your hand feel wet, so it would only have been a gimmick.",
+          media: [
+            { type: "image", url: "assets/projects/lakes-echo/rain-test.jpg", size: "small", alt: "Unity particle system settings for a rain test over the lake", caption: "The rain test that didn't make the cut" }
+          ]
+        },
+        {
+          title: "Showcase",
+          text: "Lake's Echo was shown in RMIT's Black Box, played in a VR headset with the view projected for the room. Streaming it wirelessly was laggy and blurry, so I switched to a long cable, and the final showing ran smoothly. People found the space and the sound calming, which was the whole goal.",
           media: []
         }
       ],
