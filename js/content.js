@@ -241,7 +241,7 @@ const PORTFOLIO = {
         {
           title: "Showcase",
           text: "Lake's Echo was shown in RMIT's Black Box, played in a VR headset with the view projected for the room. Streaming it wirelessly was laggy and blurry, so I switched to a long cable, and the final showing ran smoothly. People found the space and the sound calming, which was the whole goal.",
-          media: []
+          media: [{ type: "image", url: "assets/projects/lakes-echo/black-box.jpg", alt: "Someone in a VR headset in RMIT's Black Box, looking up at a tree canopy projected across three walls", caption: "Testing Lake's Echo in RMIT's Black Box, with the headset view projected around the room" }]
         }
       ],
       gallery: [],
