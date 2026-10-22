@@ -356,7 +356,7 @@
 
   function contactLinks() {
     var out = [];
-    if (S.email) out.push({ label: "Email", text: S.email, href: "mailto:" + S.email });
+    if (S.email) out.push({ label: "Email", text: S.email, href: "mailto:" + S.email, copy: S.email });
     if (S.linkedin) out.push({ label: "LinkedIn", text: "LinkedIn", href: S.linkedin, ext: true });
     if (S.github) out.push({ label: "GitHub", text: "GitHub" + (S.alias ? " (" + S.alias + ")" : ""), href: S.github, ext: true });
     if (S.instagram) out.push({ label: "Instagram", text: "Instagram" + (S.alias ? " (@" + S.alias + ")" : ""), href: S.instagram, ext: true });
@@ -379,7 +379,7 @@
     }
 
     var links = contactLinks().map(function (l) {
-      return '<li><a href="' + esc(l.href) + '"' + (l.ext ? ' target="_blank" rel="noopener"' : "") + ">" + esc(l.text) + "</a></li>";
+      return '<li><a href="' + esc(l.href) + '"' + (l.ext ? ' target="_blank" rel="noopener"' : "") + (l.copy ? ' data-copy="' + esc(l.copy) + '" title="Copy email"' : "") + ">" + esc(l.text) + (l.copy ? COPY_ICON : "") + "</a></li>";
     }).join("");
     el.innerHTML =
       '<footer class="site-footer"><div class="container footer-grid">' +
@@ -826,8 +826,48 @@
   function renderContact() {
     var links = contactLinks();
     $("#contact-list").innerHTML = links.length ? links.map(function (l) {
-      return '<li class="reveal"><span>' + esc(l.label) + '</span><a href="' + esc(l.href) + '"' + (l.ext ? ' target="_blank" rel="noopener"' : "") + ">" + esc(l.text) + ' <i aria-hidden="true">&rarr;</i></a></li>';
+      return '<li class="reveal"><span>' + esc(l.label) + '</span><a href="' + esc(l.href) + '"' + (l.ext ? ' target="_blank" rel="noopener"' : "") + (l.copy ? ' data-copy="' + esc(l.copy) + '" title="Copy email"' : "") + ">" + esc(l.text) + (l.copy ? COPY_ICON : ' <i aria-hidden="true">&rarr;</i>') + "</a></li>";
     }).join("") : "<li><span>Contact</span><em>Contact details coming soon.</em></li>";
+  }
+
+  /* ------------------------------------------------------ email: copy button */
+  // A mailto: link only works if the visitor has a desktop mail app set up (many people
+  // just use Gmail in the browser, so clicking does nothing). So the email is a copy
+  // button everywhere: clicking it copies the address and says so. The mailto: href
+  // stays only as a fallback for when JavaScript is off.
+  var COPY_ICON = '<svg class="copy-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="11" height="11" rx="2"/><path d="M5 15V6a2 2 0 0 1 2-2h9"/></svg>';
+  function setupCopyLinks() {
+    var toast = null, timer = 0;
+    function show(msg) {
+      if (!toast) {
+        toast = document.createElement("div");
+        toast.className = "copy-toast";
+        toast.setAttribute("role", "status");
+        toast.setAttribute("aria-live", "polite");
+        document.body.appendChild(toast);
+      }
+      toast.textContent = msg;
+      toast.classList.add("is-on");
+      clearTimeout(timer);
+      timer = setTimeout(function () { toast.classList.remove("is-on"); }, 2600);
+    }
+    function fallbackCopy(text) {
+      var t = document.createElement("textarea");
+      t.value = text; t.setAttribute("readonly", ""); t.style.position = "fixed"; t.style.opacity = "0";
+      document.body.appendChild(t); t.select();
+      var ok = false; try { ok = document.execCommand("copy"); } catch (e) {}
+      t.remove(); return ok;
+    }
+    document.addEventListener("click", function (e) {
+      var a = e.target.closest("a[data-copy]");
+      if (!a) return;
+      e.preventDefault();
+      var text = a.getAttribute("data-copy");
+      var done = function () { show("Email copied: " + text); };
+      var fail = function () { if (fallbackCopy(text)) done(); else show(text); };
+      if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(done, fail);
+      else fail();
+    });
   }
 
   /* --------------------------------------------------------------- lightbox */
@@ -1066,6 +1106,7 @@
   if (page === "contact") renderContact();
   buildFooter();
   setupLightbox();
+  setupCopyLinks();
   setupEmbeds();
   setupReveal();
   if (page === "home") runIntro();

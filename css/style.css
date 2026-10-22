@@ -3377,3 +3377,53 @@ html.intro .hero-text > .btn-row {
 .hero.glass.is-lit .hero-photo::before {
   opacity: 1;
 }
+
+
+/* email copy button: small copy icon after the address */
+.copy-icon {
+  width: 0.95em;
+  height: 0.95em;
+  margin-left: 0.45em;
+  vertical-align: -0.12em;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+}
+a[data-copy]:hover .copy-icon,
+a[data-copy]:focus-visible .copy-icon {
+  opacity: 1;
+}
+/* keep the copy icon on the same line as the address, and let the big address on the
+   contact page shrink to fit narrow phones (5.6vw fits ~26 characters on a 390px screen) */
+.contact-list a[data-copy] {
+  white-space: nowrap;
+  font-size: clamp(1.15rem, 5.6vw, 2.6rem);
+}
+/* "Email copied" note (see setupCopyLinks() in main.js) */
+.copy-toast {
+  position: fixed;
+  left: 50%;
+  bottom: 28px;
+  z-index: 60;
+  max-width: calc(100% - 32px);
+  padding: 12px 20px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #ffffff;
+  font-size: 0.9rem;
+  box-shadow: 0 14px 40px rgba(23, 32, 56, 0.25);
+  opacity: 0;
+  transform: translate(-50%, 10px);
+  pointer-events: none;
+  transition:
+    opacity 0.25s var(--ease),
+    transform 0.25s var(--ease);
+}
+.copy-toast.is-on {
+  opacity: 1;
+  transform: translate(-50%, 0);
+}
