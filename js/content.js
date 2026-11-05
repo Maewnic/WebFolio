@@ -286,23 +286,59 @@ const PORTFOLIO = {
       slug: "drift",
       title: "DRIFT",
       category: "immersive",
-      type: "VR experience · Unity",
-      tagline: "An astronaut drifts from their ship as panic turns to calm.",
-      summary: "A VR experience about an astronaut drifting away from their ship. Panic slowly turns into calm acceptance as they take in the beauty of space. The black hole, planets, sun, nebula and skybox are shaders that react to the music.",
-      status: "In progress",
+      type: "VR audiovisual experience · Unity",
+      tagline: "An astronaut cut loose in space, drifting from panic to awe, with music shaping the universe in real time.",
+      summary: "A five-minute VR experience where you are an astronaut whose tether snaps. You drift past Earth, a ringed planet, a pulsar and a nebula towards a black hole, as panic slowly turns into acceptance and awe. Every planet, star and the black hole is a custom shader I wrote with AI, all reacting to the music, and you use your hands to change the world around you. Shown in RMIT's Black Box.",
+      status: "",
       size: "m",
       hidden: false,
       cover: "assets/projects/drift/cover.jpg",
+      hero: { type: "youtube", url: "https://youtu.be/tN-1yAhTjHM" },
       context: "RMIT University · AI Studio",
       year: "2026",
-      role: "",
+      role: "Solo project: concept, direction, level design and Unity development, with AI-assisted code",
       collaborators: [],
-      tools: ["Unity", "Claude Code", "Suno"],
+      tools: ["Unity 6", "Claude Code", "Suno", "ElevenLabs"],
       links: [],
       sections: [
         {
-          title: "How it's made",
-          text: "The shaders are driven by one shared audio script that feeds the music's amplitude and frequency into the shader settings. I used Claude Code to help write and tune the shaders, and the music was generated with Suno. I'm also working on getting everything to run well in VR.",
+          title: "The idea",
+          text: "I told my lecturer the sheer size of space felt beautiful. To her, it sounded terrifying. That contrast became the whole piece.\n\nDRIFT isn't a rescue story. It's about finding peace in something you can't control. It plays like an ambient music video more than a game: an authored path following an emotional arc, experienced seated in a VR headset. You don't watch an astronaut drift. You are the one drifting.",
+          media: []
+        },
+        {
+          title: "The journey",
+          text: "It opens on a routine spacewalk above Earth, with the crew chatting over the radio. Then debris hits, the tether snaps, the radio breaks up into silence, and the music begins.\n\nFrom there it moves through feelings rather than objects: excitement inside the sadness while skimming through the rings of a Saturn-like planet, awe at a blue pulsar and a nebula you can wave your hands through, then fear again as the black hole pulls you in, even though up close it's the most beautiful thing in the piece. The ending calls back to the start: debris streams past again and the crew's voices return, muffled like a memory, saying \"hold on\" and \"stay calm\". This time, the panic has become acceptance.\n\nEarth wasn't in the first version. Enough people asked for it that I added a realistic one with city lights and clouds, which gives you something familiar to lose.",
+          media: []
+        },
+        {
+          title: "Your body as the controller",
+          text: "You wear a rigged astronaut you can look down at, with gloves that follow your hands and legs that float up once the tether snaps. The helmet is fixed to the torso like a real spacesuit, so turning around only shows the inside of the helmet, and drifting backwards slowly reveals each scene.\n\nYour hands change the world, and the gestures are emotional as well as visual. Raising your hands brightens the universe, covering the visor darkens it and muffles the music, spreading your arms adds reverb, clapping sends out a pulse, a clenched fist floods the image and sound with noise, and a thumbs-up blooms into light. The gestures were based on VRChat's hand gesture system.",
+          media: []
+        },
+        {
+          title: "Visuals written as code",
+          text: "Instead of using AI to generate finished images, I used it to write the code that generates the visuals. The black hole, accretion disk, aurora skybox, planets, Earth, sun and nebula are all custom shaders, developed with Claude and Claude Code, which was connected straight into Unity so it could edit scripts and catch errors itself. One reusable audio-reactive script feeds the music into every shader, so the glow, turbulence and patterns move with the score. My lecturer said she hadn't seen generative AI used this way before.\n\nClaude Code even built the spaceship in code, a capsule with a hatch, solar panels and a docking ring, since AI 3D-model tools were out of budget.\n\nThe most successful trick was faking scale: each object shrinks as you drift away from it, so space feels huge and the journey fast without rendering huge distances. It was inspired by how No Man's Sky makes space feel continuous without lag.",
+          media: [{ type: "image", url: "assets/projects/drift/black-hole.jpg", alt: "The black hole: a glowing white ring around a dark centre above a bright orange and pink accretion disk", caption: "The black hole and accretion disk shader, the technical anchor of the project" }]
+        },
+        {
+          title: "Sound",
+          text: "The score was generated with Suno, and the whole journey is keyframed against it so they rise and fall together. It builds slowly, peaks at the ringed planet and the black hole, and drops to its slowest inside the nebula to give you room to breathe before the final pull.\n\nBreathing, a heartbeat and suit air are generated in code, the radio dialogue was voiced with ElevenLabs and breaks up as the signal goes, and the music swells through the final stretch under the muffled voices of the ending.",
+          media: []
+        },
+        {
+          title: "What went wrong",
+          text: "I built a full system for exploring space at very large scale, then realised the piece needed a fixed path, not open exploration. I disabled it and rebuilt the journey as one authored path, then again as hand-keyframed animation that's easy to retime to the music. The lesson: build exactly what the finished piece needs once the scope is clear.\n\nThe experience kept crashing in the headset, so I held back on the graphics, assuming it was a performance problem. In week 12, connecting through a USB hub fixed it instantly, and I could push the visuals much further.\n\nClaude Code can't see inside the headset, so the astronaut's wrists took many wrong fixes until I sent screenshots and a hand-drawn diagram. A light-streak effect never looked right after several attempts, so I cut it. And scale is still the honest limitation: planets look huge on a monitor, but less so in VR.",
+          media: []
+        },
+        {
+          title: "Working with AI",
+          text: "AI didn't replace my creativity. It moved my work from making every part myself to directing, testing and catching mistakes. Coding is my weakest skill, so that's the gap AI filled, while I kept the decisions: where things sit, how the journey is timed to the music, and how long you stay with each moment. AI could give me a black hole, but it couldn't tell me why you should feel anything when you reach it.\n\nI was open about it throughout. The end credit reads \"created with Unity 6 × Claude Code\", and the parts not made with AI are credited too: a free rigged astronaut model from Sketchfab (assetfactory) and NASA's Earth imagery.",
+          media: []
+        },
+        {
+          title: "Exhibition",
+          text: "DRIFT was shown at the final presentation in RMIT's Black Box, on its own table. Viewers sat in a Pico headset linked to my laptop by cable, while a large screen mirrored their view for everyone around them. A start menu leads into the spaceship opening, the drift itself, and a fade to black with a title screen and restart option.",
           media: []
         }
       ],
