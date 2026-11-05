@@ -309,17 +309,26 @@ const PORTFOLIO = {
         {
           title: "The journey",
           text: "It opens on a routine spacewalk above Earth, with the crew chatting over the radio. Then debris hits, the tether snaps, the radio breaks up into silence, and the music begins.\n\nFrom there it moves through feelings rather than objects: excitement inside the sadness while skimming through the rings of a Saturn-like planet, awe at a blue pulsar and a nebula you can wave your hands through, then fear again as the black hole pulls you in, even though up close it's the most beautiful thing in the piece. The ending calls back to the start: debris streams past again and the crew's voices return, muffled like a memory, saying \"hold on\" and \"stay calm\". This time, the panic has become acceptance.\n\nEarth wasn't in the first version. Enough people asked for it that I added a realistic one with city lights and clouds, which gives you something familiar to lose.",
-          media: []
+          media: [
+            { type: "image", url: "assets/projects/drift/earth.jpg", alt: "Earth seen from orbit with white clouds over blue ocean", caption: "The opening spacewalk above Earth" },
+            { type: "image", url: "assets/projects/drift/earth-rings.jpg", alt: "Golden debris rings streaking past Earth and its moon", caption: "Drifting away from Earth through the debris" },
+            { type: "image", url: "assets/projects/drift/ringed-planet.jpg", alt: "A ringed planet in front of a huge bright sun, with rocks floating in the rings", caption: "The ringed planet, where the music peaks" },
+            { type: "image", url: "assets/projects/drift/pulsar.jpg", alt: "A blue pulsar firing a beam of light across a dark starfield", caption: "The pulsar" },
+            { type: "image", url: "assets/projects/drift/black-hole-approach.jpg", alt: "Streaks of orange debris pulled towards a glowing ring of light", caption: "Pulled towards the black hole" },
+            { type: "image", url: "assets/projects/drift/black-hole-final.jpg", alt: "A black hole with a bright ring above a glowing orange accretion disk", caption: "The black hole" }
+          ]
         },
         {
           title: "Your body as the controller",
           text: "You wear a rigged astronaut you can look down at, with gloves that follow your hands and legs that float up once the tether snaps. The helmet is fixed to the torso like a real spacesuit, so turning around only shows the inside of the helmet, and drifting backwards slowly reveals each scene.\n\nYour hands change the world, and the gestures are emotional as well as visual. Raising your hands brightens the universe, covering the visor darkens it and muffles the music, spreading your arms adds reverb, clapping sends out a pulse, a clenched fist floods the image and sound with noise, and a thumbs-up blooms into light. The gestures were based on VRChat's hand gesture system.",
-          media: []
+          media: [
+            { type: "image", url: "assets/projects/drift/hand-mist.jpg", alt: "A blurred view of the astronaut\u2019s glowing hands leaving trails of pink light in a nebula", caption: "Raising your hands brightens the universe around you" }
+          ]
         },
         {
           title: "Visuals written as code",
           text: "Instead of using AI to generate finished images, I used it to write the code that generates the visuals. The black hole, accretion disk, aurora skybox, planets, Earth, sun and nebula are all custom shaders, developed with Claude and Claude Code, which was connected straight into Unity so it could edit scripts and catch errors itself. One reusable audio-reactive script feeds the music into every shader, so the glow, turbulence and patterns move with the score. My lecturer said she hadn't seen generative AI used this way before.\n\nClaude Code even built the spaceship in code, a capsule with a hatch, solar panels and a docking ring, since AI 3D-model tools were out of budget.\n\nThe most successful trick was faking scale: each object shrinks as you drift away from it, so space feels huge and the journey fast without rendering huge distances. It was inspired by how No Man's Sky makes space feel continuous without lag.",
-          media: [{ type: "image", url: "assets/projects/drift/black-hole.jpg", alt: "The black hole: a glowing white ring around a dark centre above a bright orange and pink accretion disk", caption: "The black hole and accretion disk shader, the technical anchor of the project" }]
+          media: [{ type: "image", url: "assets/projects/drift/black-hole.jpg", alt: "The black hole: a glowing white ring around a dark centre above a bright orange and pink accretion disk", caption: "The black hole and accretion disk shader, the technical anchor of the project" }, { type: "image", url: "assets/projects/drift/spacecraft-render.jpg", alt: "A white space capsule with solar panels against an orange glow", caption: "An early render of the spacecraft Claude Code modelled in code" }]
         },
         {
           title: "Sound",
@@ -339,7 +348,10 @@ const PORTFOLIO = {
         {
           title: "Exhibition",
           text: "DRIFT was shown at the final presentation in RMIT's Black Box, on its own table. Viewers sat in a Pico headset linked to my laptop by cable, while a large screen mirrored their view for everyone around them. A start menu leads into the spaceship opening, the drift itself, and a fade to black with a title screen and restart option.",
-          media: []
+          media: [
+            { type: "image", url: "assets/projects/drift/start-menu.jpg", alt: "The DRIFT start menu: the title and a play button beside the spacecraft above Earth", caption: "The start menu that leads into the spaceship opening" },
+            { type: "image", url: "assets/projects/drift/end-screen.jpg", alt: "The DRIFT end screen with the title and credits on a starfield", caption: "The end screen, with a fade to black and restart option" }
+          ]
         }
       ],
       gallery: [],
